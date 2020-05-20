@@ -6,6 +6,8 @@ TODO:
 2. Fix the numbers into the table of GLUE tasks.
 21.05
 1. Fix all the graph. (tables maybe)
+
+
 Done, not in the draft: (Should I put them into the paper?)
 1. DensRay rotation matrix trained on every attention heads, not eval yet
 2. Uncesscessful Japaness and Persian templates (X)
