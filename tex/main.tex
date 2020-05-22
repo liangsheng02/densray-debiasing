@@ -32,6 +32,63 @@
 % smaller than 5cm (the original size); we will check this
 % in the camera-ready version and ask you to change it back.
 
+% START custom header
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{array,amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{pgf,tikz}
+\usepackage{mathrsfs}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usetikzlibrary{arrows}
+\usepackage{threeparttable}
+
+\def\figref#1{Figure~\ref{fig:#1}}
+\def\figlabel#1{\label{fig:#1}\label{p:#1}}
+\def\chapref#1{Chapter~\ref{chap:#1}}
+\def\chaplabel#1{\label{chap:#1}\label{p:#1}}
+\def\Tabref#1{Table~\ref{tab:#1}}
+\def\tabref#1{Table~\ref{tab:#1}}
+\def\tablabel#1{\label{tab:#1}\label{p:#1}}
+\def\Secref#1{\S\ref{sec:#1}}
+\def\secref#1{\S\ref{sec:#1}}
+\def\seclabel#1{\label{sec:#1}}
+\def\eqref#1{Eq.~\ref{eqn:#1}}
+\def\eqrefn#1{\ref{eqn:#1}}
+\def\eqsref#1#2{Eqs.~\ref{eqn:#1}/\ref{eqn:#2}}
+\def\eqlabel#1{\label{eqn:#1}}
+\def\subsp#1{P_{\mbox{{\scriptsize\rm #1}}}}
+
+\def\numpar{100k}
+\def\ppnumpar{5}
+
+\newcounter{notecounter}
+\newcommand{\enotesoff}{\long\gdef\enote##1##2{}}
+\newcommand{\enoteson}{\long\gdef\enote##1##2{{
+			\stepcounter{notecounter}
+			{\large\bf
+				\hspace{1cm}\arabic{notecounter} $<<<$ ##1: ##2
+				$>>>$\hspace{1cm}}}}}
+\enoteson
+%\enotesoff
+\long\def\eat#1{}
+
+\def\dnrmupmath#1#2{\mbox{$^#2_{\hbox{\scriptsize #1}}$}}
+\def\dnrm#1{\mbox{$_{\hbox{\scriptsize #1}}$}}
+\def\uprm#1{\mbox{$^{\hbox{\scriptsize #1}}$}}
+\def\cupequal{\cup\!\!=}
+\newcommand{\pluseq}{\mathrel{+}=}
+
+
+% END custom header
+
 \newcommand\BibTeX{B\textsc{ib}\TeX}
 
 \title{Instructions for EMNLP 2020 Proceedings}
@@ -51,13 +108,15 @@
 
 \begin{document}
 \maketitle
+\enote{pd}{possible titles? Debiasing BERT with DensRay. Removing Gender Information in Pretrained Language Models with Analytical Solutions. ...}
 \begin{abstract}
-As one of the representatives of context word embedding, BERT has achieved the most advanced performance on many NLP tasks. Due to the strong feature extraction ability and the high demand for the amounts of training data, BERT can hardly avoid learning many of the human-generated stereotypes in the text data, including gender bias. In this study, we (1) proposed a template based on language models to quantify gender bias in BERT; (2) proposed a DensRay-based word vector space projection analysis method, which is used in Eliminate gender bias. (3) The method of English training is extended to multilingual BERT, which reduces the gender bias of Chinese on our Chinese template.
+As one of the representatives of context word embedding, BERT has achieved the most advanced performance on many NLP tasks. Due to the strong feature extraction ability and the high demand for the amounts of training data, BERT can hardly avoid learning many of the human-generated stereotypes in the text data, including gender bias. In this paper, we (1) propose a template based method that is well suited to quantify gender bias in language models; (2) adapt DensRay (a vector space projection analysis method) to contextualized embeddings, and use this method to eliminate gender information. (3) investigate how English training data can be used to remove gender bias in Chinese using multilingual BERT.
 \end{abstract}
 
 \section{Introduction}
 \input{introduction}
 
+\enote{pd}{I would call this section ``Background''}
 \section{Related Work}
 \input{related work}
 

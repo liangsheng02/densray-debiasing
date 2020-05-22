@@ -1,11 +1,11 @@
 \subsection{Setup}
-As an extension, we apply DensRay to mBERT for zero-shot debiasing on Chinese. Here we use the "bert-multilingual-uncesed" model from \citep{wolf2019huggingfaces}, we also use the same setup as the "bert-base-uncased" model in our previous experiments. 
+As an extension, we apply DensRay to mBERT for zero-shot debiasing on Chinese. Here we use the "bert-multilingual-uncased" model from \citep{wolf2019huggingfaces}, we also use the same setup as the "bert-base-uncased" model in our previous experiments.  \enote{pd}{why using the uncased model?}
 
-Still, we compute the rotation matrices by the English gendered words from the "family" category of the Google analogy test set \citep{mikolov2013efficient}.
+As before, we compute the rotation matrices using the English gendered words from the "family" category of the Google analogy test set \citep{mikolov2013efficient}.
 
-Since Chinese is a language that doesn't contain genus, we can construct the templates by simply translating from the English templates. After removing the duplicates, we get 302 Chinese templates.
+Since Chinese is a language that does not contain genus, we can construct the templates by simply translating from the English templates. After removing the duplicates, we get 302 Chinese templates. \enote{pd}{details on the translation process?}
 
-\subsection{Results on Templates}
+\subsection{Results on templates}
 Results about our experiments on the templates are summarized in table \ref{t:templates2}. Two example templates are given in table \ref{t:templates2}. The evaluation on our templates shows that DensRay can mitigate the gender bias on BERT.
 \begin{table*}[ht]
 \centering
