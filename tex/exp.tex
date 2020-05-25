@@ -139,11 +139,11 @@ We explored two other ways to remove bias. The first is to replace the first dim
 
 
 \subsubsection{Debiasing on different BERT layers}
-Here we only apply DesnRay on one BERT layer at a time. We constructed a figure \figref{fig:layersbase} to illustrate the results of layers on our templates and the three WEAT categories.
+Here we only apply DesnRay on one BERT layer at a time. We constructed a figure \figref{fig:layersbase} to illustrate the results of layers on our templates and the three WEAT categories. It shows that the debiasing effect on the 7-10 layer is more obvious than other on the other layers in BERT base model.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{layers_base}
-	\caption{Debiasing on each single layer on BERT base.}
-	\label{fig:layersbase}
+	\caption{Debiasing on each single layer on BERT base. Bias is measured by \text{diff} on the templates and $d$-value on WEAT categories.}
+	\figlabel{fig:layersbase}
 \end{figure}
 
