@@ -1,9 +1,9 @@
 \subsection{Setup}
-As an extension, we apply DensRay to mBERT for zero-shot debiasing on Chinese. Here we use the "bert-multilingual-uncased" model from \citep{wolf2019huggingfaces}, we also use the same setup as the "bert-base-uncased" model in our previous experiments.
+As an extension, we apply DensRay to mBERT for zero-shot debiasing on Chinese. Here we use the ``bert-multilingual-uncased'' model from \citep{wolf2019huggingfaces}, we also use the same setup as the ``bert-base-uncased'' model in our previous experiments.
 
-As before, we compute the rotation matrices using the English gendered words from the "family" category of the Google analogy test set \citep{mikolov2013efficient}.
+As before, we compute the rotation matrices using the English gendered words from the ``family'' category of the Google analogy test set \citep{mikolov2013efficient}.
 
-Since Chinese is a language that does not contain genus, we can construct the templates by directly translating from the English templates. So we got the following template: "\text{[MASK]}是一个\textit{occupation}。". For the occupation name, we referred to Tencent Translation\footnote{https://fanyi.qq.com/} and made some manual adjustments to the translation. After removing the duplicates, we got 302 Chinese templates.
+Since Chinese is a language that does not contain genus, we can construct the templates by directly translating from the English templates. So we got the following template: \eat{"\text{[MASK]}是一个\textit{occupation}。".} For the occupation name, we referred to Tencent Translation\footnote{https://fanyi.qq.com/} and made some manual adjustments to the translation. After removing the duplicates, we got 302 Chinese templates.
 
 \subsection{Results on templates}
 Results about our experiments on the templates are summarized in table \tabref{t:templates3}. Two example templates are given in table \tabref{t:templates3}. The evaluation on our templates shows that DensRay can mitigate the gender bias on BERT.
@@ -49,19 +49,19 @@ We also checked the perplexity for mBERT on Wikitext-2, see table \tabref{t:ppl2
 \footnotesize
 \begin{tabular}{llcc}
 \hline
-sentence & model & prob(他) & prob(她)\\
+sentence & model & \eat{prob(他)} & \eat{prob(她)}\\
 \hline
-\text{[MASK]}是一个客座教授。 & bert-multi-en & 0.68 & 0.16\\
+\eat{\text{[MASK]}是一个客座教授。} & bert-multi-en & 0.68 & 0.16\\
 & bert-multi-densray-en & 0.51 & 0.18\\
 & bert-multi-cn & 0.52 & 0.11\\
  & bert-multi-densray-cn & 0.30 & 0.08\\
 \hline
-\text{[MASK]}是一个管理员。 & bert-multi-en & 0.53 & 0.17\\
+\eat{\text{[MASK]}是一个管理员。} & bert-multi-en & 0.53 & 0.17\\
 & bert-multi-densray-en & 0.35 & 0.13\\
 & bert-multi-cn & 0.68 & 0.16\\
  & bert-multi-densray-cn & 0.51 & 0.18\\
 \hline
 \end{tabular}
 \caption{\label{t:templates3}
-Sanity check on the Chinese templates, where \textit{他} means \textit{he} and \textit{她} means \textit{she}. The two sentences are translated from \tabref{t:templates2}.}
+Sanity check on the Chinese templates, where \eat{\textit{他}} means \textit{he} and \eat{\textit{她}} means \textit{she}. The two sentences are translated from \tabref{t:templates2}.}
 \end{table*}
