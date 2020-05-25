@@ -23,20 +23,30 @@ the gender subspace.
 \subsection{Evaluation}\label{sec:eval}
 We use two evaluation datasets
 to measure gender
-bias: WEAT and OCCTEMP.
+bias: WEAT (Section~\ref{sec:weat}) and OCCTMP.
 
+OCCTMP is an evaluation dataset
+based on occupation templates
+that
+is tailored for 
+the evaluation of contextualized language models.  It has
+the added advantage that results are easier to interpret
+than the measures used for WEAT.
 
-In addition, we use WEAT 
-
-Besides, to quickly test the results of debiasing, we
-also constructed a set of templates with 320 occupation
+To construct OCCTMP,
+we start with 
+320 occupation
 names\footnote{https://github.com/tolga-b/debiaswe/blob/master/data/professions.json}
-provided by \citet{bolukbasi2016man} for masked language
-modeling: "[MASK] is a \textit{occupation}." The gender bias
-in the templates is measured by the average difference
-between the probability of BERT predicts [MASK] as "he" and
-"she",
+provided by \citet{bolukbasi2016man}.
+Each occupation name is converted into a template of the form
+``[MASK] is an \textit{occupation}.''
+We measure
+gender bias
+in the templates as the average difference
+between the probability of BERT predicting [MASK] as ``he''
+vs.\ ``she''
 \begin{eqnarray}
-    \text{diff}=\mathop{mean}_{i \in templates}(\mathop{prob}(he)-\mathop{prob}(she))\nonumber
+    \text{diff}=frac{1}{|{\mathcal T}|} \sum_{T \in
+      {\mathcal T}}(p(\mbox{he}| T) - p(\mbox{she}|T)\nonumber
 \end{eqnarray}
 Throughout the paper, we find that for most templates the probability of ``he'' is higher than ``she'', which qualitatively indicates that gender bias exists in these templates. We also find that for most sentences the sum of the two probability is higher than 0.7, which means that the predictions will be stable. This templates set can be easily extended to other languages that do not have gendered profession names, like Chinese.
