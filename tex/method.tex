@@ -1,24 +1,41 @@
 \subsection{Adapting DensRay to Contextualized Language Models}
-We now describe how we adapt
-DensRay to contextualized
-language models. Given a gendered word list
-$V:=\{v_1,v_2,\dots,v_n\}$, we feed sentences which contain
-the gendered words into BERT without applying any
-masking. Due to the different contexts, for each word we
-regard every occurrence in a corpus as $v_{i_j}$, with the corresponding embedding $e_{i_j}$. For
-each sentence that contains the word $v_{i_j}$, the output
-of each BERT layer yields a contextual embedding
-$e_{i_j}^m,m\in\{1,2,\dots,M\}$, where $M$ is the number of
-layers in the BERT model. We compute an orthogonal rotation
-matrix $Q_m$ for the $m$th BERT layer as given in formula
-\ref{eq:densray2}. We believe that by replacing parameters
-in identified the gender subspace by $0$, the gender
-information that may cause bias can be mitigated. In this
+We now describe how we adapt DensRay to contextualized
+language models. Given a set of gendered words
+$V$, we extract sentences containing a word in $V$ from a
+corpus. We run a contextualized language model
+with $M$ layers
+on each
+sentence
+$t_1,t_2,\ldots,v,\ldots t_{n-1},t_n$ (where $v \in V$)
+and compute the contextualized representations $e^m, 1\leq m
+\leq M$ of $v$, one for each layer. 
+We compute an orthogonal rotation
+matrix $Q_m$ for the $m$th BERT layer using Eq.\
+\ref{eq:densray2}.
+Finally, we set the dimensions
+of the gender subspace to $0$ with the goal of eliminating
+or at least reducing
+gender
+information that may cause bias. In this
 paper, we take the first dimension of the rotated space as
 the gender subspace.
 
 \subsection{Evaluation}\label{sec:eval}
-In this paper we will use WEAT to measure gender bias. Besides, to quickly test the results of debiasing, we also constructed a set of templates with 320 occupation names\footnote{https://github.com/tolga-b/debiaswe/blob/master/data/professions.json} provided by \citet{bolukbasi2016man} for masked language modeling: "[MASK] is a \textit{occupation}." The gender bias in the templates is measured by the average difference between the probability of BERT predicts [MASK] as "he" and "she",
+We use two evaluation datasets
+to measure gender
+bias: WEAT and OCCTEMP.
+
+
+In addition, we use WEAT 
+
+Besides, to quickly test the results of debiasing, we
+also constructed a set of templates with 320 occupation
+names\footnote{https://github.com/tolga-b/debiaswe/blob/master/data/professions.json}
+provided by \citet{bolukbasi2016man} for masked language
+modeling: "[MASK] is a \textit{occupation}." The gender bias
+in the templates is measured by the average difference
+between the probability of BERT predicts [MASK] as "he" and
+"she",
 \begin{eqnarray}
     \text{diff}=\mathop{mean}_{i \in templates}(\mathop{prob}(he)-\mathop{prob}(she))\nonumber
 \end{eqnarray}
