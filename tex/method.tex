@@ -49,4 +49,15 @@ vs.\ ``she''
     \text{diff}=frac{1}{|{\mathcal T}|} \sum_{T \in
       {\mathcal T}}(p(\mbox{he}| T) - p(\mbox{she}|T)\nonumber
 \end{eqnarray}
-Throughout the paper, we find that for most templates the probability of ``he'' is higher than ``she'', which qualitatively indicates that gender bias exists in these templates. We also find that for most sentences the sum of the two probability is higher than 0.7, which means that the predictions will be stable. This templates set can be easily extended to other languages that do not have gendered profession names, like Chinese.
+where $\mathcal T$ is the set of 320 templates.  We find
+that for most experiments and most templates the probability
+of ``he'' is higher than ``she'', which qualitatively
+indicates that gender bias exists in these templates. We
+also find that in most cases the sum of the two probability
+is higher than 0.7; thus, this evaluation task is a good fit
+for BERT because it has learned that a pronoun is likely to
+occur in the masked position.
+Our templates  can be easily extended to other
+languages
+as we later show for
+Chinese.
