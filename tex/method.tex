@@ -6,9 +6,9 @@ corpus. We run a contextualized language model
 with $M$ layers
 on each
 sentence
-$t_1,t_2,\ldots,v,\ldots t_{n-1},t_n$ (where $v \in V$)
+$t_1,\ldots,t_j,\ldots t_{n-1},t_n$ (where $t_j \in V$)
 and compute the contextualized representations $e^m, 1\leq m
-\leq M$ of $v$, one for each layer. 
+\leq M$ of $t_j$, one for each layer. 
 We compute an orthogonal rotation
 matrix $Q_m$ for the $m$th BERT layer using Eq.\
 \ref{eq:densray2}.
@@ -31,7 +31,7 @@ that
 is tailored for 
 the evaluation of contextualized language models.  It has
 the added advantage that results are easier to interpret
-than the measures used for WEAT.
+than those for WEAT.
 
 To construct OCCTMP,
 we start with 
@@ -46,11 +46,11 @@ in the templates as the average difference
 between the probability of BERT predicting [MASK] as ``he''
 vs.\ ``she''
 \begin{eqnarray}
-    \text{diff}=frac{1}{|{\mathcal T}|} \sum_{T \in
-      {\mathcal T}}(p(\mbox{he}| T) - p(\mbox{she}|T)\nonumber
+    \text{diff}=\frac{1}{|{\mathcal T}|} \sum_{T \in
+      {\mathcal T}}(p(\mbox{he}| T) - p(\mbox{she}|T))\nonumber
 \end{eqnarray}
 where $\mathcal T$ is the set of 320 templates.  We find
-that for most experiments and most templates the probability
+that for most experiments and most templates the probabilities
 of ``he'' is higher than ``she'', which qualitatively
 indicates that gender bias exists in these templates. We
 also find that in most cases the sum of the two probability
