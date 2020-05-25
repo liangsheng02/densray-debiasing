@@ -13,6 +13,7 @@
 %% and that of ACL 08 by Joakim Nivre and Noah Smith
 
 \documentclass[11pt,a4paper]{article}
+
 \usepackage[hyperref]{emnlp2020}
 \usepackage{times}
 \usepackage{latexsym}
@@ -22,7 +23,10 @@
 % but it will improve the layout of the manuscript,
 % and will typically save some space.
 \usepackage{microtype}
-
+\usepackage[UTF8]{ctex}
+\usepackage{graphicx} 
+\usepackage{float} 
+\usepackage{subfigure} 
 %\aclfinalcopy % Uncomment this line for the final submission
 %\def\aclpaperid{***} %  Enter the acl Paper ID here
 
@@ -91,7 +95,7 @@
 
 \newcommand\BibTeX{B\textsc{ib}\TeX}
 
-\title{Instructions for EMNLP 2020 Proceedings}
+\title{Removing Gender Information in BERT with Analytical Solution}
 
 \author{First Author \\
   Affiliation / Address line 1 \\
@@ -105,10 +109,10 @@
   \texttt{email@domain} \\}
 
 \date{}
-
+\hypersetup{draft}
 \begin{document}
 \maketitle
-\enote{pd}{possible titles? Debiasing BERT with DensRay. Removing Gender Information in Pretrained Language Models with Analytical Solutions. ...}
+
 \begin{abstract}
 As one of the representatives of context word embedding, BERT has achieved the most advanced performance on many NLP tasks. Due to the strong feature extraction ability and the high demand for the amounts of training data, BERT can hardly avoid learning many of the human-generated stereotypes in the text data, including gender bias. In this paper, we (1) propose a template based method that is well suited to quantify gender bias in language models; (2) adapt DensRay (a vector space projection analysis method) to contextualized embeddings, and use this method to eliminate gender information. (3) investigate how English training data can be used to remove gender bias in Chinese using multilingual BERT.
 \end{abstract}
@@ -116,8 +120,7 @@ As one of the representatives of context word embedding, BERT has achieved the m
 \section{Introduction}
 \input{introduction}
 
-\enote{pd}{I would call this section ``Background''}
-\section{Related Work}
+\section{Background}
 \input{relatedwork}
 
 \section{Methodology}

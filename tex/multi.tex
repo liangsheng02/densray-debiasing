@@ -1,61 +1,67 @@
 \subsection{Setup}
-As an extension, we apply DensRay to mBERT for zero-shot debiasing on Chinese. Here we use the "bert-multilingual-uncased" model from \citep{wolf2019huggingfaces}, we also use the same setup as the "bert-base-uncased" model in our previous experiments.  \enote{pd}{why using the uncased model?}
+As an extension, we apply DensRay to mBERT for zero-shot debiasing on Chinese. Here we use the "bert-multilingual-uncased" model from \citep{wolf2019huggingfaces}, we also use the same setup as the "bert-base-uncased" model in our previous experiments.
 
 As before, we compute the rotation matrices using the English gendered words from the "family" category of the Google analogy test set \citep{mikolov2013efficient}.
 
-Since Chinese is a language that does not contain genus, we can construct the templates by simply translating from the English templates. After removing the duplicates, we get 302 Chinese templates. \enote{pd}{details on the translation process?}
+Since Chinese is a language that does not contain genus, we can construct the templates by directly translating from the English templates. So we got the following template: "\text{[MASK]}是一个\textit{occupation}。". For the occupation name, we referred to Tencent Translation\footnote{https://fanyi.qq.com/} and made some manual adjustments to the translation. After removing the duplicates, we got 302 Chinese templates.
 
 \subsection{Results on templates}
-Results about our experiments on the templates are summarized in table \ref{t:templates2}. Two example templates are given in table \ref{t:templates2}. The evaluation on our templates shows that DensRay can mitigate the gender bias on BERT.
-\begin{table*}[ht]
+Results about our experiments on the templates are summarized in table \tabref{t:templates3}. Two example templates are given in table \tabref{t:templates3}. The evaluation on our templates shows that DensRay can mitigate the gender bias on BERT.
+\begin{table}[ht]
 \centering
-\begin{tabular}{lllll}
+\footnotesize
+\begin{tabular}{lcccc}
 \hline
 model & prob(he) & prob(she) & diff & var\\
 \hline
-bert-multi-en & 0.5064 & 0.1427 & 0.3637 & 0.0619 \\
-bert-multi-densray-en & 0.3344 & 0.1207 & 0.2137 & 0.0277 \\
-bert-multi-cn & 0.2370 & 0.0718 & 0.1652 & 0.0223 \\
-bert-multi-densray-cn & 0.1247 & 0.0407 & 0.0840 & 0.0055\\
+\scriptsize bert-multi-en 
+& 0.51 & 0.14 & 0.36 & 0.06 \\
+\scriptsize 
+bert-multi-densray-en & 0.33 & 0.12 & 0.21 & 0.03 \\
+\scriptsize bert-multi-cn 
+& 0.24 & 0.07 & 0.17 & 0.02 \\
+\scriptsize bert-multi-densray-cn 
+& 0.12 & 0.04 & 0.08 & 0.01\\
 \hline
 \end{tabular}
-\caption{\label{t:templates2}
+\caption{\tablabel{t:templates3}
 Results of templates on mBERT after applied DensRay. Models with \textit{-en} are tested on our English templates, and those with \textit{-cn} are tested on our Chinese templates.}
-\end{table*}
+\end{table}
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{llll}
+\footnotesize
+\begin{tabular}{lc}
 \hline
 model & ppl\\
 \hline
-bert-multi & 3.5788\\
-bert-multi-densray & 3.7216\\
+bert-multi & 3.58\\
+bert-multi-densray & 3.72\\
 \hline
 \end{tabular}
-\caption{\label{t:ppl2}
+\caption{\tablabel{t:ppl2}
 Language modeling performance on mBERT after applied DensRay.}
 \end{table}
-
-We also checked the perplexity for mBERT on Wikitext-2, see table \ref{t:ppl2}. Results show that DensRay can be extended to mBERT as a zero-shot debiasing method for some other languages.
+We also checked the perplexity for mBERT on Wikitext-2, see table \tabref{t:ppl2}. Results show that DensRay can be extended to mBERT as a zero-shot debiasing method for some other languages.
 
 \begin{table*}[t]
 \centering
-\begin{tabular}{llll}
+\footnotesize
+\begin{tabular}{llcc}
 \hline
-sentence & model & prob(he) & prob(she)\\
+sentence & model & prob(他) & prob(她)\\
 \hline
-[MASK] is a adjunct professor. & bert-multi-en & 0.6823 & 0.1611\\
- & bert-multi-densray-en & 0.5073 & 0.1762\\
-& bert-multi-cn & 0.5189 & 0.1108\\
- & bert-multi-densray-cn & 0.3046 & 0.0831\\
+\text{[MASK]}是一个客座教授。 & bert-multi-en & 0.68 & 0.16\\
+& bert-multi-densray-en & 0.51 & 0.18\\
+& bert-multi-cn & 0.52 & 0.11\\
+ & bert-multi-densray-cn & 0.30 & 0.08\\
 \hline
-[MASK] is a administrator. & bert-multi-en & 0.5344 & 0.1670\\
- & bert-multi-densray-en & 0.3496 & 0.1318\\
-& bert-multi-cn & 0.6823 & 0.1611\\
- & bert-multi-densray-cn & 0.5073 & 0.1762\\
+\text{[MASK]}是一个管理员。 & bert-multi-en & 0.53 & 0.17\\
+& bert-multi-densray-en & 0.35 & 0.13\\
+& bert-multi-cn & 0.68 & 0.16\\
+ & bert-multi-densray-cn & 0.51 & 0.18\\
 \hline
 \end{tabular}
 \caption{\label{t:templates3}
-Sanity check on the Chinese templates. Here we only present their translation for convenience.}
+Sanity check on the Chinese templates, where \textit{他} means \textit{he} and \textit{她} means \textit{she}. The two sentences are translated from \tabref{t:templates2}.}
 \end{table*}
