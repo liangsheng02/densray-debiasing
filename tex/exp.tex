@@ -3,9 +3,10 @@ In the experiments we process all the text data into lower case and use the BERT
 
 To compute the rotation matrices by DensRay, we need a gendered word list as label, and some corpus. For the word list, we get 23 masculine words and 23 feminine words from the "family" category\footnote{http://download.tensorflow.org/data/questions-words.txt} of the Google analogy test set \citep{mikolov2013efficient}, and label them as 1 and -1. As the input corpus, we collect text data from Wikipedia that contains 5,000 (10,000) occurrences of words in the gendered list for BERT base (large) model. We carefully balance the occurrences such that the number of male and female samples are equal. We set  $\alpha_{\neq}=\alpha_{=}=0.5$, as we have balanced the training samples from the corpus.
 
+As to compare with prior works, we compared with the post-processing method proposed by \citet{mu2018all} to eliminate gender bias as \citet{karve2019conceptor} introduced. 
+
 \subsection{Results on OCCTMP}
-Results about our experiments on OCCTMP are summarized in \tabref{t:templates1}. Two OCCTMP examples are given in \tabref{t:templates2}. It shows that DensRay can mitigate the gender bias in BERT: the average difference between predicting he/she drops by more than half (e.g., bert-base from 0.47 to 0.17).
-\enote{sl}{use figure instead of table1,5 later}
+Results about our experiments on OCCTMP are summarized in \tabref{t:templates1}. Two OCCTMP examples are given in \tabref{t:templates2}. It shows that DensRay can mitigate the gender bias in BERT: the average difference between predicting he/she drops to around two third (e.g., bert-base from 0.47 to 0.11).
 \begin{table}[ht]
 \centering
 \footnotesize
@@ -14,10 +15,12 @@ Results about our experiments on OCCTMP are summarized in \tabref{t:templates1}.
 model & prob(he) & prob(she) & diff & var\\
 \hline
 bert-base & 0.66 & 0.19 & 0.47 & 0.16 \\
-bert-base-densray & 0.51 & 0.34 & {0.17} & 0.01\\
+bert-base-Mu & 0.35 & 0.42 & -0.07 & 0.03 \\
+bert-base-densray & 0.48 & 0.37 & {0.11} & 0.02\\
 \hline
 bert-large  & 0.63 & 0.19 & 0.44 & 0.13 \\
-bert-large-densray  & 0.48 & 0.29 & {0.18} & 0.02\\
+bert-large-Mu & 0.40 & 0.23 & 0.17 & 0.02 \\
+bert-large-densray  & 0.47 & 0.31 & {0.16} & 0.02\\
 \hline
 \end{tabular}
 \caption{\tablabel{t:templates1}
@@ -63,18 +66,24 @@ In WEAT we measure the effect size $d$-value and the oneside $p$-value of the pe
 category & model & d & p\\
 \hline
 (Career, Family) & bert-base & 0.66 & 0.08 \\
-vs& bert-base-densray & 0.64 & 0.11\\
-(Male, Female)& bert-large & 1.57 & $0.00^{*}$ \\
+vs& bert-base-Mu & 0.15 & 0.38\\
+(Male, Female&bert-base-densray & 0.62 & 0.12\\
+& bert-large & 1.57 & $0.00^{*}$ \\
+&bert-large-Mu & 0.80 & 0.06 \\
 & bert-large-densray & 1.00 & $0.02^{*}$\\
 \hline
 (Math, Arts) & bert-base & 0.60 & 0.11 \\
-vs& bert-base-densray & 0.07 & 0.45\\
-(Male, Female)& bert-large & 0.22 & 0.35 \\
+vs& bert-base-densray & -0.07 & 0.56\\
+(Male, Female)& bert-base-densray & 0.09 & 0.45\\
+& bert-large & 0.22 & 0.35 \\
+& bert-large-Mu & -0.01 & 0.48\\
 & bert-large-densray & -0.01 & 0.48\\
 \hline
 (Science, Arts)& bert-base & 0.78 & 0.08 \\
-vs& bert-base-densray & 0.02 & 0.49\\
-(Male, Female) & bert-large & 0.82 & $0.04^{*}$  \\
+vs& bert-base-Mu & -0.29 & 0.68\\
+(Male, Female)& bert-base-densray & 0.03 & 0.47\\
+& bert-large & 0.82 & $0.04^{*}$  \\
+& bert-large-Mu & 0.80 & 0.06\\
 & bert-large-densray & 0.67 & 0.10\\
 \hline
 \end{tabular}
@@ -82,29 +91,30 @@ vs& bert-base-densray & 0.02 & 0.49\\
 BERT debiasing results on WEAT. * shows significant gender bias.}
 \end{table}
 \subsection{Impact on Model Performance}
-It is crucial that debiasing methods do not harm downstream performance of BERT models.Thus we test the perplexity of language modeling on the Wikitext-2 dataset \citep{merity2016pointer} which is a subset of Wikipedia with 2 million words. Following the same setup as \citet{wolf2019huggingfaces}\footnote{https://huggingface.co/transformers/}, we also evaluate on the GLUE tasks \citep{wang2018glue}. \tabref{t:glue1} shows that DensRay debiasing gets comparable results with the original models on Wikitext-2 and GLUE.
+It is crucial that debiasing methods do not harm downstream performance of BERT models.Thus we test the perplexity of language modeling on the Wikitext-2 \citep{merity2016pointer}, a subset of Wikipedia with 2 million words. We also test on some GLUE tasks \citep{wang2018glue}. For all the tests we follow the same setup as \citet{wolf2019huggingfaces}\footnote{https://huggingface.co/transformers/}. \tabref{t:glue1} shows that DensRay debiasing gets comparable results with the original models on Wikitext-2 and GLUE tasks.
 \begin{table*}[ht]
 \centering
 \footnotesize
 \begin{tabular}{lcccccccccc}
 \hline
-model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&QQP&MNLI&QNLI&RTE&WNLI\\
+model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI\\
 \hline
-bert-base &3.77& 49.23& 91.97&85.86 & 83.95& 84.31& 80.61& 87.36& 62.82& 52.11\\
-bert-base-densray &3.81& 48.32& 91.86& 84.73& 82.46& 78.94& 87.01& 87.30& 63.90& 54.93\\
+bert-base &3.77&49.15&92.09&85.86&82.66&62.82&52.11\\
+bert-base-mu &3.95&45.53&91.74&82.48&82.60&63.54&56.34\\
+bert-base-densray &3.81&48.04&91.74&84.89&82.43&63.90&53.52\\
 \hline
-bert-large &3.29& 47.93&94.90&89.30&87.60&72.10&86.70&92.70&70.10&65.10\\
-bert-large-densray &3.35& 48.91&94.02&88.84&85.63&70.54&86.24&90.61&67.78&64.48\\
+bert-large &3.29& 47.93&94.90&89.30&87.60&70.10&65.10\\
+bert-large-densray &3.35& 48.91&94.02&88.84&85.63&67.78&64.48\\
 \hline
 \end{tabular}
 \caption{\tablabel{t:glue1}
-GLUE tasks performance on BERT with/without debiasing with DensRay.Language modeling performance on BERT after debiasing with DensRay................................}
+Language modelling perplexity and GLUE tasks performance.}
+\enote{sl}{bert-large update later today}
 \end{table*}
 \subsection{Discussions}
 \subsubsection{Number of Training Samples}
-Experiments show that DensRay is an effective debiasing method on BERT. Although DensRay is an analytical solution, the effect still depends on size of the training data. In the experiments, we regarded the occurrences of the same word in the corpus as independent words with the same gender label, and used balanced samples for masculine and feminine words. Now we analyze the impact of these processes.
-
-Since there are only 46 words in the gendered word list, if we average their embedding under different contexts, there will be only 46 training samples left for DensRay to calculate. DensRay is essentially a supervised learning method. In the case of insufficient labels, it is difficult for supervised learning to extract useful features. Treating different occurrences as different words greatly enriches training samples. As shown in figure, the debiasing results improve with an increased number of training samples.
+In the experiments, we regarded the occurrences of the same word in the corpus as independent words with the same gender label, as a data augmentation appraoch. We also and used balanced samples for masculine and feminine words. Now we analyze the impact of these processes.
+DensRay is essentially a supervised learning method. In the case of insufficient labels, it is difficult for supervised learning to extract useful features. Treating different occurrences as different words greatly enriches training samples. As shown in figure, the debiasing results improve with an increased number of training samples.
 
 The same as other projection-based debiasing methods \citep{bolukbasi2016man,zhao2019gender,dev2019attenuating, karve2019conceptor}, the premise of DensRay debiasing is that the bias direction should be correct. If the sample is unbalanced, the bias direction computed by DensRay will be biased towards either the male or the female, resulting in deleting the gender subspace during debiasing will reverse the gender bias (e.g. there are more masculine words in unbalanced text data, thus the embeddings will be biased towards female after biased). The figure also shows that balanced training sample improved the debiasing performers. 
 \begin{figure*}
