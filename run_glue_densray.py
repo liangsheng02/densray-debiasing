@@ -15,7 +15,7 @@
 # limitations under the License.
 """ Finetuning the library models for sequence classification on GLUE (Bert, XLM, XLNet, RoBERTa, Albert, XLM-RoBERTa)."""
 
-
+import pickle
 import argparse
 import glob
 import json
@@ -33,6 +33,9 @@ from transformers import (
     MODEL_FOR_SEQUENCE_CLASSIFICATION_MAPPING,
     WEIGHTS_NAME,
     AdamW,
+    BertConfig,
+    BertTokenizer,
+    PreTrainedTokenizer,
     get_linear_schedule_with_warmup,
 )
 from densray_bert import *
@@ -393,6 +396,9 @@ def main():
         help="The input data dir. Should contain the .tsv files (or other data files) for the task.",
     )
     parser.add_argument(
+        "--eigvecs_dict", default=None, type=str, required=True, help="The input training data file (a text file)."
+    )
+    parser.add_argument(
         "--model_type",
         default=None,
         type=str,
@@ -513,6 +519,13 @@ def main():
     parser.add_argument("--server_port", type=str, default="", help="For distant debugging.")
     args = parser.parse_args()
 
+    df=open(args.eigvecs_dict,'rb')#注意此处是rb
+    #此处使用的是load(目标文件)
+    args.eigvecs_dict=pickle.load(df)
+    df.close()	
+	
+	
+	
     if (
         os.path.exists(args.output_dir)
         and os.listdir(args.output_dir)
@@ -577,8 +590,14 @@ def main():
         torch.distributed.barrier()  # Make sure only the first process in distributed training will download model & vocab
 
     args.model_type = args.model_type.lower()
-    config = BertConfig.from_pretrained(args.config_name, cache_dir=args.cache_dir)
-    tokenizer = BertTokenizer.from_pretrained(args.tokenizer_name, cache_dir=args.cache_dir)
+    if args.config_name:
+        config = BertConfig.from_pretrained(args.config_name, cache_dir=args.cache_dir)
+    elif args.model_name_or_path:
+        config = BertConfig.from_pretrained(args.model_name_or_path, cache_dir=args.cache_dir)
+    if args.tokenizer_name:
+        tokenizer = BertTokenizer.from_pretrained(args.tokenizer_name, cache_dir=args.cache_dir)
+    elif args.model_name_or_path:
+        tokenizer = BertTokenizer.from_pretrained(args.model_name_or_path, cache_dir=args.cache_dir)
     model = BertForSequenceClassification_1.from_pretrained(
             args.model_name_or_path,
             eigvecs_dict=args.eigvecs_dict,
@@ -586,6 +605,8 @@ def main():
             config=config,
             cache_dir=args.cache_dir,
         )
+    for param in model.bert.parameters():
+        param.requires_grad = False
 
     if args.local_rank == 0:
         torch.distributed.barrier()  # Make sure only the first process in distributed training will download model & vocab
@@ -619,7 +640,7 @@ def main():
         torch.save(args, os.path.join(args.output_dir, "training_args.bin"))
 
         # Load a trained model and vocabulary that you have fine-tuned
-        model = BertForSequenceClassification_1.from_pretrained(args.output_dir)
+        model = BertForSequenceClassification_1.from_pretrained(args.output_dir, eigvecs_dict=args.eigvecs_dict)
         tokenizer = BertTokenizer.from_pretrained(args.output_dir)
         model.to(args.device)
 
@@ -638,7 +659,7 @@ def main():
             global_step = checkpoint.split("-")[-1] if len(checkpoints) > 1 else ""
             prefix = checkpoint.split("/")[-1] if checkpoint.find("checkpoint") != -1 else ""
 
-            model = BertForSequenceClassification_1.from_pretrained(checkpoint)
+            model = BertForSequenceClassification_1.from_pretrained(checkpoint, eigvecs_dict=args.eigvecs_dict)
             model.to(args.device)
             result = evaluate(args, model, tokenizer, prefix=prefix)
             result = dict((k + "_{}".format(global_step), v) for k, v in result.items())

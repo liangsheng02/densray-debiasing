@@ -99,7 +99,7 @@ class BertLayer_1(BertLayer):
         if self.flag:
             for i in range(layer_output.shape[0]):
                 vec = torch.mm(layer_output[i], self.eigvec)
-                vec[:, 0] = 0
+                vec[:, 0] = torch.normal(torch.zeros((1)),1)
                 layer_output[i] = torch.mm(vec, self.eigvec.T)
         # DensRay Done
         outputs = (layer_output,) + outputs

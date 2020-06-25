@@ -126,6 +126,43 @@ As one of the representatives of context word embedding, BERT has achieved the m
 \section{Methodology}
 \input{method}
 
+\section{Quantifying Gender Bias with DensRay}
+DensRay can be used to quantify gender bias for any sentence and token, here use the distance to the zero point of the gender subspace as the measurement. In BERT we use the bias score of [CLS] as aggregation of the sentence. \tabref{t:measure1} compared DensRay with the log probability score \citep{kurita2019measuring} which can quantify gender bias on specific templates '[TARGET] is a [ATTRIBUTE].' These examples show that DensRay is more versatile, it can measure the bias on each token.
+
+\begin{table}[ht]
+	\centering
+	\scriptsize
+	\begin{tabular}{ccccccc}
+		\hline
+\multicolumn{6}{c|}{DensRay}&log score\\		
+\hline
+[CLS] &he &is &a& nurse &.&\\
+-1.55 &-4.9  &-0.26  &0.39  &2.26  &0.28& -3.76\\
+\hline
+[CLS] &he &is &a& nurse &.&\\
+0.34 &2.68 &1.51 &1.72 &1.67 &0.37 &1.68\\
+\hline
+[CLS] &he &is &a& doctor &.&\\
+-1.35 &-4.7 & -0.58 &-0.72 & 0.33 &-0.09 &0.10\\
+\hline
+[CLS] &she &is &a& doctor &.&\\
+0.44 &3.12 &1.58 &1.58& 0.95& 0.06 &0.36\\
+\hline
+[CLS] &he &is &a& professor &.&\\
+-1.94 &-5.23 &-1.45& -1.54 &-0.13& -0.00&0.41\\
+\hline
+[CLS] &she &is &a& professor &.&\\
+0.30 & 3.13 &1.59& 1.04 &0.79& 0.28  &0.23\\
+\hline
+[CLS] &The &professor &asked &.&&\\
+-0.79 &-2.12 &-0.64 & 0.03&  0.52&&-\\
+
+		\hline
+	\end{tabular}
+	\caption{\tablabel{t:measure1}
+		Examples for quantifying bias on bert-based.}
+\end{table}
+
 \section{DensRay Debiasing Experiments on BERT Layers}
 \input{exp}
 

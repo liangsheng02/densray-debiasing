@@ -598,13 +598,17 @@ def main():
         tokenizer = BertTokenizer.from_pretrained(args.tokenizer_name, cache_dir=args.cache_dir)
     elif args.model_name_or_path:
         tokenizer = BertTokenizer.from_pretrained(args.model_name_or_path, cache_dir=args.cache_dir)
+    proxies = {"http": "http://10.10.1.10:3128","https": "https://10.10.1.10:1080",}
     model = BertForSequenceClassification_1.from_pretrained(
             args.model_name_or_path,
             eigvecs_dict=args.eigvecs_dict,
             from_tf=bool(".ckpt" in args.model_name_or_path),
             config=config,
             cache_dir=args.cache_dir,
+			proxies=proxies,
         )
+    for param in model.bert.parameters():
+        param.requires_grad = False
 
     if args.local_rank == 0:
         torch.distributed.barrier()  # Make sure only the first process in distributed training will download model & vocab

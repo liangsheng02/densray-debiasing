@@ -58,22 +58,25 @@ BERT_PRETRAINED_MODEL_ARCHIVE_MAP = {
     "bert-base-dutch-cased": "https://s3.amazonaws.com/models.huggingface.co/bert/wietsedv/bert-base-dutch-cased/pytorch_model.bin",
 }
 
-
-
-class BertLayer_1(BertLayer):
+class BertSelfAttention_1(BertSelfAttention):
     def __init__(self, config, eigvecs_dict, l):
         super().__init__(config)
-        self.attention = BertAttention(config)
-        self.is_decoder = config.is_decoder
-        if self.is_decoder:
-            self.crossattention = BertAttention(config)
-        self.intermediate = BertIntermediate(config)
-        self.output = BertOutput(config)
-        self.l = str(l)
-        self.flag = eigvecs_dict[self.l][1]
-        if self.flag:
-            self.eigvec = torch.load(eigvecs_dict[self.l][0]).to('cuda')
-
+        if config.hidden_size % config.num_attention_heads != 0 and not hasattr(config, "embedding_size"):
+            raise ValueError(
+                "The hidden size (%d) is not a multiple of the number of attention "
+                "heads (%d)" % (config.hidden_size, config.num_attention_heads)
+            )
+        self.output_attentions = config.output_attentions
+        self.num_attention_heads = config.num_attention_heads
+        self.attention_head_size = int(config.hidden_size / config.num_attention_heads)
+        self.all_head_size = self.num_attention_heads * self.attention_head_size
+        self.query = nn.Linear(config.hidden_size, self.all_head_size)
+        self.key = nn.Linear(config.hidden_size, self.all_head_size)
+        self.value = nn.Linear(config.hidden_size, self.all_head_size)
+        self.dropout = nn.Dropout(config.attention_probs_dropout_prob)
+        ############
+        self.eigvecs = eigvecs_dict[l]
+        
     def forward(
         self,
         hidden_states,
@@ -82,36 +85,81 @@ class BertLayer_1(BertLayer):
         encoder_hidden_states=None,
         encoder_attention_mask=None,
     ):
-        self_attention_outputs = self.attention(hidden_states, attention_mask, head_mask)
-        attention_output = self_attention_outputs[0]
-        outputs = self_attention_outputs[1:]  # add self attentions if we output attention weights
+        mixed_query_layer = self.query(hidden_states)
 
-        if self.is_decoder and encoder_hidden_states is not None:
-            cross_attention_outputs = self.crossattention(
-                attention_output, attention_mask, head_mask, encoder_hidden_states, encoder_attention_mask
-            )
-            attention_output = cross_attention_outputs[0]
-            outputs = outputs + cross_attention_outputs[1:]  # add cross attentions if we output attention weights
+        # If this is instantiated as a cross-attention module, the keys
+        # and values come from an encoder; the attention mask needs to be
+        # such that the encoder's padding tokens are not attended to.
+        if encoder_hidden_states is not None:
+            mixed_key_layer = self.key(encoder_hidden_states)
+            mixed_value_layer = self.value(encoder_hidden_states)
+            attention_mask = encoder_attention_mask
+        else:
+            mixed_key_layer = self.key(hidden_states)
+            mixed_value_layer = self.value(hidden_states)
 
-        intermediate_output = self.intermediate(attention_output)
-        layer_output = self.output(intermediate_output, attention_output)
-        # DensRay
-        if self.flag:
-            for i in range(layer_output.shape[0]):
-                vec = torch.mm(layer_output[i], self.eigvec)
+        query_layer = self.transpose_for_scores(mixed_query_layer)
+        key_layer = self.transpose_for_scores(mixed_key_layer)
+        value_layer = self.transpose_for_scores(mixed_value_layer)
+
+        # Take the dot product between "query" and "key" to get the raw attention scores.
+        attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))
+        attention_scores = attention_scores / math.sqrt(self.attention_head_size)
+        if attention_mask is not None:
+            # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
+            attention_scores = attention_scores + attention_mask
+
+        # Normalize the attention scores to probabilities.
+        attention_probs = nn.Softmax(dim=-1)(attention_scores)
+
+        # This is actually dropping out entire tokens to attend to, which might
+        # seem a bit unusual, but is taken from the original Transformer paper.
+        attention_probs = self.dropout(attention_probs)
+
+        # Mask heads if we want to
+        if head_mask is not None:
+            attention_probs = attention_probs * head_mask
+
+        context_layer = torch.matmul(attention_probs, value_layer)
+
+        context_layer = context_layer.permute(0, 2, 1, 3).contiguous()
+        new_context_layer_shape = context_layer.size()[:-2] + (self.all_head_size,)
+        context_layer = context_layer.view(*new_context_layer_shape)
+		#########here
+        for head in self.eigvecs.keys():
+            for i in range(context_layer.shape[0]):
+                vec = torch.mm(context_layer[i][:,64*head:64*(head+1)], self.eigvecs[head])
                 vec[:, 0] = 0
-                layer_output[i] = torch.mm(vec, self.eigvec.T)
-        # DensRay Done
-        outputs = (layer_output,) + outputs
+                context_layer[i][:,64*head:64*(head+1)] = torch.mm(vec, self.eigvecs[head].T)
+		#########
+        outputs = (context_layer, attention_probs) if self.output_attentions else (context_layer,)
         return outputs
 
+
+class BertAttention_1(BertAttention):
+    def __init__(self, config, eigvecs_dict, l):
+        super().__init__(config)
+        self.self = BertSelfAttention_1(config, eigvecs_dict, l)
+        self.output = BertSelfOutput(config)
+        self.pruned_heads = set()
+
+
+class BertLayer_1(BertLayer):
+    def __init__(self, config, eigvecs_dict, l):
+        super().__init__(config)
+        self.attention = BertAttention_1(config, eigvecs_dict, l)
+        self.is_decoder = config.is_decoder
+        if self.is_decoder:
+            self.crossattention = BertAttention_1(config, eigvecs_dict, l)
+        self.intermediate = BertIntermediate(config)
+        self.output = BertOutput(config)
 
 class BertEncoder_1(BertEncoder):
     def __init__(self, config, eigvecs_dict):
         super().__init__(config)
         self.output_attentions = config.output_attentions
         self.output_hidden_states = config.output_hidden_states
-        self.layer = nn.ModuleList([BertLayer_1(config, eigvecs_dict, l) for l in range(config.num_hidden_layers)])
+        self.layer = nn.ModuleList([BertLayer_1(config, eigvecs_dict, l) if l in eigvecs_dict.keys() else BertLayer(config) for l in range(config.num_hidden_layers)])
 
 
 class PreTrainedModel_1(PreTrainedModel):
