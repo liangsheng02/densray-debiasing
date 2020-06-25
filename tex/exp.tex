@@ -60,31 +60,34 @@ OCCTMP examples with prediction probabilities.}
 In WEAT we measure the effect size $d$-value and the oneside $p$-value of the permutation test. For the $d$-value, the closer to zero, the less gender bias.  We also prefer a high $p$-value (at least 0.05) to accept the null hypothesis which indicates the lack of gender bias. Follow the same WEAT word lists setup as \citet{karve2019conceptor}, the results on WEAT is shown on \tabref{t:weat1}.
 \begin{table}[ht]
 \centering
-\footnotesize
-\begin{tabular}{clcc}
+\scriptsize
+\begin{tabular}{clcccc}
 \hline
-category & model & d & p\\
+&&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c}{SEAT}\\
 \hline
-(Career, Family) & bert-base & 0.66 & 0.08 \\
-vs& bert-base-Mu & 0.15 & 0.38\\
-(Male, Female&bert-base-densray & 0.62 & 0.12\\
-& bert-large & 1.57 & $0.00^{*}$ \\
-&bert-large-Mu & 0.80 & 0.06 \\
-& bert-large-densray & 0.76 & 0.07\\
+category & model & d & p& d & p\\
 \hline
-(Math, Arts) & bert-base & 0.60 & 0.11 \\
-vs& bert-base-densray & -0.07 & 0.56\\
-(Male, Female)& bert-base-densray & 0.09 & 0.45\\
-& bert-large & -0.40 & 0.75 \\
-& bert-large-Mu & -0.51 & 0.83\\
-& bert-large-densray & -0.06 & 0.45\\
+C6 & bert-base & 0.66 & 0.08 &0.11&0.25\\
+& bert-base-Mu & 0.15 & 0.38&0.48&0.10\\
+&bert-base-densray & 0.62 & 0.12&-0.11&0.75\\
+%& bert-large & 1.57 & $0.00^{*}$ \\
+%&bert-large-Mu & 0.80 & 0.06 \\
+%& bert-large-densray & 0.76 & 0.07\\
 \hline
-(Science, Arts)& bert-base & 0.78 & 0.08 \\
-vs& bert-base-Mu & -0.29 & 0.68\\
-(Male, Female)& bert-base-densray & 0.03 & 0.47\\
-& bert-large & -0.60 & 0.87  \\
-& bert-large-Mu & 0.78 & 0.06\\
-& bert-large-densray & 0.20 & 0.33\\
+C7 & bert-base & 0.60 & 0.11 &0.72&0.01\\
+& bert-base-densray & -0.07 & 0.56&-0.09&0.72\\
+& bert-base-densray & 0.09 & 0.45&-0.11&0.26\\
+%& bert-large & -0.40 & 0.75 \\
+%& bert-large-Mu & -0.51 & 0.83\\
+%& bert-large-densray & -0.06 & 0.45\\
+\hline
+C8& bert-base & 0.78 & 0.08 &1.00&0.01\\
+& bert-base-Mu & -0.29 & 0.68&0.36&0.03\\
+& bert-base-densray & 0.03 & 0.47&0.75&0.01\\
+%& bert-large & -0.60 & 0.87  \\
+%& bert-large-Mu & 0.78 & 0.06\\
+%& bert-large-densray & 0.20 & 0.33\\
+
 \hline
 \end{tabular}
 \caption{\tablabel{t:weat1}
