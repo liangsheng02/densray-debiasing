@@ -117,9 +117,15 @@ Language modelling perplexity and GLUE tasks performance.}
 \subsection{Discussions}
 \subsubsection{Compare DensRay and Hard Debiasing}
 Here we compare the difference between DensRay and the HArd debiasing by \citep{mu2018all}. With their objectives, we can find that DensRay will produce meaningful direction on the gender axis, then male bias and female bias are distributed on different sides of the axis. While Hard debiasing does not necessarily produce such a direction, their direction is provided by the embedding model.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{example.png}
+	\caption{Gender direction on gendered words.}
+	\figlabel{fig:example}
+\end{figure}
 \subsubsection{Debiasing on Attention Heads}
 Here we applied DensRay on the attention heads in BERT to debias on OCCTMP, the heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not obvious, with diff scores all around 0.4 - 0.5. Due to the lack of dimensions and the distribution of gender features in the attention heads, we chose to apply DensRay on layers as debiasing method.
-\begin{figure}[ht]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.9\linewidth]{heatmap_heads}
 	\caption{DensRay debiasing on each single attention head in BERT base, measured by \text{diff} on OCCTMP.}
