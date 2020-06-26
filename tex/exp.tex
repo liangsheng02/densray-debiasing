@@ -24,7 +24,7 @@ bert-large-densray  & 0.47 & 0.31 & {0.16} &0.02 \\
 \hline
 \end{tabular}
 \caption{\tablabel{t:templates1}
-BERT debiasing results on OCCTMP. \textit{bert-base} and \textit{bert-large} are the original model without debiasing. \textit{prob(he)} is the average probability that model predict \textit{he} as the [MASK] in OCCTMP. \textit{var} is the variance of the differences between the probability of BERT predicts [MASK] as \textit{he} and \textit{she}.} 
+BERT debiasing results on OCCTMP. \textit{bert-base} and \textit{bert-large} are the original model without debiasing. \textit{prob(he)} is the average probability that model predict \textit{he} as the [MASK] in OCCTMP. \textit{var} is the variance of the differences between the probability of BERT predicts [MASK] as \textit{he} and \textit{she}. \enote{pd}{why don't we compare with conceptor anymore?}} 
 \end{table}
 \begin{table}[ht]
 \centering
@@ -112,7 +112,7 @@ bert-large-densray &3.35& 48.91&94.02&88.84&85.63&67.78&64.48\\
 \hline
 \end{tabular}
 \caption{\tablabel{t:glue1}
-Language modelling perplexity and GLUE tasks performance.}
+Language modelling perplexity and GLUE tasks performance. \enote{pd}{it seems on bert-large densray is always better than Mu? Can't we make the argument that DensRay affects performance less?}}
 \end{table*}
 \subsection{Discussions}
 \subsubsection{Compare DensRay and Hard Debiasing}
@@ -120,7 +120,7 @@ Here we compare the difference between DensRay and the HArd debiasing by \citep{
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.9\linewidth]{example.png}
-	\caption{Gender direction on gendered words.}
+	\caption{Gender direction on gendered words. \enote{pd}{We should use the PCA with normalized data to make a fair comparison. Is this the case here?}}
 	\figlabel{fig:example}
 \end{figure}
 \subsubsection{Debiasing on Attention Heads}

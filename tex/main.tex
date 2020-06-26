@@ -95,7 +95,8 @@
 
 \newcommand\BibTeX{B\textsc{ib}\TeX}
 
-\title{Removing Gender Information from BERT Using DensRay}
+\title{Reducing Gender Bias in Contextualized Representations\\
+	 Using DensRay}
 
 \author{First Author \\
   Affiliation / Address line 1 \\
@@ -114,7 +115,7 @@
 \maketitle
 
 \begin{abstract}
-As one of the representatives of context word embedding, BERT has achieved the most advanced performance on many NLP tasks. Due to the strong feature extraction ability and the high demand for the amounts of training data, BERT can hardly avoid learning many of the human-generated stereotypes in the text data, including gender bias. In this paper, we (1) propose a template based method that is well suited to quantify gender bias in language models; (2) adapt DensRay (a vector space projection analysis method) to contextualized embeddings, and use this method to eliminate gender information. (3) investigate how English training data can be used to remove gender bias in Chinese using multilingual BERT.
+	Pretrained text representations learn many of the human-generated stereotypes in the text data, including gender bias. This is a problem for downstream tasks such as coreference resolution or machine translation as biased results might outrage users. Prior work usually identifies a linear gender subspace and removes gender information by removing the subspace. We follow this line of work and propose to use DensRay, an analytical method used to obtain interpretable ultradense subspaces. We show that DensRay performs on-par with prior approaches, and provide arguments why DensRay is more stable. In addition DensRay can be used to obtain interpretable gender scores on token level for all representations. Further we showcase that multilingual embeddings can be used to remove gender bias in Chinese using only English training data. 
 \end{abstract}
 
 \section{Introduction}
@@ -128,6 +129,8 @@ As one of the representatives of context word embedding, BERT has achieved the m
 
 \section{Quantifying Gender Bias with DensRay}
 DensRay can be used to quantify gender bias for any sentence and token, here use the distance to the zero point of the gender subspace as the measurement. \tabref{t:measure1} compared DensRay with the log probability score \citep{kurita2019measuring} which can quantify gender bias on specific format '[TARGET] is a [ATTRIBUTE].' We use the bias score of [CLS] as aggregation of the sentence. For example, These examples show that DensRay is more versatile, it can measure the bias on each token.
+
+\enote{pd}{why can't we do the same with hard-debiasing?}
 
 \begin{table}[ht]
 	\centering
@@ -177,6 +180,8 @@ DensRay can be used to quantify gender bias for any sentence and token, here use
 \section{DensRay Debiasing multilingual-BERT}
 \input{multi}
 
+
+\enote{pd}{Related work is missing?}
 \section{Conclusion}
 \input{conclusion}
 
