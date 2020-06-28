@@ -1,12 +1,29 @@
 \subsection{Setup}
-As an extension, we apply DensRay to mBERT for zero-shot debiasing on Chinese. Here we use the ``bert-multilingual-uncased" model from \citep{wolf2019huggingfaces}, we also use the same setup as the ``bert-base-uncased" model in our previous experiments. \enote{pd}{If I recall correctly the uncased model is not good for Chinese and only the cased model should be used. This is because they used different preprocessing for both models.}
+We now show that, in a multilingual contextualized language
+model like mBERT,
+we can use DensRay  for zero-shot debiasing.
+Specifically, we train a DensRay model on English and use it
+to debias Chinese.
+We use  bert-multilingual-uncased from
+\citep{wolf2019huggingfaces}. We  use the same setup as
+for bert-base-uncased in our previous experiments. \enote{pd}{If I recall correctly the uncased model is not good for Chinese and only the cased model should be used. This is because they used different preprocessing for both models.}
 
-As before, we compute the rotation matrices using the English gendered words from the ``family" category of the Google analogy test set \citep{mikolov2013efficient}.
+As before, we compute the rotation matrices using the English gendered words from the ``family'' category of the Google analogy test set \citep{mikolov2013efficient}.
 
-Since Chinese is a language that does not contain genus, we can construct the OCCTMP templates by directly translating from the English templates. So we got the following form: \eat{"\text{[MASK]}是一个\textit{occupation}。".} For the occupation name, we referred to Tencent Translation\footnote{https://fanyi.qq.com/} and made some manual adjustments to the translation. After removing the duplicates, we got 302 Chinese templates.
+Since Chinese is a language that does not mark gender, we
+can construct the OCCTMP templates by directly translating
+from the English templates. We use the following form:
+``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}''
+We translate the occupation name based on
+Tencent
+Translation\footnote{https://fanyi.qq.com/} and make some
+manual adjustments to the translation. After removing 
+duplicates,  302 Chinese templates remain.
 
 \subsection{Results on OCCTMP}
-Results about our experiments on the templates are summarized in \tabref{t:templates3}. Two examples are given in \tabref{t:templates3}. It shows that DensRay trained with English can mitigate gender bias in mBERT: the average difference drops from 0.17 to 0.08 on Chinese templates. Also, the mBERT still gets comparable perplexities on Wikitext-2 after debiasing, see table \tabref{t:ppl2}. 
+\tabref{t:templates3} gives
+results for the Chinese templates.
+Two examples are given in \tabref{t:templates3}. We see that DensRay trained with English can mitigate gender bias in mBERT: the average difference drops from 0.17 to 0.08 on Chinese templates. Also, mBERT still gets comparable perplexities on Wikitext-2 after debiasing: see table \tabref{t:ppl2}. 
 \begin{table}[ht]
 \centering
 \footnotesize

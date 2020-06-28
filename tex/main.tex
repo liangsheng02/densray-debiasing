@@ -14,6 +14,9 @@
 
 \documentclass[11pt,a4paper]{article}
 
+\usepackage{CJKutf8}
+\def\yin#1{\begin{CJK*}{UTF8}{gbsn}#1\end{CJK*}}
+
 \usepackage[hyperref]{emnlp2020}
 \usepackage{times}
 \usepackage{latexsym}
@@ -159,7 +162,12 @@ it can measure the bias on each token.
 
 \enote{pd}{why can't we do the same with hard-debiasing?}
 
-\enote{hs}{
+\enote{hs}{you probably have to help the reader recall what
+  the log score was and that it can only be applied to an
+  entire sentence, not to an indivdual token?}
+
+\enote{hs}{what is the advantage of being able to measure
+  bias on each token? you should at least give an example}
 
 \begin{table}[ht]
 	\centering
