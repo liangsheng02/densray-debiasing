@@ -1,5 +1,5 @@
 \subsection{Setup}
-In the experiments we process all the text data into lower case and use the BERT models "bert-base-uncased" and "bert-large-uncased". We implemented all experiments using the transformers library \citep{wolf2019huggingfaces}.
+In the experiments we process all the text data into lower case and use the BERT models ``bert-base-uncased" and ``bert-large-uncased". We implemented all experiments using the transformers library \citep{wolf2019huggingfaces}.
 
 To compute the rotation matrices by DensRay, we need a gendered word list as label, and some corpus. For the word list, we get 23 masculine words and 23 feminine words from the "family" category\footnote{http://download.tensorflow.org/data/questions-words.txt} of the Google analogy test set \citep{mikolov2013efficient}, and label them as 1 and -1. As the input corpus, we collect text data from Wikipedia that contains 5,000 (10,000) occurrences of words in the gendered list for BERT base (large) model. We carefully balance the occurrences such that the number of male and female samples are equal. We set  $\alpha_{\neq}=\alpha_{=}=0.5$, as we have balanced the training samples from the corpus.
 
@@ -57,7 +57,8 @@ administrator.
 OCCTMP examples with prediction probabilities.}
 \end{table}
 \subsection{Results on WEAT}
-In WEAT we measure the effect size $d$-value and the oneside $p$-value of the permutation test. For the $d$-value, the closer to zero, the less gender bias.  We also prefer a high $p$-value (at least 0.05) to accept the null hypothesis which indicates the lack of gender bias. Follow the same WEAT word lists setup as \citet{karve2019conceptor}, the results on WEAT is shown on \tabref{t:weat1}.
+In WEAT we measure the effect size $d$-value and the oneside $p$-value of the permutation test.
+A $d$-value closer to zero indicates less gender bias.  We also prefer a high $p$-value (at least 0.05) to not reject the null hypothesis, i.e., we do not reject that there is no gender bias. We follow the same WEAT word lists setup as \citet{karve2019conceptor}, the results on WEAT is shown in \tabref{t:weat1}.
 \begin{table}[ht]
 \centering
 \scriptsize
@@ -94,7 +95,7 @@ C8& bert-base & 0.78 & 0.08 &1.00&0.01\\
 BERT debiasing results on WEAT. * shows significant gender bias.}
 \end{table}
 \subsection{Impact on Model Performance}
-It is crucial that debiasing methods do not harm downstream performance of BERT models.Thus we test the perplexity of language modeling on the Wikitext-2 \citep{merity2016pointer}, a subset of Wikipedia with 2 million words. We also test on some GLUE tasks \citep{wang2018glue}. For all the tests we follow the same setup as \citet{wolf2019huggingfaces}\footnote{https://huggingface.co/transformers/}. \tabref{t:glue1} shows that DensRay debiasing gets comparable results with the original models on Wikitext-2 and GLUE tasks.
+It is crucial that debiasing methods do not harm downstream performance of BERT models.Thus we test the perplexity of language modeling on the Wikitext-2 \citep{merity2016pointer}, a subset of Wikipedia with 2 million words. We also test on GLUE tasks \citep{wang2018glue}. For all the tests we follow the same setup as \citet{wolf2019huggingfaces}\footnote{https://huggingface.co/transformers/}. \tabref{t:glue1} shows that DensRay debiasing gets comparable results with the original models on Wikitext-2 and GLUE tasks.
 \begin{table*}[ht]
 \centering
 \footnotesize
@@ -116,7 +117,7 @@ Language modelling perplexity and GLUE tasks performance. \enote{pd}{it seems on
 \end{table*}
 \subsection{Discussions}
 \subsubsection{Compare DensRay and Hard Debiasing}
-Here we compare the difference between DensRay and the HArd debiasing by \citep{mu2018all}. With their objectives, we can find that DensRay will produce meaningful direction on the gender axis, then male bias and female bias are distributed on different sides of the axis. While Hard debiasing does not necessarily produce such a direction, their direction is provided by the embedding model.
+Here we compare the difference between DensRay and hard debiasing by \citep{mu2018all}. \figref{fig:example} shows artifically created two dimensional embeddings. The black lines show the gender directions identified by hard debiasing and DensRay. Hard debiasing does not use the labels of the male-female word pairs. Instead it relies upon the assumption that the first principal component of the considered vectors is a meaningful gender direction. This can fail in some cases. 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.9\linewidth]{example.png}
@@ -125,6 +126,7 @@ Here we compare the difference between DensRay and the HArd debiasing by \citep{
 \end{figure}
 \subsubsection{Debiasing on Attention Heads}
 Here we applied DensRay on the attention heads in BERT to debias on OCCTMP, the heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not obvious, with diff scores all around 0.4 - 0.5. Due to the lack of dimensions and the distribution of gender features in the attention heads, we chose to apply DensRay on layers as debiasing method.
+We conclude that there is no single attention head which is responsible for processing gender information.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.9\linewidth]{heatmap_heads}
@@ -134,25 +136,27 @@ Here we applied DensRay on the attention heads in BERT to debias on OCCTMP, the 
 
 
 \subsubsection{Number of Training Samples}
-In the experiments, we regarded the occurrences of the same word in the corpus as independent words with the same gender label, as a data augmentation appraoch. We also and used balanced samples for masculine and feminine words. Now we analyze the impact of these processes.
-DensRay is essentially a supervised learning method. In the case of insufficient labels, it is difficult for supervised learning to extract useful features. Treating different occurrences as different words greatly enriches training samples. As shown in figure, the debiasing results improve with an increased number of training samples.
+In the experiments, we collected training samples for DensRay by considering  occurrences of the same word in the corpus across different sentences. We collected equally many masculine and feminine words. Now we analyze the impact of these processes.
+DensRay is essentially a supervised learning method. In the case of insufficient labels, it is difficult for supervised learning to extract useful features. Treating different occurrences as different words greatly enriches training samples. As shown in \figref{curve}, the debiasing results improve with an increased number of training samples.
 
 The same as other projection-based debiasing methods \citep{bolukbasi2016man,zhao2019gender,dev2019attenuating, karve2019conceptor}, the premise of DensRay debiasing is that the bias direction should be correct. If the sample is unbalanced, the bias direction computed by DensRay will be biased towards either the male or the female, resulting in deleting the gender subspace during debiasing will reverse the gender bias (e.g. there are more masculine words in unbalanced text data, thus the embeddings will be biased towards female after biased). The figure also shows that balanced training sample improved the debiasing performers. 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=6cm,height=3cm]{samples}
     \caption{DensRay debiasing results on OCCTMP with different number of samples.}
-    \label{fig:my_label}
+    \figlabel{curve}
 \end{figure}
 
 \subsubsection{Balancing Gender Bias}
+\enote{pd}{I think this section can be moved to the supplementary material}
 In this experiment, we used the method of removing the first dimension (replacing its value by $0$) of the gender interpreteble subspace to remove gender bias. Here we explore some other ways.
 
 We explored three other ways to remove bias: 1) replace the first dimension of the gender interpreteble subspace with the mean value of the first dimension of the training samples. 2) standardize the first dimension. 3) replace the first dimension with a small random variable sampled from Gaussian distribution. All of them did not perform well. We further checked the mean and found that the mean of the different layers is not stable around 0, which is a problem worthy for further exploring. We also tried to delete more dimensions. However removing more dimensions does not improve the debiasing results significantly, while harming the model performance significantly.
 
 
-\subsubsection{Debiasing on different BERT layers}
-Here we only apply DesnRay on one BERT layer at a time. See \figref{fig:layersbase} to illustrate the results of layers on our templates and the three WEAT categories. It shows that the debiasing effect on the 7-10 layer is more visible than on the other layers in BERT base model.
+\subsubsection{Debiasing across different layers}
+So far we have applied DensRay on each layer of BERT simultaneously.
+ See \figref{fig:layersbase} to illustrate the results of layers on our templates and the three WEAT categories. It shows that the debiasing effect on the 7-10 layer is more visible than on the other layers in BERT base model.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\linewidth]{layers_base}

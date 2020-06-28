@@ -4,7 +4,7 @@ A common approach for removing gender information in static embeddings is to ide
 
 In summary our contributions are: i) We adjust DensRay to work on contextualized embeddings. 
  We apply DensRay to every BERT layer and evaluate two tasks: a set of templates we constructed and the Word Embedding Association Test (WEAT) \citep{caliskan2017semantics}. Our experiments find that debiasing with DensRay effectively mitigates gender bias and performs on par-with prior approaches. ii) We argue that DensRay is more robust and interpretable than prior approaches.
-iii) We investigate whether debiased models maintain the performance of BERT on language modeling and the GLUE tasks \citep{wang2018glue}. iv) We apply our debiasing method to the multilingual-BERT (mBERT) model: we use English gender label for computing the gender subspace, and show that this effectively debiases Chinese. 
+iii) We investigate whether debiased models maintain the performance of BERT on language modeling and the GLUE tasks \citep{wang2018glue}. iv) We apply our debiasing method to the multilingual-BERT (mBERT) model: we show that English training data can be used to effectively debias Chinese.
 
 \enote{pd}{
 I would suggest a different structure for the paper: 
