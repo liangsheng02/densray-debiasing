@@ -95,8 +95,10 @@
 
 \newcommand\BibTeX{B\textsc{ib}\TeX}
 
-\title{Reducing Gender Bias in Contextualized Representations\\
-	 Using DensRay}
+%\title{Reducing Gender Bias in Contextualized Representations\\
+%	 Using DensRay}
+
+\title{Monolingual and Multilingual Reduction of Gender Bias in Contextualized Representations}
 
 \author{First Author \\
   Affiliation / Address line 1 \\
@@ -116,21 +118,21 @@
 
 \begin{abstract}
 
-Pretrained text representations learn many of the
-human-generated stereotypes in the text data, including
-gender bias. This is a problem for downstream tasks such as
-coreference resolution or machine translation as biased
-results might outrage users. Prior work usually identifies a
-linear gender subspace and removes gender information by
-removing the subspace. We follow this line of work and
-propose to use DensRay, an analytical method used to obtain
-interpretable ultradense subspaces. We show that DensRay
-performs on-par with prior approaches, and provide arguments
-why DensRay is more stable. In addition DensRay can be used
-to obtain interpretable gender scores on token level for all
-representations. Further we showcase that multilingual
-embeddings can be used to remove gender bias in Chinese
-using only English training data.
+Pretrained language models (PLMs) learn many of the
+human-generated stereotypes from their training corpora,
+including gender bias.  When PLMs are used for downstream
+tasks such as picking candidates for a job, people's lives
+can be negatively affected by these learned stereotypes.
+Prior work usually identifies a linear gender subspace and
+removes gender information by removing the
+subspace. Following this line of work, we use DensRay, an
+analytical method for obtaining interpretable ultradense
+subspaces. We show that DensRay performs on-par with prior
+approaches, but is more stable. In addition, DensRay can be
+used to obtain interpretable gender scores on token level
+for all representations.  Finally, we demonstrate that we
+can remove bias multilingually, e.g., from Chinese, using
+only English training data.
 
 \end{abstract}
 
