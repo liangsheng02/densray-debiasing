@@ -10,7 +10,7 @@ corpus. We run a contextualized language model
 with $M$ layers
 on each
 sentence
-$t_1,\ldots,t_j,\ldots t_{n-1},t_n$ (where $t_j \in V$)
+$t_1,\ldots,t_j,\ldots,t_n$ (where $t_j \in V$)
 and compute the contextualized representations $e^m, 1\leq m
 \leq M$ of $t_j$, one for each layer. 
 We compute an orthogonal rotation
@@ -25,10 +25,10 @@ We use two evaluation datasets
 to measure gender
 bias: WEAT (Section~\ref{sec:weat}) and OCCTMP.
 
-OCCTMP is an evaluation dataset
+OCCTMP is a new evaluation dataset
 based on occupation templates
-that
-is tailored for 
+that we created specifically
+for
 the evaluation of contextualized language models.  It has
 the added advantage that results are easier to interpret
 than those for WEAT.
@@ -50,9 +50,9 @@ vs.\ ``she''
       {\mathcal T}}(p(\mbox{he}| T) - p(\mbox{she}|T))\nonumber
 \end{eqnarray}
 where $\mathcal T$ is the set of 320 templates.  We find
-that for most experiments and most templates the probabilities
+that for most experiments and most templates the probability
 of ``he'' is higher than ``she'', which qualitatively
-indicates that gender bias exists in these templates. We
+indicates that gender bias can be identified using these templates. We
 also find that in most cases the sum of the two probability
 is higher than 0.7; thus, this evaluation task is a good fit
 for BERT because it has learned that a pronoun is likely to

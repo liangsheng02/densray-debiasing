@@ -148,9 +148,18 @@ only English training data.
 \input{method}
 
 \section{Quantifying Gender Bias with DensRay}
-DensRay can be used to quantify gender bias for any sentence and token, here use the distance to the zero point of the gender subspace as the measurement. \tabref{t:measure1} compared DensRay with the log probability score \citep{kurita2019measuring} which can quantify gender bias on specific format '[TARGET] is a [ATTRIBUTE].' We use the bias score of [CLS] as aggregation of the sentence. For example, These examples show that DensRay is more versatile, it can measure the bias on each token.
+DensRay can be used to quantify gender bias for any sentence
+and token. Here we use the distance to the zero point of the
+gender subspace as the measurement. \tabref{t:measure1}
+compares DensRay with the log probability score
+\citep{kurita2019measuring}, which quantifies gender bias
+using the format ``[TARGET] is a [ATTRIBUTE]''. We use the
+bias score of [CLS] as aggregation of the sentence. These examples show that DensRay is more versatile:
+it can measure the bias on each token.
 
 \enote{pd}{why can't we do the same with hard-debiasing?}
+
+\enote{hs}{
 
 \begin{table}[ht]
 	\centering
