@@ -100,22 +100,44 @@ is more stable than hard debiasing.
 \enote{hs}{above: what does ``shrine'' mean?}
  
 \subsection{DensRay}
-DensRay is an analytical method for identifying the embedding subspace of linguistic features. Same as the methods mentioned in the previous section, we aim to identify the "gender subspace" using a set of gendered words $V:=\{v_1,v_2,\dots,v_n\}$ and their embedding $E \in R^{n\times d}$, thus for word $v_i$ we have the corresponding embedding vector $e_{v_i}$. We denotes the gendered words into a map $l:V\to \{-1,1\}$ (e.g. $l(father)=1,l(sister)=-1$). The objective of DensRay is to find an orthogonal matrix $Q\in R^{d\times d}$ such that $EQ$ is gender-interpretable, specifically, the first $k$ dimensions can be interpreted as the gender subspace.
+DensRay is an analytical method for identifying the
+embedding subspace of certain linguistic features. Similar to the
+methods mentioned in the previous section, we aim to
+identify the ``gender subspace'' using a set of gendered words
+$V:=\{v_1,v_2,\dots,v_n\}$ and their embeddings $E \in
+R^{n\times d}$, thus for word $v_i$ we have the
+corresponding embedding vector $e_{v_i}$. We
+introduce a function $l$ for the gender attribute:
+$l:V\to \{-1,1\}$;
+e.g. $l(father)=1$, $l(sister)=-1$. The objective of DensRay
+is to find an orthogonal matrix $Q\in R^{d\times d}$ such
+that $EQ$ is gender-interpretable, specifically, the first
+$k$ dimensions can be interpreted as the gender subspace.
 
-Consider $L_{=}:=\{(v,w)\in V\times V|l(v)=l(w)\}$ and analogously $L_{\neq}$, the DensRay objective \ref{eq:densray1} tries to maximize the distance of the word pairs from the same gender group $L_{=}$ and minimize the distance of the word pairs from different gender group $L_{\neq}$.
+Let $L_{=}:=\{(v,w)\in V\times V|l(v)=l(w)\}$ and define
+$L_{\neq}$ analogously.  The DensRay objective
+in \eqref{densray1} is to maximize the distance of the word
+pairs from the same gender group ($L_{=}$) and minimize the
+distance of the word pairs from the different gender group
+($L_{\neq}$).
 \begin{eqnarray}
-    \mathop{max}\limits_{q} 
+    \max\limits_{q} 
     \sum_{(v,w)\in L_{\neq}}\alpha_{\neq}||q^Td_{vw}||^2_2\nonumber\\
     -\sum_{(v,w)\in L_{=}}\alpha_{=}||q^Td_{vw}||^2_2
-\label{eq:densray1}
+\eqlabel{densray1}
 \end{eqnarray}
-where we define $d_{vw}:=e_v-e_w$. We also have $q\in R^d$ and $q^Tq=1$ since $Q$ is orthogonal, and $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hyperparameters. Regard that $||x||^2_2=x^Tx$, objective \ref{eq:densray1} can be simplified to:
+where we define $d_{vw}:=e_v-e_w$. We also have $q\in R^d$
+and $q^Tq=1$ since $Q$ is \enote{hs}{orthogonal or
+  orthonormal?} orthogonal. $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hyperparameters. Observing that $||x||^2_2=x^Tx$, objective \eqref{eq:densray1} can be simplified to:
 \begin{eqnarray}
-    \mathop{max}\limits_{q} q^T(
+    \max \limits_{q} q^T(
     \sum_{(v,w)\in L_{\neq}}\alpha_{\neq}||d_{vw}d_{vw}^T||^2_2\nonumber\\
     \sum_{(v,w)\in L_{=}}\alpha_{=}||d_{vw}d_{vw}^T||^2_2)q\nonumber\\
-    =:\mathop{max}\limits_{q} q^TAq
+    =:\max\limits_{q} q^TAq
 \label{eq:densray2}
 \end{eqnarray}
 
-The objective \ref{eq:densray2} is maximizing the Rayleigh quotient of $A$ and $q$. Since $A$ is symmetric, we can get an analytical solution $q$ by the eigenvector with the max eigenvalue of $A$ \citep{horn1990matrix}. Thus the matrix of $k$ eigenvectors of $A$ ordered by the corresponding eigenvalues yields the matrix $Q$.
+The objective in \eqref{eq:densray2} is maximizing the Rayleigh quotient of $A$ and $q$. Since $A$ is symmetric, we can get an analytical solution $q$ by the eigenvector with the max eigenvalue of $A$ \citep{horn1990matrix}. Thus the matrix of $k$ eigenvectors of $A$ ordered by the corresponding eigenvalues yields the matrix $Q$.
+
+
+
