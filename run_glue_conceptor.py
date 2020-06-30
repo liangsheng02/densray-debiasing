@@ -190,7 +190,7 @@ def train(args, train_dataset, model, tokenizer):
             else:
                 loss.backward()
 
-            tr_loss += loss.item()
+            tr_loss = tr_loss+loss.item()
             if (step + 1) % args.gradient_accumulation_steps == 0 or (
                 # last step in epoch but step is always smaller than gradient_accumulation_steps
                 len(epoch_iterator) <= args.gradient_accumulation_steps
@@ -299,7 +299,7 @@ def evaluate(args, model, tokenizer, prefix=""):
                 outputs = model(**inputs)
                 tmp_eval_loss, logits = outputs[:2]
 
-                eval_loss += tmp_eval_loss.mean().item()
+                eval_loss = eval_loss+tmp_eval_loss.mean().item()
             nb_eval_steps += 1
             if preds is None:
                 preds = logits.detach().cpu().numpy()
@@ -605,8 +605,8 @@ def main():
             config=config,
             cache_dir=args.cache_dir,
         )
-    for param in model.bert.parameters():
-        param.requires_grad = False
+    #for param in model.bert.parameters():
+    #    param.requires_grad = False
 		
     if args.local_rank == 0:
         torch.distributed.barrier()  # Make sure only the first process in distributed training will download model & vocab

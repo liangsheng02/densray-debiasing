@@ -302,7 +302,7 @@ def train(args, train_dataset, model: PreTrainedModel_1, tokenizer: PreTrainedTo
 
             # Skip past any already trained steps if resuming training
             if steps_trained_in_current_epoch > 0:
-                steps_trained_in_current_epoch -= 1
+                steps_trained_in_current_epoch = steps_trained_in_current_epoch- 1
                 continue
 
             inputs, labels = mask_tokens(batch, tokenizer, args) if args.mlm else (batch, batch)
@@ -323,7 +323,7 @@ def train(args, train_dataset, model: PreTrainedModel_1, tokenizer: PreTrainedTo
             else:
                 loss.backward()
 
-            tr_loss += loss.item()
+            tr_loss = tr_loss+loss.item()
             if (step + 1) % args.gradient_accumulation_steps == 0:
                 if args.fp16:
                     torch.nn.utils.clip_grad_norm_(amp.master_params(optimizer), args.max_grad_norm)
@@ -421,7 +421,7 @@ def evaluate(args, model: PreTrainedModel_1, tokenizer: PreTrainedTokenizer, pre
         with torch.no_grad():
             outputs = model(inputs, masked_lm_labels=labels) if args.mlm else model(inputs, labels=labels)
             lm_loss = outputs[0]
-            eval_loss += lm_loss.mean().item()
+            eval_loss = eval_loss+lm_loss.mean().item()
         nb_eval_steps += 1
 
     eval_loss = eval_loss / nb_eval_steps

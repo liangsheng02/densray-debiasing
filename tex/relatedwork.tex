@@ -2,13 +2,7 @@
 A typical way to measure gender bias is to evaluate on
 \textbf{downstream tasks}. For coreference resolution,
 \cite{zhao2018gender} designed Winobias and
-\cite{rudinger2018gender} designed Winogender schemas. In
-contrast to WinoBias, Winogender schemas include
-gender-neutral pronouns. One Winogender schema has one
-occupational mention and one ``other participant'' mention
-while WinoBias has two occupational mentions. \enote{pd}{is
-  the difference between Winobias and Winogender relevant to
-  this work?}\cite{webster2018mind} released GAP, a
+\cite{rudinger2018gender} designed Winogender schemas. \cite{webster2018mind} released GAP, a
 balanced corpus of Gendered Ambiguous Pronouns, which
 measures gender bias as the ratio of F1 score on masculine
 to F1 score on feminine. However the ratio is very close to 1 \shortcite{Chada_2019, Attree_2019} making it hard to compare debiasing systems. For sentiment analysis, Equity Evaluation Corpus (EEC) \shortcite{Kiritchenko_2018} was designed to measure gender bias by the difference in emotional intensity predictions between gender-swapped sentences.
@@ -18,6 +12,7 @@ An alternative way to measure gender bias is based on \textbf{association tests}
 \enote{hs}{for many of the papers you discuss above it's not
   clear what the realtinship to the current work is. this
   hsould always be clear}
+\enote{sl}{so should we remove this section? just talk about Debiasing Methods in related work}
 
 
 \subsection{Debiasing Methods}
@@ -34,26 +29,24 @@ An alternative way to measure gender bias is based on \textbf{association tests}
 that combines
  the inner-products objective of word embedding and an
  objective to project the word embedding into an orthogonal
- gender subspace. Hard debiasing has been found to work
- better. \enote{pd}{should we mention hard-debiasing by mu
-   et al here and explain the difference to bolukbasi?}
- \cite{dev2019attenuating} explored partial projection and
+ gender subspace. The \cite{bolukbasi2016man} hard debiasing used 2 groups of gendered words for definition and another 2 groups for alignment to produce a gender direction. It has been found to work
+ better then soft debiasing.  \cite{dev2019attenuating} explored partial projection and
  some simple tricks to improve the hard debiasing
  method. \cite{zhao2019gender} applied the data
  augmentation and debiasing method of
  \cite{bolukbasi2016man} to mitigate gender bias on ELMo
- \shortcite{Peters:2018}. \cite{karve2019conceptor} introduce
- the debiasing conceptor: they shrink each
- principal component of the covariance matrix of the word
- embeddings to achieve a soft debiasing. Besides the above
- post-processing methods, \shortcite{zhao2018learning} propose
- GN-Glove: it debiases during training to learn word
- embeddings with protected attributes. The method we use
- here, DensRay, is similar to
-hard debiasing in that we find
-and eliminate a gender subspace in post-processing.
-But DensRay can be solved efficiently in closed form and it
-is more stable than hard debiasing.
+ \cite{Peters:2018}. \cite{karve2019conceptor} proposed
+ the debiasing conceptor, which shrink each
+ principal component of the covariance matrix of the
+ embeddings to achieve a soft debiasing. They also introduced a simple hard debiasing method proposed by \cite{mu2018all}, which identified the gender subspace by PCA and projected the first principal component off.
+ %Besides the above
+ %post-processing methods, \cite{zhao2018learning} propose
+ %GN-Glove: it debiases during training to learn word
+ %embeddings with protected attributes. 
+both the debiasing conceptor and hard debiasing \cite{mu2018all} produce gender direction by one word list with male and female, while hard debiasing \cite{bolukbasi2016man} produces gender direction by male-female pairs.
+ The method we use
+, DensRay, is similar to
+hard debiasing \cite{bolukbasi2016man} in this aspect, but DensRay uses only word lists and can be solved efficiently in closed form, so it's more stable.
 
  
 

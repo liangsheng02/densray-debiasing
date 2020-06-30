@@ -1,13 +1,10 @@
 
-\subsection{Results on OCCTMP}
+\subsection{Debiasing Results}
 \tabref{t:templates1} gives results for OCCTMP. Two OCCTMP
 examples are given in \tabref{t:templates2}. It shows that
 DensRay can mitigate the gender bias in BERT: the average
 difference between predicting he/she drops to around two
-third (e.g., for bert-base from 0.47 to 0.11).
-
-\enote{hs}{there is a summarizing sentenc emissing jhere:
-  performance of hard debiaisig and densray are comparable}
+third (e.g., for bert-base from 0.47 to 0.11). It's shown that the debiasing performance of the three methods are comparable. While the probabilities of debiasing conceptor predictions are significantly lower then the other two methods, which indicates that debiasing conceptor will affect the performance of the model.
 
 \begin{table}[ht]
 \centering
@@ -33,87 +30,40 @@ bert-large-densray  & 0.47 & 0.31 & {0.16} &0.02 \\
   the average probability  predicted for \textit{he} as
   the [MASK] in OCCTMP. \textit{var} is the variance of the
   differences between the probabilities of  predicted
-  for \textit{he} and \textit{she}. \enote{pd}{why
-    don't we compare with conceptor anymore?}}
+  for \textit{he} and \textit{she}.}
 \end{table}
-\begin{table}[ht]
+
+\tabref{t:weat1} shows the results on association tests. The debiasing performance of the three methods are comparable.
+
+\begin{table}[h]
 \centering
 \footnotesize
-\begin{tabular}{llcc}
+\begin{tabular}{clcccccc}
 \hline
-sentence & model & prob(he) & prob(she)\\
+&&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c}{SEAT}&\multicolumn{2}{c}{CEAT}\\
 \hline
-[MASK] is a & 
-\scriptsize bert-base 
-& 0.72 & 0.19\\
-adjunct professor. & 
-\scriptsize bert-base-densray 
-& 0.44 & 0.47\\
-&\scriptsize bert-large
-& 0.72 & 0.22\\
-&\scriptsize bert-large-densray& 0.40 & 0.53\\
+category & model & d & p& d & p& d & p\\
 \hline
-[MASK] is a 
-&\scriptsize bert-base 
-& 0.63 & 0.23\\
-administrator.  
-&\scriptsize bert-base-densray 
-& 0.50 & 0.38\\
-&\scriptsize bert-large & 0.65 & 0.23\\
-&\scriptsize bert-large-densray & 0.45 & 0.37\\
-\hline
-\end{tabular}
-\caption{\tablabel{t:templates2}
-OCCTMP examples with prediction probabilities.}
-\end{table}
-
-\enote{hs}{since ``a adjunct'' and ``a administrator'' are
-  not correct english, can you please find examples that are
-  correct english?}
-
-\subsection{Results on WEAT}
-In WEAT we measure the effect size $d$-value and the
-onesided $p$-value of the permutation test.  A $d$-value
-closer to zero indicates less gender bias.  We also prefer a
-high $p$-value (at least 0.05) to not reject the null
-hypothesis, i.e., we do not reject that there is no gender
-bias. We use \cite{karve2019conceptor}'s WEAT word list
-setup.
-\tabref{t:weat1} shows
-results on WEAT.
-
-
-\enote{hs}{there is a summarizing sentenc emissing jhere:
-  performance of hard debiaisig and densray are comparable
-  (although results are somewhat random as we have discussed before)}
-
-
-\begin{table}[ht]
-\centering
-\scriptsize
-\begin{tabular}{clcccc}
-\hline
-&&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c}{SEAT}\\
-\hline
-category & model & d & p& d & p\\
-\hline
-C6 & bert-base & 0.66 & 0.08 &0.11&0.25\\
-& bert-base-Mu & 0.15 & 0.38&0.48&0.10\\
-&bert-base-densray & 0.62 & 0.12&-0.11&0.75\\
+C6 & bert-base & 0.66 & 0.08 &1.04&$<10^{-2*}$&0.94&$<10^{-2*}$\\
+& bert-base-hard & 0.15 & 0.38&-0.08&0.67&0.88&$<10^{-2*}$\\
+& bert-base-conceptor & 0.07 & 0.46&0.77&$<10^{-2*}$&0.94&$<10^{-2*}$\\
+&bert-base-densray & 0.62 & 0.12&0.36&$0.02^{*}$&0.75&$<10^{-2*}$\\
 %& bert-large & 1.57 & $0.00^{*}$ \\
-%&bert-large-Mu & 0.80 & 0.06 \\
+%&bert-large-hard & 0.80 & 0.06 \\
 %& bert-large-densray & 0.76 & 0.07\\
 \hline
-C7 & bert-base & 0.60 & 0.11 &0.72&0.01\\
-& bert-base-densray & -0.07 & 0.56&-0.09&0.72\\
-& bert-base-densray & 0.09 & 0.45&-0.11&0.26\\
+C7 & bert-base & 0.60 & 0.11 &0.17&0.15&0.99&$<10^{-2*}$\\
+& bert-base-hard & -0.07 & 0.56&-0.06&0.64&0.99&$<10^{-2*}$\\
+& bert-base-conceptor & 0.54 & 0.14&-0.25&0.93&0.99&$<10^{-2*}$\\
+& bert-base-densray & 0.09 & 0.45&-0.47&0.99&0.99&$<10^{-2*}$\\
 %& bert-large & -0.40 & 0.75 \\
 %& bert-large-Mu & -0.51 & 0.83\\
 %& bert-large-densray & -0.06 & 0.45\\
 \hline
-C8& bert-base & 0.78 & 0.08 &1.00&0.01\\
-& bert-base-Mu & -0.29 & 0.68&0.36&0.03\\
-& bert-base-densray & 0.03 & 0.47&0.75&0.01\\
+C8& bert-base & 0.78 & 0.08 &0.81&$<10^{-2*}$&0.99&$<10^{-2*}$\\
+& bert-base-hard & -0.29 & 0.68&-0.10&0.71&0.99&$<10^{-2*}$\\
+& bert-base-conceptor & 0.62 & 0.14&0.50&$<10^{-2*}$&0.99&$<10^{-2*}$\\
+& bert-base-densray & 0.03 & 0.47&0.41&$0.01^{*}$&0.99&$<10^{-2*}$\\
 %& bert-large & -0.60 & 0.87  \\
 %& bert-large-Mu & 0.78 & 0.06\\
 %& bert-large-densray & 0.20 & 0.33\\
@@ -124,13 +74,10 @@ C8& bert-base & 0.78 & 0.08 &1.00&0.01\\
 BERT debiasing results on WEAT. * shows significant gender bias.}
 \end{table}
 
-\enote{hs}{
-``* shows significant gender bias'': i don't see any stars}
-
-\subsection{Impact on Model Performance}
+\subsection{Model Performance}
 \tabref{t:glue1} shows that DensRay debiasing gets comparable results with
-the original models on Wikitext-2 and GLUE tasks.
-\begin{table*}[ht]
+the original models on Wikitext-2 and GLUE tasks. In most tasks on bert-base and all tasks on bert-large, DensRay performs better than hard debiasing, so DensRay affects model performance less.
+\begin{table*}[h]
 \centering
 \footnotesize
 \begin{tabular}{lcccccccccc}
@@ -138,20 +85,45 @@ the original models on Wikitext-2 and GLUE tasks.
 model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI\\
 \hline
 bert-base &3.77&49.15&92.09&85.86&82.66&62.82&52.11\\
-bert-base-mu &3.95&45.53&91.74&82.48&82.60&63.54&56.34\\
+bert-base-hard &3.95&45.53&91.74&82.48&82.60&63.54&56.34\\
+bert-base-conceptor &4.46&48.31&91.43&84.08&81.37&59.57&56.34\\
 bert-base-densray &3.81&48.04&91.74&84.89&82.43&63.90&53.52\\
 \hline
 bert-large &3.29& 47.93&94.90&89.30&87.60&70.10&65.10\\
-bert-large-Mu &3.85& 47.45&93.95&85.01&82.33&67.12&63.02\\
+bert-large-hard &3.85& 47.45&93.95&85.01&82.33&67.12&63.02\\
+bert-large-conceptor &4.13&49.44&93.87&87.67&83.44&62.45&56.34\\
 bert-large-densray &3.35& 48.91&94.02&88.84&85.63&67.78&64.48\\
 \hline
 \end{tabular}
 \caption{\tablabel{t:glue1}
 Language modelling perplexity and GLUE tasks
-performance. \enote{pd}{it seems on bert-large densray is
-  always better than Mu? Can't we make the argument that
-  DensRay affects performance less?}\enote{hs}{great idea!}}
+performance. }
 \end{table*}
+
+\subsection{Examples}
+In \tabref{t:templates2} we show two OCCTMP examples. In the first sentence, hard debiasing reverses the male bias and creates female bias. The sum probabilities of debiasing conceptor predicted "he" and "she" are lower than 0.6 the other two methods, indicates that the probabilities of words unrelated to these sentences becomes higher and make the model unstable.
+\begin{table}[h]
+	\centering
+	\footnotesize
+	\begin{tabular}{llccc}
+		\hline
+		sentence & model & prob(he) & prob(she) &diff\\
+		\hline
+		[MASK] is a & bert-base & 0.84 & 0.13&0.71\\
+		professor.& bert-base-hard& 0.37 & 0.55&-0.18\\
+		& bert-base-conceptor& 0.28 & 0.23&0.05\\
+		& bert-base-densray & 0.53 & 0.37&0.16\\
+		\hline
+		[MASK] is a & bert-base & 0.22 & 0.72&-0.50\\
+		dancer.  & bert-base-hard& 0.27 & 0.64&-0.37\\
+		& bert-base-conceptor& 0.20 & 0.33&-0.13\\
+		& bert-base-densray& 0.42 & 0.52&-0.10\\
+		\hline
+	\end{tabular}
+	\caption{\tablabel{t:templates2}
+		OCCTMP examples with prediction probabilities.}
+\end{table}
+
 
 \subsection{Discussions}
 
@@ -167,7 +139,7 @@ attention head which is responsible for processing gender
 information.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.9\linewidth]{heatmap_heads}
+	\includegraphics[width=0.5\linewidth]{heatmap_heads}
 	\caption{DensRay debiasing on each single attention head in BERT base, measured by \text{diff} on OCCTMP.}
 	\figlabel{fig:heads}
 \end{figure}
@@ -187,8 +159,7 @@ greatly enriches training samples. As shown in
 increased number of training samples.
 
 Similar to other projection-based debiasing methods
-\shortcite{bolukbasi2016man,zhao2019gender,dev2019attenuating,
-  karve2019conceptor}, the premise of DensRay debiasing is
+\cite{bolukbasi2016man,zhao2019gender,dev2019attenuating}, the premise of DensRay debiasing is
 that the bias direction should be correct. If the sample is
 unbalanced, the bias direction computed by DensRay will be
 biased towards either the male or the female, resulting in
@@ -201,16 +172,15 @@ performance.
 \enote{hs}{i don't understand the last point: does the
   figure also show experimental results for balanced vs
   unbalanced training sets?}
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
-    \includegraphics[width=6cm,height=3cm]{samples}
+    \includegraphics[width=0.5\linewidth]{samples}
     \caption{DensRay debiasing results on OCCTMP with different number of samples.}
     \figlabel{curve}
 \end{figure}
 
 \subsubsection{Balancing Gender Bias}
 \enote{pd}{I think this section can be moved to the supplementary material}
-\enote{pd}{are we still targeting a short paper? or a long paper?}
 In this experiment, we used the method of removing the first dimension (replacing its value by $0$) of the gender interpreteble subspace to remove gender bias. Here we explore some other ways.
 
 We explored three other ways to remove bias: 1) replace the first dimension of the gender interpreteble subspace with the mean value of the first dimension of the training samples. 2) standardize the first dimension. 3) replace the first dimension with a small random variable sampled from Gaussian distribution. All of them did not perform well. We further checked the mean and found that the mean of the different layers is not stable around 0, which is a problem worthy for further exploring. We also tried to delete more dimensions. However removing more dimensions does not improve the debiasing results significantly, while harming the model performance significantly.
@@ -223,9 +193,9 @@ So far we have applied DensRay to all BERT layers simultaneously.
  WEAT categories. We see that the debiasing effect
 is stronger in
 layers 7--10  than in the other layers in BERT base.
-\begin{figure}[ht]
+\begin{figure}[h]
 	\centering
-	\includegraphics[width=0.9\linewidth]{layers_base}
+	\includegraphics[width=0.5\linewidth]{layers_base}
 	\caption{Debiasing on each single layer on BERT base. Bias is measured by \text{diff} on the templates and $d$-value on WEAT categories.}
 	\figlabel{fig:layersbase}
 \end{figure}
@@ -238,7 +208,7 @@ Specifically, we train a DensRay model on English and use it
 to debias Chinese.
 We use  bert-multilingual-uncased from
 \shortcite{wolf2019huggingfaces}. We  use the same setup as
-for bert-base-uncased in our previous experiments. \enote{pd}{If I recall correctly the uncased model is not good for Chinese and only the cased model should be used. This is because they used different preprocessing for both models.}
+for bert-base-uncased in our previous experiments. \enote{pd}{If I recall correctly the uncased model is not good for Chinese and only the cased model should be used. This is because they used different preprocessing for both models.}\enote{sl}{modify this later}
 
 As before, we compute the rotation matrices using the English gendered words from the ``family'' category of the Google analogy test set \shortcite{mikolov2013efficient}.
 
@@ -255,7 +225,7 @@ duplicates,  302 Chinese templates remain.
 \tabref{t:templates3} gives
 results for the Chinese templates.
 Two examples are given in \tabref{t:templates3}. We see that DensRay trained with English can mitigate gender bias in mBERT: the average difference drops from 0.17 to 0.08 on Chinese templates. Also, mBERT still gets comparable perplexities on Wikitext-2 after debiasing: see table \tabref{t:ppl2}. 
-\begin{table}[ht]
+\begin{table}[h]
 	\centering
 	\footnotesize
 	\begin{tabular}{lcccc}
@@ -275,21 +245,8 @@ Two examples are given in \tabref{t:templates3}. We see that DensRay trained wit
 	\caption{\tablabel{t:templates3}
 		Results of OCCTMP on mBERT after applied DensRay. Models with \textit{-en} are tested on English templates, and those with \textit{-cn} are tested on Chinese templates.}
 \end{table}
-\begin{table}[ht]
-	\centering
-	\footnotesize
-	\begin{tabular}{lc}
-		\hline
-		model & ppl\\
-		\hline
-		bert-multi & 3.58\\
-		bert-multi-densray & 3.72\\
-		\hline
-	\end{tabular}
-	\caption{\tablabel{t:ppl2}
-		Language modeling performance on mBERT after applied DensRay. \enote{pd}{on which language? Not sure whether this table is necessary in the main paper}}
-\end{table}
-\begin{table}[t]
+
+\begin{table}[h]
 	\centering
 	\footnotesize
 	\begin{tabular}{llcc}
