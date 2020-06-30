@@ -46,15 +46,15 @@ and $q^Tq=1$ since $Q$ is orthogonal. $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hy
 \end{eqnarray}
 
 This objective is maximizing the Rayleigh quotient of $A$ and $q$. Since $A$ is symmetric, we can get an analytical solution $q$ by the eigenvector with the max eigenvalue of $A$ \shortcite{horn1990matrix}. Thus the matrix of $k$ eigenvectors of $A$ ordered by the corresponding eigenvalues yields the matrix $Q$.
+\subsection{Removing Gender Information}
+
+All prior methods yield a gender dimension $q \in R^d$. In a contextualized language model like BERT each layer yields a contextualized embedding matrix $X \in R^{t \times d}$ where $t$ is the length of the sentence. To debias representations we simply zero out the projected values on $q$ for each position, that is we set $X^{\text{debiased}}_i = X_i -  (X_i^\intercal q) q$ for each position $i$.
 
 \seclabel{artexample}
-Here we compare the difference among DensRay, debiasing conceptor, and hard debiasing. \figref{fig:example} shows artificially created two dimensional embeddings. The lines show the gender directions identified by hard debiasing, debiasing conceptor and DensRay. 
+ \figref{fig:example} shows artificially created two dimensional embeddings. The lines show the gender directions identified by hard debiasing, debiasing conceptor and DensRay. 
 
 DensRay separates the gendered words into two gender groups to produce a meaningful gender direction by objective \eqref{eq:densray2}, while debiasing conceptor and hard debiasing compute the subspace with the whole gendered words set. Theoretically they may fail to identified the correct gender direction in some cases. 
 
-\enote{hs}{since this is a crucial point of the paper, we
-	need a strong summary sentence here}
-\enote{sl}{I'm not sure about what kind of strong summary sentence we need here}
 
 
 \begin{figure}[h]

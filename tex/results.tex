@@ -196,6 +196,32 @@ layers 7--10  than in the other layers in BERT base.
 	\caption{Debiasing on each single layer on BERT base. Bias is measured by \text{diff} on the templates and $d$-value on WEAT categories.}
 	\figlabel{fig:layersbase}
 \end{figure}
+\section{Quantifying Gender Bias with DensRay}
+DensRay can be used to quantify gender bias for any sentence and token, here use the distance to the zero point of the gender subspace as the measurement. In BERT we use the average bias score of tokens to quantify the whole sentence. \tabref{t:measure1} compared DensRay with the log probability score \cite{kurita2019measuring} which can quantify gender bias on specific templates '[TARGET] is a [ATTRIBUTE].' A positive log probability score represents the level of male bias, while a positive DensRay score represents the level of female bias; we regard zero as a balance point without bias. These examples show that DensRay is more versatile, it can measure the bias both token level and sentence level.
+
+\begin{table}[h]
+	\centering
+	\scriptsize
+	\begin{tabular}{ccccccc}
+		\hline
+		\multicolumn{5}{c}{DensRay}&Avg.&log probability score\\		
+		\hline
+		[MASK] &is &a &professor& . &&\\
+		-0.69 &-0.97 &-0.9  &-0.15  &0.45& -0.45& 0.63\\
+		\hline
+		[MASK] &is &a &nurse& . &&\\
+		2.43  &1.34  &1.7   &1.93  &0.5& 1.58 &-5.44\\
+		\hline
+		The &professor &asked &me& . &&\\
+		-1.25 &-0.55 &-0.08  &0.59  &0.35 &-0.19 &-\\
+		\hline
+		Let &us &go &.& &&\\
+		-1.06  &0.57  &0.44  &0.06& &0.00 &-\\
+		\hline
+	\end{tabular}
+	\caption{\tablabel{t:measure1}
+		Examples for quantifying bias on bert-based.}
+\end{table}
 
 \subsubsection{Multilingual Debiasing}
 We now show that, in a multilingual contextualized language
@@ -203,10 +229,9 @@ model like mBERT,
 we can use DensRay  for zero-shot debiasing.
 Specifically, we train a DensRay model on English and use it
 to debias Chinese.
-We use  bert-multilingual-uncased from
-\shortcite{wolf2019huggingfaces}. We  use the same setup as
-for bert-base-uncased in our previous experiments. \enote{pd}{If I recall correctly the uncased model is not good for Chinese and only the cased model should be used. This is because they used different preprocessing for both models.}\enote{sl}{modify this later}
-
+We use  bert-base-multilingual-uncased from
+\shortcite{wolf2019huggingfaces}. We use the same setup as
+for bert-base-uncased in our previous experiments. 
 As before, we compute the rotation matrices using the English gendered words from the ``family'' category of the Google analogy test set \shortcite{mikolov2013efficient}.
 
 Since Chinese is a language that does not mark gender, we
@@ -250,17 +275,17 @@ Two examples are given in \tabref{t:templates3}. We see that DensRay trained wit
 		\hline
 		sentence & model & \eat{prob(他)} & \eat{prob(她)}\\
 		\hline
-		\eat{\text{[MASK]}是一个客座教授。} & bert-multi-en & 0.68 & 0.16\\
-		& bert-multi-densray-en & 0.51 & 0.18\\
+		\yin{\text{[MASK]}是一个客座教授。} & bert-multi-en & 0.68 & 0.16\\
+		\text{[MASK]} is an adjunct professor.& bert-multi-densray-en & 0.51 & 0.18\\
 		& bert-multi-cn & 0.52 & 0.11\\
 		& bert-multi-densray-cn & 0.30 & 0.08\\
 		\hline
-		\eat{\text{[MASK]}是一个管理员。} & bert-multi-en & 0.53 & 0.17\\
-		& bert-multi-densray-en & 0.35 & 0.13\\
+		\yin{\text{[MASK]}是一个管理员。} & bert-multi-en & 0.53 & 0.17\\
+		\text{[MASK]}is an administrator.& bert-multi-densray-en & 0.35 & 0.13\\
 		& bert-multi-cn & 0.68 & 0.16\\
 		& bert-multi-densray-cn & 0.51 & 0.18\\
 		\hline
 	\end{tabular}
 	\caption{\label{t:templates3}
-		Sanity check on the Chinese templates, where \eat{\textit{他}} means \textit{he} and \eat{\textit{她}} means \textit{she}. The two sentences are translated from \tabref{t:templates2}.}
+		Sanity check on the Chinese templates, where \eat{\textit{他}} means \textit{he} and \eat{\textit{她}} means \textit{she}. Corresponding English translations are shown blow the Chinese.}
 \end{table}

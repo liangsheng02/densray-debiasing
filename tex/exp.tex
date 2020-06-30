@@ -16,7 +16,7 @@ We adapted DensRay to all BERT layers for debiasing. We compare with the hard de
 \subsubsection{OCCTMP}
 We use two evaluation datasets
 to measure gender
-bias: WEAT (Section~\ref{sec:weat}) and OCCTMP.
+bias: Association tests (Section~\ref{sec:weat}) and OCCTMP.
 
 OCCTMP is a new evaluation dataset
 based on occupation templates
@@ -57,8 +57,7 @@ Chinese.
 \subsubsection{Association Tests}\label{sec:weat}
 Association tests are originated from sociological research. \cite{greenwald1998measuring} proposed the Implicit Association Test (IAT) to quantified societal bias. In IAT, response times were recorded when subjects were asked to match two concepts. For example, subjects were asked to match black and white names with “pleasant” and “unpleasant” words. Subjects tended to have shorter response times for concepts they thought associated. 
 
-Based on IAT, \cite{caliskan2017semantics} proposed the Word Embedding Association Test (WEAT), which used word similarities between targets and attributes instead of the response times to get rid of the requirement of human subjects. Consider two sets of target words $X_1,X_2$ with equal size $|X_1|=|X_2|$, and two sets of attribute words $A_1,A_2$. The null hypothesis in the statistical test of WEAT is: there is no difference in the similarity between $X_1,X_2$ and $A_1,A_2$. In the prior literature it has been argued that if the null hypothesis can't be rejected, there is no significant gender bias. 
-\enote{sl}{as far as I saw, all the association tests(IAT,WAET,SEAT,CEAT) use this hypothesis setup, I think it's just a 'tradition'.} 
+Based on IAT, \cite{caliskan2017semantics} proposed the Word Embedding Association Test (WEAT), which used word similarities between targets and attributes instead of the response times to get rid of the requirement of human subjects. Consider two sets of target words $X_1,X_2$ with equal size $|X_1|=|X_2|$, and two sets of attribute words $A_1,A_2$. The null hypothesis in the statistical test of WEAT is: there is no difference in the similarity between $X_1,X_2$ and $A_1,A_2$. In the prior literature it has been argued that if the null hypothesis can't be rejected, there is no significant gender bias.  
 The WEAT test statistic is defined as
 \begin{eqnarray}
 s(X_1,X_2,A_1,A_2)=\sum_{x\in X_1}s(x,A_1,A_2)-\sum_{x\in X_2}s(x,A_1,A_2),\nonumber
