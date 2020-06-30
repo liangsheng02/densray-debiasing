@@ -169,14 +169,11 @@ unbalanced text data, then the embeddings will be biased
 towards female after debiasing. The figure also shows that
 a balanced training sample improves the debiasing
 performance.
-\enote{hs}{i don't understand the last point: does the
-  figure also show experimental results for balanced vs
-  unbalanced training sets?}
 \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\linewidth]{samples}
-    \caption{DensRay debiasing results on OCCTMP with different number of samples.}
-    \figlabel{curve}
+	\centering
+	\includegraphics[width=0.5\linewidth]{samples}
+	\caption{DensRay debiasing results on OCCTMP with different number of samples and unbalanced/balanced data.}
+	\figlabel{curve}
 \end{figure}
 
 \subsubsection{Balancing Gender Bias}
@@ -224,7 +221,7 @@ duplicates,  302 Chinese templates remain.
 
 \tabref{t:templates3} gives
 results for the Chinese templates.
-Two examples are given in \tabref{t:templates3}. We see that DensRay trained with English can mitigate gender bias in mBERT: the average difference drops from 0.17 to 0.08 on Chinese templates. Also, mBERT still gets comparable perplexities on Wikitext-2 after debiasing: see table \tabref{t:ppl2}. 
+Two examples are given in \tabref{t:templates3}. We see that DensRay trained with English can mitigate gender bias in mBERT: the average difference drops from 0.17 to 0.08 on Chinese templates. 
 \begin{table}[h]
 	\centering
 	\footnotesize
