@@ -3,25 +3,25 @@ text data as vectors, are used as input in natural language
 processing tasks. It has been found that word embeddings
 exhibit biases such as gender bias, which
 are present in their training
-corpora \citep{bolukbasi2016man,
+corpora \shortcite{bolukbasi2016man,
 caliskan2017semantics,garg2018word}. Contextual word
-embedding models, such as BERT \citep{devlin2018bert}, have
+embedding models, such as BERT \shortcite{devlin2018bert}, have
 become increasingly common and achieved new state-of-the-art
 results in many NLP tasks. Researchers have also found
 gender bias in contextualized
-embeddings \citep{zhao2019gender,may2019measuring}.
+embeddings \shortcite{zhao2019gender,may2019measuring}.
 
 A common approach for removing gender information in static
 embeddings is to identify a linear gender subspace (e.g., a
 gender direction) and subsequently setting all values on the
 gender direction to 0. Successful approaches rely on simple
 principal component
-analysis \cite{bolukbasi2016man,mu2018all}. \citet{bolukbasi2016man}
+analysis \cite{bolukbasi2016man,mu2018all}. \cite{bolukbasi2016man}
 require pairs of gendered words to compute a direction
-(e.g., ``man''-``woman'') and \citet{mu2018all} rely on
+(e.g., ``man''-``woman'') and \cite{mu2018all} rely on
 computing a PCA of a set of gender words hoping that the
 main variation occurs across gender. We propose to use
-DensRay \citep{dufter2019analytical}: the main advantage is
+DensRay \shortcite{dufter2019analytical}: the main advantage is
 that DensRay only requires two or multiple groups of
 gendered words. In contrast to \cite{bolukbasi2016man}, it
 does not require explicit pairs. Compared
@@ -33,38 +33,14 @@ In summary our contributions are: i) We adjust DensRay to
  work on contextualized embeddings.  We apply DensRay to
  every BERT layer and evaluate two tasks: a set of templates
  we constructed and the Word Embedding Association Test
- (WEAT) \citep{caliskan2017semantics}. Our experiments find
+ (WEAT) \shortcite{caliskan2017semantics}. Our experiments find
  that debiasing with DensRay effectively mitigates gender
  bias and performs on par with prior approaches. ii) We
  show that DensRay is more robust and interpretable than
  prior approaches.  iii) We investigate whether debiased
  models maintain the performance of BERT on language
- modeling and  GLUE  \citep{wang2018glue}. iv) We
+ modeling and  GLUE  \shortcite{wang2018glue}. iv) We
  apply our debiasing method to the multilingual-BERT (mBERT)
  model: we show that English training data can be used to
  effectively debias Chinese.
 
-\enote{pd}{
-I would suggest a different structure for the paper: 
-Introduction
-Methods
-	Hard Debiasing
-	DensRay (potentially add the robustness figure here)
-	Debiasing Contextualized Embeddings
-Experiments
-	Setup and Data
-	Evaluation
-		Templates
-		WEAT
-		GLUE
-Results
-	Debiasing Results (OCCTMP, WEAT)
-	Model Performance
-	Examples
-	Analyses (Layer, Attention Heads, Requried samples)
-	Multilingual Debiasing
-Related Work
-Conclusion
-}
-
-\enote{hs}{i like this proposed structure!}

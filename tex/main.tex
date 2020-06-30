@@ -1,23 +1,35 @@
 %
-% File emnlp2020.tex
+% File coling2020.tex
 %
-%% Based on the style files for ACL 2020, which were
-%% Based on the style files for ACL 2018, NAACL 2018/19, which were
-%% Based on the style files for ACL-2015, with some improvements
-%%  taken from the NAACL-2016 style
+% Contact: feiliu@cs.ucf.edu & liang.huang.sh@gmail.com
+%% Based on the style files for COLING-2018, which were, in turn,
+%% Based on the style files for COLING-2016, which were, in turn,
+%% Based on the style files for COLING-2014, which were, in turn,
 %% Based on the style files for ACL-2014, which were, in turn,
-%% based on ACL-2013, ACL-2012, ACL-2011, ACL-2010, ACL-IJCNLP-2009,
-%% EACL-2009, IJCNLP-2008...
+%% Based on the style files for ACL-2013, which were, in turn,
+%% Based on the style files for ACL-2012, which were, in turn,
+%% based on the style files for ACL-2011, which were, in turn, 
+%% based on the style files for ACL-2010, which were, in turn, 
+%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
+%% based on the style files for EACL-2009 and IJCNLP-2008...
+
 %% Based on the style files for EACL 2006 by 
 %%e.agirre@ehu.es or Sergi.Balari@uab.es
 %% and that of ACL 08 by Joakim Nivre and Noah Smith
 
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt]{article}
+\usepackage{coling2020}
 
 \usepackage{CJKutf8}
 \def\yin#1{\begin{CJK*}{UTF8}{gbsn}#1\end{CJK*}}
 
-\usepackage[hyperref]{emnlp2020}
+
+\usepackage{times}
+\usepackage{url}
+\usepackage{latexsym}
+\usepackage{CJKutf8}
+
+
 \usepackage{times}
 \usepackage{latexsym}
 \renewcommand{\UrlFont}{\ttfamily\small}
@@ -94,12 +106,14 @@
 \newcommand{\pluseq}{\mathrel{+}=}
 
 
-% END custom header
+%\setlength\titlebox{5cm}
+%\colingfinalcopy % Uncomment this line for the final submission
 
-\newcommand\BibTeX{B\textsc{ib}\TeX}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
 
-%\title{Reducing Gender Bias in Contextualized Representations\\
-%	 Using DensRay}
 
 \title{Monolingual and Multilingual Reduction of Gender Bias in Contextualized Representations}
 
@@ -107,130 +121,114 @@
   Affiliation / Address line 1 \\
   Affiliation / Address line 2 \\
   Affiliation / Address line 3 \\
-  \texttt{email@domain} \\\And
+  {\tt email@domain} \\\And
   Second Author \\
   Affiliation / Address line 1 \\
   Affiliation / Address line 2 \\
   Affiliation / Address line 3 \\
-  \texttt{email@domain} \\}
+  {\tt email@domain} \\}
 
 \date{}
-\hypersetup{draft}
+
 \begin{document}
 \maketitle
-
 \begin{abstract}
-
-Pretrained language models (PLMs) learn 
-stereotypes
-held by humans and reflected in text
-from their training corpora,
-including gender bias.  When PLMs are used for downstream
-tasks such as picking candidates for a job, people's lives
-can be negatively affected by these learned stereotypes.
-Prior work usually identifies a linear gender subspace and
-removes gender information by removing the
-subspace. Following this line of work, we use DensRay, an
-analytical method for obtaining interpretable ultradense
-subspaces. We show that DensRay performs on-par with prior
-approaches, but is more stable. In addition, DensRay can be
-used to obtain interpretable gender scores on token level
-for all representations.  Finally, we demonstrate that we
-can remove bias multilingually, e.g., from Chinese, using
-only English training data.
-
+	
+	Pretrained language models (PLMs) learn 
+	stereotypes
+	held by humans and reflected in text
+	from their training corpora,
+	including gender bias.  When PLMs are used for downstream
+	tasks such as picking candidates for a job, people's lives
+	can be negatively affected by these learned stereotypes.
+	Prior work usually identifies a linear gender subspace and
+	removes gender information by removing the
+	subspace. Following this line of work, we use DensRay, an
+	analytical method for obtaining interpretable ultradense
+	subspaces. We show that DensRay performs on-par with prior
+	approaches, but is more stable. In addition, DensRay can be
+	used to obtain interpretable gender scores on token level
+	for all representations.  Finally, we demonstrate that we
+	can remove bias multilingually, e.g., from Chinese, using
+	only English training data.
+	
 \end{abstract}
 
 \section{Introduction}
 \input{introduction}
 
-\section{Background}
-\input{relatedwork}
-
 \section{Methodology}
 \input{method}
 
-\section{Quantifying Gender Bias with DensRay}
-DensRay can be used to quantify gender bias for any sentence
-and token. Here we use the distance to the zero point of the
-gender subspace as the measurement. \tabref{t:measure1}
-compares DensRay with the log probability score
-\citep{kurita2019measuring}, which quantifies gender bias
-using the format ``[TARGET] is a [ATTRIBUTE]''. We use the
-bias score of [CLS] as aggregation of the sentence. These examples show that DensRay is more versatile:
-it can measure the bias on each token.
-
-\enote{pd}{why can't we do the same with hard-debiasing?}
-
-\enote{hs}{you probably have to help the reader recall what
-  the log score was and that it can only be applied to an
-  entire sentence, not to an indivdual token?}
-
-\enote{hs}{what is the advantage of being able to measure
-  bias on each token? you should at least give an example}
-
-\begin{table}[ht]
-	\centering
-	\scriptsize
-	\begin{tabular}{ccccccc}
-		\hline
-\multicolumn{6}{c|}{DensRay}&log score\\		
-\hline
-%[CLS] &he &is &a& nurse &.&\\
-%-1.55 &-4.9  &-0.26  &0.39  &2.26  &0.28& -3.76\\
-%\hline
-%[CLS] &he &is &a& nurse &.&\\
-%0.34 &2.68 &1.51 &1.72 &1.67 &0.37 &1.68\\
-%\hline
-%[CLS] &he &is &a& doctor &.&\\
-%-1.35 &-4.7 & -0.58 &-0.72 & 0.33 &-0.09 &0.10\\
-%\hline
-%[CLS] &she &is &a& doctor &.&\\
-%0.44 &3.12 &1.58 &1.58& 0.95& 0.06 &0.36\\
-%\hline
-%[CLS] &he &is &a& professor &.&\\
-%-1.94 &-5.23 &-1.45& -1.54 &-0.13& -0.00&0.41\\
-%\hline
-%[CLS] &she &is &a& professor &.&\\
-%0.30 & 3.13 &1.59& 1.04 &0.79& 0.28  &0.23\\
-[CLS] &[MASK] &is &a& professor &.&\\
--0.79 &-0.69 &-0.97 &-0.9  &-0.15  &0.45&0.64\\
-\hline
-[CLS] &[MASK] &is &a& doctor &.&\\
--0.64 &-0.04 &-0.11 &-0.12  &0.31  &0.29 &-0.26\\
-\hline
-[CLS] &[MASK] &is &a& nurse &.&\\
--0.13  &2.43  &1.34  &1.7   &1.93  &0.5 &-5.44\\
-\hline
-[CLS] &The &professor &asked &.&&\\
--0.79 &-2.12 &-0.64 & 0.03&  0.52&&-\\
-
-		\hline
-	\end{tabular}
-	\caption{\tablabel{t:measure1}
-		Examples for quantifying bias on bert-based. One can see that ``doctor'' and ``nurse'' have higher scores and thus potentially a female association. In the bottom sentence no pronoun is existing, but one can see that ``professor'' has a male association.}
-\end{table}
-
-\section{DensRay Debiasing Experiments on BERT Layers}
+\section{Experiments}
 \input{exp}
 
-\section{DensRay Debiasing multilingual-BERT}
-\input{multi}
+\section{Results}
+\input{results}
 
+%\section{DensRay Debiasing multilingual-BERT}
+%\input{multi}
+
+\section{Related Work}
+\input{relatedwork}
 
 \section{Conclusion}
 \input{conclusion}
 
 
-%\section*{Acknowledgments}
-%
-%The acknowledgments should go immediately before the references. Do not number the acknowledgments %section.
-%Do not include this section when submitting your paper for review.
+%\section*{Acknowledgements}
 
-\bibliographystyle{acl_natbib}
-\bibliography{anthology,emnlp2020}
+%The acknowledgements should go immediately before the references.  Do
+%not number the acknowledgements section. Do not include this section
+%when submitting your paper for review.
 
-%\appendix
-%\section{Appendices}
-%\section{Supplemental Material}
+% include your own bib file like this:
+\bibliographystyle{coling}
+\bibliography{coling2020}
+
+%\begin{thebibliography}{}
+
+%\bibitem[\protect\citename{Aho and Ullman}1972]{Aho:72}
+%Alfred~V. Aho and Jeffrey~D. Ullman.
+%\newblock 1972.
+%\newblock {\em The Theory of Parsing, Translation and Compiling}, volume~1.
+%\newblock Prentice-{Hall}, Englewood Cliffs, NJ.
+
+%\bibitem[\protect\citename{{American Psychological Association}}1983]{APA:83}
+%{American Psychological Association}.
+%\newblock 1983.
+%\newblock {\em Publications Manual}.
+%\newblock American Psychological Association, Washington, DC.
+
+%\bibitem[\protect\citename{{Association for Computing Machinery}}1983]{ACM:83}
+%{Association for Computing Machinery}.
+%\newblock 1983.
+%\newblock {\em Computing Reviews}, 24(11):503--512.
+
+%\bibitem[\protect\citename{Chandra \bgroup et al.\egroup }1981]{Chandra:81}
+%Ashok~K. Chandra, Dexter~C. Kozen, and Larry~J. Stockmeyer.
+%\newblock 1981.
+%\newblock Alternation.
+%\newblock {\em Journal of the Association for Computing Machinery},
+%  28(1):114--133.
+
+%\bibitem[\protect\citename{Gusfield}1997]{Gusfield:97}
+%Dan Gusfield.
+%\newblock 1997.
+%\newblock {\em Algorithms on Strings, Trees and Sequences}.
+%\newblock Cambridge University Press, Cambridge, UK.
+
+%\bibitem[\protect\citename{Rasooli and Tetreault}2015]{rasooli-tetrault-2015}
+%Mohammad~Sadegh Rasooli and Joel~R. Tetreault. 2015.
+%\newblock {Yara parser: {A} fast and accurate dependency parser}.
+%\newblock \emph{Computing Research Repository}, arXiv:1503.06733.
+%\newblock Version 2.
+
+%\bibitem[\protect\citename{Borschinger and Johnson}2011]{borsch2011}
+%Benjamin Borschinger and Mark Johnson. 2011.
+%\newblock A particle filter algorithm for {B}ayesian wordsegmentation.
+%\newblock In \emph{Proceedings of the Australasian Language Technology Association %Workshop 2011}, pages 10--18, Canberra, Australia.
+
+%\end{thebibliography}
+
 \end{document}
