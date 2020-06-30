@@ -64,6 +64,11 @@ DensRay separates the gendered words into two gender groups to produce a meaning
 	\figlabel{fig:example}
 \end{figure}
 
+\subsection{Removing Gender Information}
+
+All prior methods yield a gender dimension $q \in R^d$. In a contextualized language model like BERT each layer yields a contextualized embedding matrix $X \in R^{t \times d}$ where $t$ is the length of the sentence. To debias representations we simply zero out the projected values on $q$ for each position, that is we set $X^{\text{debiased}}_i = X_i -  (X_i^\intercal q) q$ for each position $i$.
+
+
 \subsection{Adapting DensRay to Contextualized Language Models}
 We now describe how we adapt DensRay to contextualized
 language models. Given a set of gendered words
