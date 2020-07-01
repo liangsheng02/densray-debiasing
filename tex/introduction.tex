@@ -1,15 +1,13 @@
 Word embeddings, which represent the semantic meaning of
 text data as vectors, are used as input in natural language
 processing tasks. It has been found that word embeddings
-exhibit biases such as gender bias, which
-are present in their training
-corpora \shortcite{bolukbasi2016man,
-caliskan2017semantics,garg2018word}. Contextual word
-embedding models, such as BERT \shortcite{devlin2018bert}, have
+exhibit biases such as gender bias, which are present in their training
+corpora \cite{bolukbasi2016man,caliskan2017semantics,garg2018word}. Contextual word
+embedding models, such as BERT \cite{devlin2018bert}, have
 become increasingly common and achieved new state-of-the-art
 results in many NLP tasks. Researchers have also found
 gender bias in contextualized
-embeddings \shortcite{zhao2019gender,may2019measuring}.
+embeddings ~\cite{zhao2019gender,may2019measuring}.
 
 A common approach for removing gender information in static
 embeddings is to identify a linear gender subspace (e.g., a
@@ -21,7 +19,7 @@ require pairs of gendered words to compute a direction
 (e.g., ``man''-``woman'') and \cite{mu2018all} rely on
 computing a PCA of a set of gender words hoping that the
 main variation occurs across gender. We propose to use
-DensRay \shortcite{dufter2019analytical}: the main advantage is
+DensRay \cite{dufter2019analytical}: the main advantage is
 that DensRay only requires two or multiple groups of
 gendered words. In contrast to \cite{bolukbasi2016man}, it
 does not require explicit pairs. Compared

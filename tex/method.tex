@@ -1,5 +1,5 @@
 \subsection{Debiasing Conceptor}
-In this paper we will compare our work with the debiasing conceptor \cite{karve2019conceptor}. Given a set of gendered words $V:=\{v_1,v_2,\dots,v_n\}$ and their embeddings $E \in R^{n\times d}$, gender bias can be mitigated by multiplying the debiasing conceptor matrix$\neg C= I-C$, where $C$ is the conceptor matrix that minimizes the objective
+In this paper, we will compare our work with the debiasing conceptor \cite{karve2019conceptor}. Given a set of gendered words $V:=\{v_1,v_2,\dots,v_n\}$ and their embeddings $E \in R^{n\times d}$, gender bias can be mitigated by multiplying the debiasing conceptor matrix$\neg C= I-C$, where $C$ is the conceptor matrix that minimizes the objective
 \begin{eqnarray}
 ||E-CE||^2_F+\alpha^{-2}||E||^2_F
 \end{eqnarray}
@@ -9,7 +9,7 @@ C=\frac{1}{n}EE^T(\frac{1}{n}EE^T+\alpha^{-2}I)^{-1}
 \end{eqnarray}
 Intuitively, C is a soft projection matrix on the linear subspace where the word embeddings have the maximum bias.
 \subsection{Hard Debasing}
-We will also compare with the hard debiasing method proposed by \cite{mu2018all}, which is originally a postprocessing technique for improving word representations. \cite{karve2019conceptor} adopted it as a straightforward debiasing method. Hard debiasing relies upon the assumption that the first principal component of the considered vectors is a meaningful gender direction. The implementation is very simply, it uses PCA to get the first principal component from the embeddings of gendered words set, and then completely project it off.
+We will also compare the hard debiasing method proposed by \cite{mu2018all}, which is originally a postprocessing technique for improving word representations. \cite{karve2019conceptor} adopted it as a straightforward debiasing method. Hard debiasing relies upon assuming that the first principal component of the considered vectors is a meaningful gender direction. This simple debiasing method uses PCA to obtain the first principal component from the embeddings of gendered words, and project it off.
 
 \subsection{DensRay}
 DensRay is an analytical method for identifying the
@@ -45,15 +45,15 @@ and $q^Tq=1$ since $Q$ is orthogonal. $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hy
 \eqlabel{eq:densray2}
 \end{eqnarray}
 
-This objective is maximizing the Rayleigh quotient of $A$ and $q$. Since $A$ is symmetric, we can get an analytical solution $q$ by the eigenvector with the max eigenvalue of $A$ \shortcite{horn1990matrix}. Thus the matrix of $k$ eigenvectors of $A$ ordered by the corresponding eigenvalues yields the matrix $Q$.
+This objective is maximizing the Rayleigh quotient of $A$ and $q$. Since $A$ is symmetric, we can get an analytical solution $q$ by the eigenvector with the max eigenvalue of $A$ \cite{horn1990matrix}. Thus the matrix of $k$ eigenvectors of $A$ ordered by the corresponding eigenvalues yields the matrix $Q$.
 \subsection{Removing Gender Information}
 
 All prior methods yield a gender dimension $q \in R^d$. In a contextualized language model like BERT each layer yields a contextualized embedding matrix $X \in R^{t \times d}$ where $t$ is the length of the sentence. To debias representations we simply zero out the projected values on $q$ for each position, that is we set $X^{\text{debiased}}_i = X_i -  (X_i^\intercal q) q$ for each position $i$.
 
 \seclabel{artexample}
- \figref{fig:example} shows artificially created two dimensional embeddings. The lines show the gender directions identified by hard debiasing, debiasing conceptor and DensRay. 
-
-DensRay separates the gendered words into two gender groups to produce a meaningful gender direction by objective \eqref{eq:densray2}, while debiasing conceptor and hard debiasing compute the subspace with the whole gendered words set. Theoretically they may fail to identified the correct gender direction in some cases. 
+ \figref{fig:example} shows artificially created two dimensional embeddings. The lines show the gender directions identified by hard debiasing, debiasing conceptor, and DensRay. 
+ 
+ DensRay separates the gendered words into two gender groups to produce a meaningful gender direction by objective \eqref{eq:densray2}, while debiasing conceptor and hard debiasing compute the subspace with the whole gendered words set. Theoretically, they may fail to identify the correct gender direction in some cases. 
 
 
 
@@ -77,7 +77,5 @@ and compute the contextualized representations $e^m, 1\leq m
 \leq M$ of $t_j$, one for each layer. 
 We compute an orthogonal rotation
 matrix $Q_m$ for the $m$th BERT layer using \eqref{eq:densray2}.
-For debiasing, we set the dimensions
-of the gender subspace to $0$ with the goal of eliminating or at least reducing gender
-information that may cause bias. In this paper, we take the first dimension of the rotated space as the gender subspace.
+For debiasing, we set the gender subspace dimensions to $0$ to eliminate or at least reduce gender information that may cause bias. In this paper, we take the first dimension of the rotated space as the gender subspace.
 
