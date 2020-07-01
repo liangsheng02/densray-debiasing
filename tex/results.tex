@@ -9,19 +9,19 @@ third (e.g., for bert-base from 0.47 to 0.11). The table indicates that the debi
 \begin{table}[ht]
 \centering
 \footnotesize
-\begin{tabular}{lcccc}
+\begin{tabular}{lccccc}
 \hline
-model & prob(he) & prob(she) & diff & var\\
+model & prob(he) & prob(she) & prob(he)+prob(she)&diff & var\\
 \hline
-bert-base & 0.66 & 0.19 & 0.47 &0.16\\
-bert-base-hard & 0.35 & 0.42 & \textbf{-0.07}  &0.03\\
-bert-base-conceptor & 0.18 & 0.11 & 0.08 & 0.01\\
-bert-base-densray & 0.48 & 0.37 & {0.11} &0.02\\
+bert-base & 0.66 & 0.19 & 0.85 &1.57&2.86\\
+bert-base-hard & 0.35 & 0.42 & 0.77&-0.15&0.25\\
+bert-base-conceptor & 0.18 & 0.11 & 0.28 & 0.61&0.36\\
+bert-base-densray & 0.48 & 0.37 & 0.86&0.28&0.12\\
 \hline
-bert-large  & 0.63 & 0.19 & 0.44  &0.13\\
-bert-large-hard & 0.40 & 0.23 & 0.17  &0.02\\
-bert-large-conceptor & 0.43 & 0.18 & 0.25 & 0.04\\
-bert-large-densray  & 0.47 & 0.31 & \textbf{0.16} &0.02 \\
+bert-large  & 0.63 & 0.19 & 0.82  &1.46&2.46\\
+bert-large-hard & 0.40 & 0.23 & 0.63&0.64&0.36\\
+bert-large-conceptor & 0.43 & 0.18 & 0.61 & 0.97&0.64\\
+bert-large-densray  & 0.47 & 0.31 & 0.77&0.48&0.15 \\
 \hline
 \end{tabular}
 \caption{\tablabel{t:templates1} BERT debiasing results on
