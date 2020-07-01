@@ -55,7 +55,27 @@ and $q^Tq=1$ since $Q$ is orthogonal. $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hy
 \eqlabel{eq:densray2}
 \end{eqnarray}
 
-This objective is maximizing the Rayleigh quotient of $A$ and $q$. Since $A$ is symmetric, we can get an analytical solution $q$ by the eigenvector with the max eigenvalue of $A$ \cite{horn1990matrix}. Thus the matrix of $k$ eigenvectors of $A$ ordered by the corresponding eigenvalues yields the matrix $Q$.
+This objective is maximizing the Rayleigh quotient of $A$ and $q$. With Lagrange multiplier $\lambda$, subject to the constraint $q^{T}q=1$, it's equivalent to to find the critical points of
+\begin{eqnarray}
+\mathcal{L}(q)=q^{T}Aq-\lambda(q^{T}q-1)
+\end{eqnarray}
+Since the stationary points of $\mathcal{L}(q)$ occur at
+\begin{eqnarray}
+\frac{d\mathcal{L}(q)}{dq}=0 \Rightarrow Aq=\lambda q
+\end{eqnarray}
+
+
+In matrix form, subject to the constraint $Q^{T}Q=I$, it's equivalent to  
+\begin{eqnarray}
+\max\limits_{Q} \space tr(Q^{T}AQ)
+\end{eqnarray}
+With Lagrange multiplier $\lambda$, we get 
+\begin{eqnarray}
+AQ=\lambda Q
+\end{eqnarray}
+
+Since $A$ is symmetric, we can get an analytical solution $q$ by the eigenvector with the max eigenvalue of $A$ \cite{horn1990matrix}. 
+Thus the matrix of $k$ eigenvectors of $A$ ordered by the corresponding eigenvalues yields the matrix $Q$.
 \subsection{Removing Gender Information}
 
 All prior methods yield a gender dimension $q \in R^d$. In a contextualized language model like BERT each layer yields a contextualized embedding matrix $X \in R^{t \times d}$ where $t$ is the length of the sentence. To debias representations we simply zero out the projected values on $q$ for each position, that is we set $X^{\text{debiased}}_i = X_i -  (X_i^\intercal q) q$ for each position $i$.
