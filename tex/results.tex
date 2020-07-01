@@ -249,19 +249,19 @@ Since Chinese is a language that does not mark gender, we can construct the OCCT
 \begin{table}[h]
 	\centering
 	\footnotesize
-	\begin{tabular}{llcc}
+	\begin{tabular}{llcccc}
 		\hline
-		sentence & model & \yin{prob(他)} & \yin{prob(她)}\\
+		sentence & model & \yin{prob(他)} & \yin{prob(她)}&sum&diff\\
 		\hline
-		\yin{\text{[MASK]}是一个客座教授。} & bert-multi-en & 0.68 & 0.16\\
-		\text{[MASK]} is an adjunct professor.& bert-multi-densray-en & 0.51 & 0.18\\
-		& bert-multi-cn & 0.52 & 0.11\\
-		& bert-multi-densray-cn & 0.30 & 0.08\\
+		\yin{\text{[MASK]}是一个客座教授。} & bert-multi-en & 0.68 & 0.16&0.84&1.45\\
+		\text{[MASK]} is an adjunct professor.& bert-multi-densray-en & 0.51 & 0.18&0.70&1.04\\
+		& bert-multi-cn & 0.52 & 0.11&0.63&1.55\\
+		& bert-multi-densray-cn & 0.30 & 0.08&0.38&1.31\\
 		\hline
-		\yin{\text{[MASK]}是一个管理员。} & bert-multi-en & 0.53 & 0.17\\
-		\text{[MASK]}is an administrator.& bert-multi-densray-en & 0.35 & 0.13\\
-		& bert-multi-cn & 0.68 & 0.16\\
-		& bert-multi-densray-cn & 0.51 & 0.18\\
+		\yin{\text{[MASK]}是一个管理员。} & bert-multi-en & 0.53 & 0.17&0.70&1.14\\
+		\text{[MASK]}is an administrator.& bert-multi-densray-en & 0.35 & 0.13&0.48&0.99\\
+		& bert-multi-cn & 0.68 & 0.16&0.84&1.45\\
+		& bert-multi-densray-cn & 0.51 & 0.18&0.69&1.04\\
 		\hline
 	\end{tabular}
 	\caption{\label{t:templates3}
