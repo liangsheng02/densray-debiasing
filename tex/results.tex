@@ -20,7 +20,7 @@ bert-base-densray & 0.48 & 0.37 & {0.11} &0.02\\
 \hline
 bert-large  & 0.63 & 0.19 & 0.44  &0.13\\
 bert-large-hard & 0.40 & 0.23 & 0.17  &0.02\\
-bert-large-conceptor & 0.05 & 0.03 & 0.02 & 0.00\\
+bert-large-conceptor & 0.43 & 0.18 & 0.25 & 0.04\\
 bert-large-densray  & 0.47 & 0.31 & {0.16} &0.02 \\
 \hline
 \end{tabular}
@@ -36,63 +36,88 @@ bert-large-densray  & 0.47 & 0.31 & {0.16} &0.02 \\
 \tabref{t:weat1} shows the results on association tests. The debiasing performance of the three methods are comparable.
 
 \begin{table}[h]
-\centering
-\footnotesize
-\begin{tabular}{clcccc}
-\hline
-&&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c}{SEAT}\\
-\hline
-category & model & d & p& d & p\\
-\hline
-C6 & bert-base & 0.66 & 0.08 &1.04&$<$10$^{-2*}$\\
-& bert-base-hard & 0.15 & 0.38&-0.08&0.67\\
-& bert-base-conceptor & 0.07 & 0.46&0.77&$<$10$^{-2*}$\\
-&bert-base-densray & 0.62 & 0.12&0.36&0.02$^{*}$\\
-\hline
-C7 & bert-base & 0.60 & 0.11 &0.17&0.15\\
-& bert-base-hard & -0.07 & 0.56&-0.06&0.64\\
-& bert-base-conceptor & 0.54 & 0.14&-0.25&0.93\\
-& bert-base-densray & 0.09 & 0.45&-0.47&0.99\\
-\hline
-C8& bert-base & 0.78 & 0.08 &0.81&$<$10$^{-2*}$\\
-& bert-base-hard & -0.29 & 0.68&-0.10&0.71\\
-& bert-base-conceptor & 0.62 & 0.14&0.50&$<$10$^{-2*}$\\
-& bert-base-densray & 0.03 & 0.47&0.41&0.01$^{*}$\\
-%& bert-large & -0.60 & 0.87  \\
-%& bert-large-Mu & 0.78 & 0.06\\
-%& bert-large-densray & 0.20 & 0.33\\
+	\centering
+	\footnotesize
+	\begin{tabular}{clcccc}
+		\hline
+		&&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c}{SEAT}\\
+		\hline
+		category & model & d & p& d & p\\
+		\hline
+		C6 & bert-base & 0.66 & 0.08 &1.04&$<$10$^{-2*}$\\
+		& bert-base-hard & 0.15 & 0.38&-0.08&0.67\\
+		& bert-base-conceptor & 0.07 & 0.46&0.77&$<$10$^{-2*}$\\
+		&bert-base-densray & 0.62 & 0.12&0.36&0.02$^{*}$\\
+		\hline
+		C7 & bert-base & 0.60 & 0.11 &0.17&0.15\\
+		& bert-base-hard & -0.07 & 0.56&-0.06&0.64\\
+		& bert-base-conceptor & 0.54 & 0.14&-0.25&0.93\\
+		& bert-base-densray & 0.09 & 0.45&-0.47&0.99\\
+		\hline
+		C8& bert-base & 0.78 & 0.08 &0.81&$<$10$^{-2*}$\\
+		& bert-base-hard & -0.29 & 0.68&-0.10&0.71\\
+		& bert-base-conceptor & 0.62 & 0.14&0.50&$<$10$^{-2*}$\\
+		& bert-base-densray & 0.03 & 0.47&0.41&0.01$^{*}$\\
+		\hline
+	\end{tabular}
+	\caption{\tablabel{t:weat1}
+		BERT debiasing results on WEAT. * shows significant gender bias.}
+\end{table}
 
-\hline
-\end{tabular}
-\caption{\tablabel{t:weat1}
-BERT debiasing results on WEAT. * shows significant gender bias.}
+\begin{table}[h]
+	\centering
+	\footnotesize
+	\begin{tabular}{clcccc}
+		\hline
+		&&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c}{SEAT}\\
+		\hline
+		category & model & d & p& d & p\\
+		\hline
+		C6 & bert-large & 1.5705 & $<$10$^{-2*}$ &0.50&$<$10$^{-2*}$\\
+		& bert-large-hard & 0.80 & 0.06&0.07&0.35\\
+		& bert-large-conceptor & 1.33 & $<$10$^{-2*}$&0.06&0.37\\
+		&bert-large-densray & 0.76 & 0.07&0.13&0.22\\
+		\hline
+		C7 & bert-large & -0.40 & 0.75 &0.38&0.01$^{*}$\\
+		& bert-large-hard & -0.51 & 0.83&0.38&0.01$^{*}$\\
+		& bert-large-conceptor & -0.32 & 0.73&-0.60&0.99\\
+		& bert-large-densray & 0.06 & 0.04&-0.73&0.99\\
+		\hline
+		C8& bert-large & -0.60 & 0.87 &-0.30&0.95\\
+		& bert-large-hard & 0.78 & 0.06&-0.03&0.56\\
+		& bert-large-conceptor & 0.12 & 0.39&0.30&0.94\\
+		& bert-large-densray & 0.20 & 0.33&-0.66&0.99\\
+		\hline
+	\end{tabular}
+	\caption{\tablabel{t:weat2}
+		BERT debiasing results on WEAT. * shows significant gender bias.}
 \end{table}
 
 \subsection{Model Performance}
 \tabref{t:glue1} shows that DensRay debiasing gets comparable results with
 the original models on Wikitext-2 and GLUE tasks. In most tasks on bert-base and all tasks on bert-large, DensRay performs better than hard debiasing, so DensRay affects model performance less.
-\begin{table*}[h]
-\centering
-\footnotesize
-\begin{tabular}{lcccccccccc}
-\hline
-model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI\\
-\hline
-bert-base &3.77&49.15&92.09&85.86&82.66&62.82&52.11\\
-bert-base-hard &3.95&45.53&91.74&82.48&82.60&63.54&56.34\\
-bert-base-conceptor &4.46&48.31&91.43&84.08&81.37&59.57&56.34\\
-bert-base-densray &3.81&48.04&91.74&84.89&82.43&63.90&53.52\\
-\hline
-bert-large &3.29& 47.93&94.90&89.30&87.60&70.10&65.10\\
-bert-large-hard &3.85& 47.45&93.95&85.01&82.33&67.12&63.02\\
-bert-large-conceptor &4.13&49.44&93.87&87.67&83.44&62.45&56.34\\
-bert-large-densray &3.35& 48.91&94.02&88.84&85.63&67.78&64.48\\
-\hline
-\end{tabular}
-\caption{\tablabel{t:glue1}
-Language modelling perplexity and GLUE tasks
-performance. }
-\end{table*}
+\begin{table}[h]
+	\centering
+	\footnotesize
+	\begin{tabular}{lcccccccccc}
+		\hline
+		model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI\\
+		\hline
+		bert-base &3.77&49.15&92.09&85.86&82.66&62.82&52.11\\
+		bert-base-hard &3.95&45.53&91.74&82.48&82.60&63.54&56.34\\
+		bert-base-conceptor &4.46&48.31&91.43&84.08&81.37&59.57&56.34\\
+		bert-base-densray &3.81&48.04&91.74&84.89&82.43&63.90&53.52\\
+		\hline
+		bert-large &3.29& 47.93&94.90&89.30&87.60&70.10&65.10\\
+		bert-large-hard &3.85& 47.45&93.95&85.01&82.33&67.12&63.02\\
+		bert-large-conceptor &4.13&49.44&93.87&87.67&83.44&62.45&56.34\\
+		bert-large-densray &3.35& 48.91&94.02&88.84&85.63&67.78&64.48\\
+		\hline
+	\end{tabular}
+	\caption{\tablabel{t:glue1}
+		Language modelling perplexity and GLUE tasks
+		performance. }
+\end{table}
 
 \subsection{Examples}
 In \tabref{t:templates2} we show two OCCTMP examples. In the first sentence, hard debiasing reverses male bias and creates female bias. The sum probabilities of "he" and "she" on the debiasing conceptor are around 0.5, indicates that the pronoun is not likely to occur in the masked position.
@@ -121,28 +146,33 @@ In \tabref{t:templates2} we show two OCCTMP examples. In the first sentence, har
 
 \subsection{Analyses}
 
-\subsubsection{Debiasing on Attention Heads}
+\subsubsection{Debiasing on Attention Heads and Layers}
 We now apply DensRay to the attention heads in BERT to debias on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [0.4,0.5]. Due to the lack of dimensions and the distribution of gender features in the attention heads, we chose to apply DensRay on layers as a debiasing method. We conclude that there is no single attention head that is responsible for processing gender information.
+
+So far we have also applied DensRay to all BERT layers simultaneously.\figref{fig:layersbase}  illustrates the effect of
+debiasing a single  layer on our templates and the three
+WEAT categories. We see that the debiasing effect is stronger in layers 7--10 than in the other layers in bert-base model. It is shown that gender information is extracted and processed on BERT layers, especially the upper layers. 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\linewidth]{heatmap_heads}
-	\caption{DensRay debiasing on each single attention head in BERT base, measured by \text{diff} on OCCTMP.}
-	\figlabel{fig:heads}
+	\subfigure[attention heads]{
+		\begin{minipage}[l]{0.5\linewidth}
+			\centering
+			\includegraphics[width=0.75\linewidth]{heads}
+			\figlabel{fig:heads}
+		\end{minipage}%
+	}%
+	\subfigure[layers]{
+		\begin{minipage}[r]{0.5\linewidth}
+			\centering
+			\includegraphics[width=0.75\linewidth]{layers_grid}
+			\figlabel{fig:layersbase}
+		\end{minipage}%
+	}%
+	\centering
+	\caption{(a): DensRay debiasing on each single attention head in bert-base, measured by \text{diff} on OCCTMP. (b): DensRay debiasing on each single layer, bias is measured by \text{diff} on  OCCTMP and $d$-value on WEAT.}
+	\figlabel{fig:headsandlayers}
 \end{figure}
 
-\subsubsection{Debiasing across different layers}
-So far we have applied DensRay to all BERT layers simultaneously.
-  \figref{fig:layersbase}  illustrates the effect of
- debiasing a single  layer on our templates and the three
- WEAT categories. We see that the debiasing effect
-is stronger in
-layers 7--10  than in the other layers in BERT base.
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.5\linewidth]{layers_base}
-	\caption{Debiasing on each single layer on BERT base. Bias is measured by \text{diff} on the templates and $d$-value on WEAT categories.}
-	\figlabel{fig:layersbase}
-\end{figure}
 \subsubsection{Quantifying Gender Bias with DensRay}
 \seclabel{quantify}
 DensRay can be used to quantify gender bias for sentences and tokens. We use the distance to the origin of the gender subspace as the measurement. In BERT, we use the average bias score of tokens to quantify the whole sentence. \tabref{t:measure1} compared DensRay with the log probability score \cite{kurita2019measuring}, which can quantify gender bias on specific templates '[TARGET] is a [ATTRIBUTE].' we regard zero as a balance point without bias. Contrary to the log probability score, a positive DensRay score represents the level of female bias. These examples show that DensRay is more versatile, it can quantify the bias both token and sentence level.
@@ -167,7 +197,7 @@ DensRay can be used to quantify gender bias for sentences and tokens. We use the
 		\hline
 	\end{tabular}
 	\caption{\tablabel{t:measure1}
-		Examples for quantifying bias on bert-based.}
+		Examples for quantifying bias on bert-base model.}
 \end{table}
 
 
@@ -178,13 +208,12 @@ In the experiments, we collected training samples for DensRay by considering occ
 As a projection-based debiasing method, the premise of DensRay debiasing is that the gender direction should be correct. Unbalanced samples will lead to incorrect gender direction biased towards either the male or the female, resulting in reversing the gender bias during debiasing. For example, if there are more masculine samples, then the embeddings will be biased towards feminine after debiasing. The figure also shows that a balanced training sample improves the debiasing performance.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\linewidth]{samples}
+	\includegraphics[width=0.5\linewidth]{samples_grid}
 	\caption{DensRay debiasing results on OCCTMP with different number of samples and unbalanced/balanced data.}
 	\figlabel{curve}
 \end{figure}
 
 \subsubsection{Balancing Gender Bias}
-\enote{pd}{I think this section can be moved to the supplementary material}
 In this experiment, we zero out the dimensions of gender subspace to remove gender bias. Here we explore some other ways.
 
 We explored three other ways to remove bias: 1) replace the first dimension of the gender subspace with the mean value of the first dimension of the training samples. 2) standardize the first dimension. 3) replace the first dimension with a small random variable sampled from Gaussian distribution. All of them did not perform well. We further checked the mean and found that the mean of the different layers is not stable around zero, which is a problem worthy of further exploration. We also tried to delete more dimensions. However removing more dimensions does not improve the debiasing results significantly while harming the model performance.
@@ -205,13 +234,12 @@ Since Chinese is a language that does not mark gender, we can construct the OCCT
 		\hline
 		model & prob(he) & prob(she) & diff & var\\
 		\hline
-		\scriptsize bert-multi-en 
-		& 0.51 & 0.14 & 0.36 & 0.06 \\
-		\scriptsize 
+		 bert-multi-en 
+		& 0.51 & 0.14 & 0.36 & 0.06 \\ 
 		bert-multi-densray-en & 0.33 & 0.12 & 0.21 & 0.03 \\
-		\scriptsize bert-multi-cn 
+		 bert-multi-cn 
 		& 0.24 & 0.07 & 0.17 & 0.02 \\
-		\scriptsize bert-multi-densray-cn 
+		 bert-multi-densray-cn 
 		& 0.12 & 0.04 & 0.08 & 0.01\\
 		\hline
 	\end{tabular}
@@ -238,5 +266,5 @@ Since Chinese is a language that does not mark gender, we can construct the OCCT
 		\hline
 	\end{tabular}
 	\caption{\label{t:templates3}
-		Sanity check on the Chinese templates, where \eat{\textit{他}} means \textit{he} and \eat{\textit{她}} means \textit{she}. Corresponding English translations are shown blow the Chinese.}
+		Sanity check on the Chinese templates, where \yin{\textit{他}} means \textit{he} and \yin{\textit{她}} means \textit{she}. Corresponding English translations are shown blow the Chinese.}
 \end{table}
