@@ -122,7 +122,7 @@ In \tabref{t:templates2} we show two OCCTMP examples. In the first sentence, har
 \subsection{Analyses}
 
 \subsubsection{Debiasing on Attention Heads}
-We now apply DensRay to the attention heads in BERT to debias on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [0.4,0.5]. Due to the lack of dimensions and the distribution of gender features in the attention heads, we chose to apply DensRay on layers as a debiasing method.  We conclude that there is no single attention head that is responsible for processing gender information.
+We now apply DensRay to the attention heads in BERT to debias on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [0.4,0.5]. Due to the lack of dimensions and the distribution of gender features in the attention heads, we chose to apply DensRay on layers as a debiasing method. We conclude that there is no single attention head that is responsible for processing gender information.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\linewidth]{heatmap_heads}

@@ -27,18 +27,10 @@ to \cite{mu2018all}, it has explicit supervision with gender
 labels. We show in \secref{artexample} that
 DensRay is more stable.
 
-In summary our contributions are: i) We adjust DensRay to
- work on contextualized embeddings.  We apply DensRay to
- every BERT layer and evaluate two tasks: a set of templates
- we constructed and the Word Embedding Association Test
- (WEAT) \shortcite{caliskan2017semantics}. Our experiments find
- that debiasing with DensRay effectively mitigates gender
- bias and performs on par with prior approaches. ii) We
- show that DensRay is more robust and interpretable than
- prior approaches.  iii) We investigate whether debiased
- models maintain the performance of BERT on language
- modeling and  GLUE  \shortcite{wang2018glue}. iv) We
- apply our debiasing method to the multilingual-BERT (mBERT)
- model: we show that English training data can be used to
- effectively debias Chinese.
+In summary, our contributions are: 
+i) We adjust DensRay to work on contextualized embeddings.  We apply DensRay to every BERT layer and evaluate two tasks: a set of templates we constructed and the Association Tests. Our experiments find that debiasing with DensRay effectively mitigates gender bias and performs on par with prior approaches. 
+ii). We investigate whether debiased models maintain the performance of BERT on language modeling and GLUE \cite{wang2018glue}: we show that DensRay is more robust and interpretable than prior approaches.
+iii) We explore how gender information is processed in BERT by applying DensRay to BERT attention heads and layers: we conclude that there is no single attention head responsible for processing gender information.
+iv) We show that DensRay can be used to quantify gender bias with interpretable gender scores on token and sentence level for all representations. 
+v) We apply our debiasing method to the multilingual-BERT (mBERT) model: we show that English training data can be used to effectively debias Chinese.
 
