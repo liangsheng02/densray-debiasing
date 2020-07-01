@@ -3,24 +3,34 @@ In this paper, we will compare our work with the debiasing conceptor \cite{karve
 \begin{eqnarray}
 ||E-CE||^2_F+\alpha^{-2}||E||^2_F
 \end{eqnarray}
-where $\alpha^{-2}$ is a scalar parameter. $C$ has an analytical solution
+where $\alpha$ is a parameter. $C$ has an analytical solution
 \begin{eqnarray}
 C=\frac{1}{n}EE^T(\frac{1}{n}EE^T+\alpha^{-2}I)^{-1}
 \end{eqnarray}
 Intuitively, C is a soft projection matrix on the linear subspace where the word embeddings have the maximum bias.
+
 \subsection{Hard Debasing}
-We will also compare the hard debiasing method proposed by \cite{mu2018all}, which is originally a postprocessing technique for improving word representations. \cite{karve2019conceptor} adopted it as a straightforward debiasing method. Hard debiasing relies upon assuming that the first principal component of the considered vectors is a meaningful gender direction. This simple debiasing method uses PCA to obtain the first principal component from the embeddings of gendered words, and project it off.
+We will also compare with the hard debiasing method proposed
+by \newcite{mu2018all}, which is originally a postprocessing
+technique for improving word
+representations. \newcite{karve2019conceptor} adopted it as a
+method for debiasing. Hard debiasing relies upon
+the assumption that the first principal component of the
+embedding vectors is a meaningful gender direction. 
+PCA is used to obtain the first
+principal component from the embeddings of gendered words
+and to project it off.
 
 \subsection{DensRay}
 DensRay is an analytical method for identifying the
 embedding subspace of certain linguistic features. We aim to
-identify the "gender subspace" using a set of gendered words
+identify the ``gender subspace'' using a set of gendered words
 $V:=\{v_1,v_2,\dots,v_n\}$ and their embeddings $E \in
 R^{n\times d}$, thus for word $v_i$ we have the
 corresponding embedding vector $e_{v_i}$. We
 introduce a function $l$ for the gender attribute:
 $l:V\to \{-1,1\}$;
-e.g. $l(father)=1$, $l(sister)=-1$. The objective of DensRay
+e.g. $l(\mbox{father})=1$, $l(\mbox{sister})=-1$. The objective of DensRay
 is to find an orthogonal matrix $Q\in R^{d\times d}$ such
 that $EQ$ is gender-interpretable, specifically, the first
 $k$ dimensions can be interpreted as the gender subspace.
