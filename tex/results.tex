@@ -1,10 +1,10 @@
 
 \subsection{Debiasing Results}
 \tabref{t:templates1} gives results for OCCTMP. Two OCCTMP
-examples are given in \tabref{t:templates2}. It shows that
+examples are given in \tabref{t:templates2}. We see that
 DensRay can mitigate the gender bias in BERT: the average
 difference between predicting he/she drops to around two
-third (e.g., for bert-base from 0.47 to 0.11). It's shown that the debiasing performance of the three methods are comparable. While the probabilities of debiasing conceptor predictions are significantly lower then the other two methods, which indicates that debiasing conceptor will affect the performance of the model.
+third (e.g., for bert-base from 0.47 to 0.11). The table indicates that the debiasing performance of the three methods is comparable. While the probabilities of debiasing conceptor predictions are significantly lower then the other two methods, which indicates that debiasing conceptor will affect the performance of the model.
 
 \begin{table}[ht]
 \centering
@@ -96,28 +96,29 @@ bert-large-densray  & 0.47 & 0.31 & \textbf{0.16} &0.02 \\
 \subsection{Model Performance}
 \tabref{t:glue1} shows that DensRay debiasing gets comparable results with
 the original models on Wikitext-2 and GLUE tasks. In most tasks on bert-base and all tasks on bert-large, DensRay performs better than hard debiasing, so DensRay affects model performance less.
-\begin{table}[h]
-	\centering
-	\footnotesize
-	\begin{tabular}{lcccccccccc}
-		\hline
-		model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI\\
-		\hline
+\begin{table*}[h]
+\centering
+\footnotesize
+\begin{tabular}{l||c|cccccccccc}
+\hline
+model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI&GLUE avg\\
+\hline\hline
 		bert-base &3.77&49.15&92.09&85.86&82.66&62.82&52.11\\
-		bert-base-hard &3.95&45.53&\textbf{91.74}&82.48&\textbf{82.60}&63.54&\textbf{56.34}\\
-		bert-base-conceptor &4.46&\textbf{48.31}&91.43&84.08&81.37&59.57&\textbf{56.34}\\
-		bert-base-densray &\textbf{3.81}&48.04&\textbf{91.74}&\textbf{84.89}&82.43&\textbf{63.90}&53.52\\
-		\hline
-		bert-large &3.29& 47.93&94.90&89.30&87.60&70.10&65.10\\
-		bert-large-hard &3.85& 47.45&93.95&85.01&82.33&67.12&63.02\\
-		bert-large-conceptor &4.13&\textbf{49.44}&93.87&87.67&83.44&62.45&56.34\\
-		bert-large-densray &\textbf{3.35}& 48.91&\textbf{94.02}&\textbf{88.84}&\textbf{85.63}&\textbf{67.78}&\textbf{64.48}\\
-		\hline
-	\end{tabular}
-	\caption{\tablabel{t:glue1}
-		Language modelling perplexity and GLUE tasks
-		performance. }
-\end{table}
+bert-base-hard &3.95&45.53&\textbf{91.74}&82.48&\textbf{82.60}&63.54&\textbf{56.34}\\
+bert-base-conceptor &4.46&\textbf{48.31}&91.43&84.08&81.37&59.57&\textbf{56.34}\\
+bert-base-densray &\textbf{3.81}&48.04&\textbf{91.74}&\textbf{84.89}&82.43&\textbf{63.90}&53.52\\
+\hline
+bert-large &3.29& 47.93&94.90&89.30&87.60&70.10&65.10\\
+bert-large-hard &3.85& 47.45&93.95&85.01&82.33&67.12&63.02\\
+bert-large-conceptor &4.13&\textbf{49.44}&93.87&87.67&83.44&62.45&56.34\\
+bert-large-densray &\textbf{3.35}& 48.91&\textbf{94.02}&\textbf{88.84}&\textbf{85.63}&\textbf{67.78}&\textbf{64.48}\\
+\hline
+\end{tabular}
+\caption{\tablabel{t:glue1}
+Language modelling perplexity and GLUE tasks
+performance. }
+\end{table*}
+
 
 \subsection{Examples}
 In \tabref{t:templates2} we show two OCCTMP examples. In the first sentence, hard debiasing reverses male bias and creates female bias. The sum probabilities of "he" and "she" on the debiasing conceptor are around 0.5, indicates that the pronoun is not likely to occur in the masked position.

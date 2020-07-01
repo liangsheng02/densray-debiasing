@@ -133,16 +133,27 @@
 \maketitle
 \begin{abstract}
 	
-Pretrained language models (PLMs) learn 
-stereotypes
-held by humans and reflected in text
-from their training corpora,
+Pretrained language models (PLMs) learn stereotypes held by
+humans and reflected in text from their training corpora,
 including gender bias.  When PLMs are used for downstream
 tasks such as picking candidates for a job, people's lives
 can be negatively affected by these learned stereotypes.
-Prior work usually identifies a linear gender subspace and removes gender information by eliminating the subspace. Following this line of work, we use DensRay, an analytical method for obtaining interpretable ultradense subspaces. We show that DensRay performs on-par with prior approaches, but is more robust. By applying DensRay to BERT attention heads, we also show that gender information is processed discretely in all attention headers. In addition, DensRay can be used to obtain interpretable gender scores on token and sentence level for all representations.  Finally, we demonstrate that we can remove bias multilingually, e.g., from Chinese, using only English training data.
+Prior work usually identifies a linear gender subspace and
+removes gender information by eliminating the
+subspace. Following this line of work, we use DensRay, an
+analytical method for obtaining interpretable ultradense
+subspaces. We show that DensRay performs on-par with prior
+approaches, but is more robust. By applying DensRay to BERT
+attention heads, we also show that gender information is
+processed discretely in all attention heads. In addition,
+DensRay can be used to obtain interpretable gender scores on
+token and sentence levels for all representations.  Finally,
+we demonstrate that we can remove bias multilingually, e.g.,
+from Chinese, using only English training data.
 	
 \end{abstract}
+
+\enote{hs}{figure 4: legend: *un*balanced}
 
 \section{Introduction}
 \input{introduction}
