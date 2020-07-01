@@ -74,10 +74,9 @@ the original models on Wikitext-2 and GLUE tasks. In most tasks on bert-base and
 \begin{table*}[h]
 \centering
 \footnotesize
-\begin{tabular}{lcccccccccc}
-\hline
-model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI\\
-\hline
+\begin{tabular}{l||c|cccccccccc}
+model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI&GLUE avg\\
+\hline\hline
 bert-base &3.77&49.15&92.09&85.86&82.66&62.82&52.11\\
 bert-base-hard &3.95&45.53&91.74&82.48&82.60&63.54&56.34\\
 bert-base-conceptor &4.46&48.31&91.43&84.08&81.37&59.57&56.34\\
@@ -86,8 +85,7 @@ bert-base-densray &3.81&48.04&91.74&84.89&82.43&63.90&53.52\\
 bert-large &3.29& 47.93&94.90&89.30&87.60&70.10&65.10\\
 bert-large-hard &3.85& 47.45&93.95&85.01&82.33&67.12&63.02\\
 bert-large-conceptor &4.13&49.44&93.87&87.67&83.44&62.45&56.34\\
-bert-large-densray &3.35& 48.91&94.02&88.84&85.63&67.78&64.48\\
-\hline
+bert-large-densray &3.35& 48.91&94.02&88.84&85.63&67.78&64.48
 \end{tabular}
 \caption{\tablabel{t:glue1}
 Language modelling perplexity and GLUE tasks
