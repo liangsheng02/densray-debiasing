@@ -14,8 +14,7 @@ We adapted DensRay to all BERT layers for debiasing. We
 compare with the hard debiasing method \cite{mu2018all} and
 the debiasing conceptor \cite{karve2019conceptor} to
 eliminate gender bias as adapted to contextualized
-embeddings by \cite{karve2019conceptor}. In the experiments,
-we found that hard debiasing adapted to all BERT layers
+embeddings by \cite{karve2019conceptor}. In the experiments, we found that hard debiasing adapted to all BERT layers
 yields better results than only adapted to the contextual
 embeddings. In contrast, when applying debiasing conceptor
 to all layers, language modeling performance (as measured by
@@ -32,10 +31,13 @@ that we created specifically to evaluate contextualized language models.  It has
 
 To construct OCCTMP, we start with 320 occupation names\footnote{https://github.com/tolga-/debiaswe/blob/master/data/professions.json} provided by \newcite{bolukbasi2016man}. Each occupation name is converted into the fromat ``[MASK] is an \textit{occupation}.''
 We measure gender bias in the templates as the average difference between the probability of BERT predicting [MASK] as ``he'' vs.\ ``she''
-\begin{eqnarray}
+%\begin{eqnarray}
+\begin{gather*}
 \text{diff}=\frac{1}{|{\mathcal T}|} \sum_{T \in
-	{\mathcal T}}(p(\mbox{he}| T) - p(\mbox{she}|T))\nonumber
-\end{eqnarray}
+	{\mathcal T}}(log\ p_{max} - log\ p_{min}),\\
+\mbox{where }p_{max}=max\{p(\mbox{he}| T),p(\mbox{she}| T)\} \mbox{; }p_{min}=min\{p(\mbox{he}| T),p(\mbox{she}| T)\}
+\end{gather*}
+%\end{eqnarray}
 where $\mathcal T$ is the set of 320 templates.  We find that for most experiments and templates, the probability of ``he'' is higher than ``she'', which qualitatively indicates that gender bias can be identified using these templates. We also find that in most cases the sum of the two probability is higher than 0.7; thus, this evaluation task is a good fit for BERT because it has learned that a pronoun is likely to occur in the masked position. Our templates can be easily extended to other languages as we later show for Chinese.
 
 \subsubsection{Association Tests}\label{sec:weat}
@@ -53,13 +55,10 @@ $X_1,X_2$ and $A_1,A_2$. In the prior literature, it has
 been argued that if the null hypothesis cannot be rejected,
 there is no significant gender bias.  The WEAT test
 statistic is defined as
-\begin{eqnarray}
-s(X_1,X_2,A_1,A_2)=\sum_{x\in X_1}s(x,A_1,A_2)-\sum_{x\in X_2}s(x,A_1,A_2),\nonumber
-\end{eqnarray}
-where
-\begin{eqnarray}
-s(x,A_1,A_2)=\mbox{mean}_{a\in A_1}cos(\vec{x},\vec{a})-\mbox{mean}_{a\in A_2}cos(\vec{x},\vec{a})\nonumber
-\end{eqnarray}
+\begin{gather*}
+s(X_1,X_2,A_1,A_2)=\sum_{x\in X_1}s(x,A_1,A_2)-\sum_{x\in X_2}s(x,A_1,A_2),\\
+\mbox{where } s(x,A_1,A_2)=\mbox{mean}_{a\in A_1}cos(\vec{x},\vec{a})-\mbox{mean}_{a\in A_2}cos(\vec{x},\vec{a})
+\end{gather*}
 in which $cos(\vec{x},\vec{a})$ denotes the cosine similarity between embedding vector $\vec{x}$ and $\vec{a}$. Intuitively, $s(x,A_1,A_2)$ measures the association of a word with the attributes, so the test statistic measures the differential association of the two target sets with the attributes. 
 
 Let $\{({X_1}_i,{X_2}_i)\}_{i}$ denote all the partitions of $X_1\cup X_2$. The one-sided $p$-value of the permutation test is defined as $$p=Pr_i[s({X_1}_i,{X_2}_i,A_1,A_2)>s(X_1,X_2,A_1,A_2)]$$
