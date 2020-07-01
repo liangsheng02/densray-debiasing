@@ -24,15 +24,13 @@ that DensRay only requires two or multiple groups of
 gendered words. In contrast to \cite{bolukbasi2016man}, it
 does not require explicit pairs. Compared
 to \cite{mu2018all}, it has explicit supervision with gender
-labels. We show in \secref{artexample} that
-DensRay is more stable.
+labels. We show in \secref{artexample} that this is leads to better gender directions identified by 
+DensRay.
 
 In summary, our contributions are: 
-i) We adjust DensRay to work on contextualized embeddings.
-We apply DensRay to every BERT layer and evaluate two tasks:
-a set of templates we constructed and previously used Association Tests. Our experiments find that debiasing with DensRay effectively mitigates gender bias and performs on par with prior approaches. 
-ii). We investigate whether debiased models maintain the performance of BERT on language modeling and GLUE \cite{wang2018glue}: we show that DensRay is more robust and interpretable than prior approaches.
-iii) We explore how gender information is processed in BERT by applying DensRay to BERT attention heads and layers: we conclude that there is no single attention head responsible for processing gender information.
-iv) We show that DensRay can be used to quantify gender bias with interpretable gender scores on token and sentence levels for all representations. 
+i) We adjust DensRay to be usable to debias contextualized embeddings
+By evaluating the approach on two tasks, a set of templates we constructed and previously used Association Tests, we show that DensRay performs comparable to prior approaches. 
+ii) We provide arguments why DensRay is more robust and find that applying DensRay affects language model performance on downstream tasks less.
+iii) We analyse how gender information is processed in BERT by applying DensRay to attention heads and layers: we conclude that there is no single attention head responsible for processing gender information. In addition we show in a qualitative analysis that token-level gender scores can be obtained. 
 v) We apply our debiasing method to the multilingual-BERT (mBERT) model: we show that English training data can be used to effectively debias Chinese.
 
