@@ -14,14 +14,14 @@ third (e.g., for bert-base from 0.47 to 0.11). It's shown that the debiasing per
 model & prob(he) & prob(she) & diff & var\\
 \hline
 bert-base & 0.66 & 0.19 & 0.47 &0.16\\
-bert-base-hard & 0.35 & 0.42 & -0.07  &0.03\\
+bert-base-hard & 0.35 & 0.42 & \textbf{-0.07}  &0.03\\
 bert-base-conceptor & 0.18 & 0.11 & 0.08 & 0.01\\
 bert-base-densray & 0.48 & 0.37 & {0.11} &0.02\\
 \hline
 bert-large  & 0.63 & 0.19 & 0.44  &0.13\\
 bert-large-hard & 0.40 & 0.23 & 0.17  &0.02\\
 bert-large-conceptor & 0.43 & 0.18 & 0.25 & 0.04\\
-bert-large-densray  & 0.47 & 0.31 & {0.16} &0.02 \\
+bert-large-densray  & 0.47 & 0.31 & \textbf{0.16} &0.02 \\
 \hline
 \end{tabular}
 \caption{\tablabel{t:templates1} BERT debiasing results on
@@ -45,19 +45,19 @@ bert-large-densray  & 0.47 & 0.31 & {0.16} &0.02 \\
 		category & model & d & p& d & p\\
 		\hline
 		C6 & bert-base & 0.66 & 0.08 &1.04&$<$10$^{-2*}$\\
-		& bert-base-hard & 0.15 & 0.38&-0.08&0.67\\
-		& bert-base-conceptor & 0.07 & 0.46&0.77&$<$10$^{-2*}$\\
+		& bert-base-hard & 0.15 & 0.38&{-0.08}&0.67\\
+		& bert-base-conceptor & {0.07} & 0.46&0.77&$<$10$^{-2*}$\\
 		&bert-base-densray & 0.62 & 0.12&0.36&0.02$^{*}$\\
 		\hline
 		C7 & bert-base & 0.60 & 0.11 &0.17&0.15\\
-		& bert-base-hard & -0.07 & 0.56&-0.06&0.64\\
+		& bert-base-hard & {-0.07} & 0.56&{-0.06}&0.64\\
 		& bert-base-conceptor & 0.54 & 0.14&-0.25&0.93\\
 		& bert-base-densray & 0.09 & 0.45&-0.47&0.99\\
 		\hline
 		C8& bert-base & 0.78 & 0.08 &0.81&$<$10$^{-2*}$\\
-		& bert-base-hard & -0.29 & 0.68&-0.10&0.71\\
+		& bert-base-hard & -0.29 & 0.68&{-0.10}&0.71\\
 		& bert-base-conceptor & 0.62 & 0.14&0.50&$<$10$^{-2*}$\\
-		& bert-base-densray & 0.03 & 0.47&0.41&0.01$^{*}$\\
+		& bert-base-densray & {0.03} & 0.47&0.41&0.01$^{*}$\\
 		\hline
 	\end{tabular}
 	\caption{\tablabel{t:weat1}
@@ -73,19 +73,19 @@ bert-large-densray  & 0.47 & 0.31 & {0.16} &0.02 \\
 		\hline
 		category & model & d & p& d & p\\
 		\hline
-		C6 & bert-large & 1.5705 & $<$10$^{-2*}$ &0.50&$<$10$^{-2*}$\\
+		C6 & bert-large & 1.57 & $<$10$^{-2*}$ &0.50&$<$10$^{-2*}$\\
 		& bert-large-hard & 0.80 & 0.06&0.07&0.35\\
-		& bert-large-conceptor & 1.33 & $<$10$^{-2*}$&0.06&0.37\\
-		&bert-large-densray & 0.76 & 0.07&0.13&0.22\\
+		& bert-large-conceptor & 1.33 & $<$10$^{-2*}$&{0.06}&0.37\\
+		&bert-large-densray & {0.76} & 0.07&0.13&0.22\\
 		\hline
 		C7 & bert-large & -0.40 & 0.75 &0.38&0.01$^{*}$\\
 		& bert-large-hard & -0.51 & 0.83&0.38&0.01$^{*}$\\
-		& bert-large-conceptor & -0.32 & 0.73&-0.60&0.99\\
-		& bert-large-densray & 0.06 & 0.04&-0.73&0.99\\
+		& bert-large-conceptor & -0.32 & 0.73&{-0.60}&0.99\\
+		& bert-large-densray & {0.06} & 0.05&-0.73&0.99\\
 		\hline
 		C8& bert-large & -0.60 & 0.87 &-0.30&0.95\\
-		& bert-large-hard & 0.78 & 0.06&-0.03&0.56\\
-		& bert-large-conceptor & 0.12 & 0.39&0.30&0.94\\
+		& bert-large-hard & 0.78 & 0.06&{-0.03}&0.56\\
+		& bert-large-conceptor & {0.12} & 0.39&0.30&0.94\\
 		& bert-large-densray & 0.20 & 0.33&-0.66&0.99\\
 		\hline
 	\end{tabular}
@@ -104,14 +104,14 @@ the original models on Wikitext-2 and GLUE tasks. In most tasks on bert-base and
 		model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI\\
 		\hline
 		bert-base &3.77&49.15&92.09&85.86&82.66&62.82&52.11\\
-		bert-base-hard &3.95&45.53&91.74&82.48&82.60&63.54&56.34\\
-		bert-base-conceptor &4.46&48.31&91.43&84.08&81.37&59.57&56.34\\
-		bert-base-densray &3.81&48.04&91.74&84.89&82.43&63.90&53.52\\
+		bert-base-hard &3.95&45.53&\textbf{91.74}&82.48&\textbf{82.60}&63.54&\textbf{56.34}\\
+		bert-base-conceptor &4.46&\textbf{48.31}&91.43&84.08&81.37&59.57&\textbf{56.34}\\
+		bert-base-densray &\textbf{3.81}&48.04&\textbf{91.74}&\textbf{84.89}&82.43&\textbf{63.90}&53.52\\
 		\hline
 		bert-large &3.29& 47.93&94.90&89.30&87.60&70.10&65.10\\
 		bert-large-hard &3.85& 47.45&93.95&85.01&82.33&67.12&63.02\\
-		bert-large-conceptor &4.13&49.44&93.87&87.67&83.44&62.45&56.34\\
-		bert-large-densray &3.35& 48.91&94.02&88.84&85.63&67.78&64.48\\
+		bert-large-conceptor &4.13&\textbf{49.44}&93.87&87.67&83.44&62.45&56.34\\
+		bert-large-densray &\textbf{3.35}& 48.91&\textbf{94.02}&\textbf{88.84}&\textbf{85.63}&\textbf{67.78}&\textbf{64.48}\\
 		\hline
 	\end{tabular}
 	\caption{\tablabel{t:glue1}
@@ -130,13 +130,13 @@ In \tabref{t:templates2} we show two OCCTMP examples. In the first sentence, har
 		\hline
 		[MASK] is a & bert-base & 0.84 & 0.13&0.71\\
 		professor.& bert-base-hard& 0.37 & 0.55&-0.18\\
-		& bert-base-conceptor& 0.28 & 0.23&0.05\\
+		& bert-base-conceptor& 0.28 & 0.23&\textbf{0.05}\\
 		& bert-base-densray & 0.53 & 0.37&0.16\\
 		\hline
 		[MASK] is a & bert-base & 0.22 & 0.72&-0.50\\
 		dancer.  & bert-base-hard& 0.27 & 0.64&-0.37\\
 		& bert-base-conceptor& 0.20 & 0.33&-0.13\\
-		& bert-base-densray& 0.42 & 0.52&-0.10\\
+		& bert-base-densray& 0.42 & 0.52&\textbf{-0.10}\\
 		\hline
 	\end{tabular}
 	\caption{\tablabel{t:templates2}
