@@ -1,13 +1,13 @@
 \subsection{Debiasing Conceptor}
-In this paper, we will compare our work with the debiasing conceptor \cite{karve2019conceptor}. Given a set of gendered words $V:=\{v_1,v_2,\dots,v_n\}$ and their embeddings $E \in R^{n\times d}$, gender bias can be mitigated by multiplying the debiasing conceptor matrix$\neg C= I-C$, where $C$ is the conceptor matrix that minimizes the objective
+In this paper, we will compare our work with the debiasing conceptor \cite{karve2019conceptor}. Given a set of gendered words $V:=\{v_1,v_2,\dots,v_n\}$ and their embeddings Z, gender bias can be mitigated by multiplying the debiasing conceptor matrix$\neg C= I-C$, where $C$ is the conceptor matrix that minimizes the objective
 \begin{eqnarray}
-||E-CE||^2_F+\alpha^{-2}||E||^2_F
+||Z-CZ||^2_F+\alpha^{-2}||E||^2_F
 \end{eqnarray}
 where $\alpha$ is a parameter. $C$ has an analytical solution
 \begin{eqnarray}
-C=\frac{1}{n}EE^T(\frac{1}{n}EE^T+\alpha^{-2}I)^{-1}
+C=\frac{1}{d}ZZ^{T}(\frac{1}{d}ZZ^{T}+\alpha^{-2}I)^{-1}
 \end{eqnarray}
-Intuitively, C is a soft projection matrix on the linear subspace where the word embeddings have the maximum bias.
+Intuitively, C is a soft projection matrix on the linear subspace where embeddings have the maximum bias.
 
 \subsection{Hard Debasing}
 We will also compare with the hard debiasing method proposed
@@ -55,26 +55,7 @@ and $q^Tq=1$ since $Q$ is orthogonal. $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hy
 \eqlabel{eq:densray2}
 \end{eqnarray}
 
-This objective is maximizing the Rayleigh quotient of $A$ and $q$. With Lagrange multiplier $\lambda$, subject to the constraint $q^{T}q=1$, it's equivalent to to find the critical points of
-\begin{eqnarray}
-\mathcal{L}(q)=q^{T}Aq-\lambda(q^{T}q-1)
-\end{eqnarray}
-Since the stationary points of $\mathcal{L}(q)$ occur at
-\begin{eqnarray}
-\frac{d\mathcal{L}(q)}{dq}=0 \Rightarrow Aq=\lambda q
-\end{eqnarray}
-
-
-In matrix form, subject to the constraint $Q^{T}Q=I$, it's equivalent to  
-\begin{eqnarray}
-\max\limits_{Q} \space tr(Q^{T}AQ)
-\end{eqnarray}
-With Lagrange multiplier $\lambda$, we get 
-\begin{eqnarray}
-AQ=\lambda Q
-\end{eqnarray}
-
-Since $A$ is symmetric, we can get an analytical solution $q$ by the eigenvector with the max eigenvalue of $A$ \cite{horn1990matrix}. 
+This objective is maximizing the Rayleigh quotient of $A$ and $q$. Since $A$ is symmetric, we can get an analytical solution $q$ by the eigenvector with the max eigenvalue of $A$ \cite{horn1990matrix}. 
 Thus the matrix of $k$ eigenvectors of $A$ ordered by the corresponding eigenvalues yields the matrix $Q$.
 \subsection{Removing Gender Information}
 
