@@ -11,26 +11,24 @@ third (e.g., for bert-base from 0.47 to 0.11). The table indicates that the debi
 \footnotesize
 \begin{tabular}{lccccc}
 \hline
-model & prob(he) & prob(she) & prob(he)+prob(she)&diff & var\\
+model & prob(he) & prob(she) & sum &diff & var\\
 \hline
-bert-base & 0.66 & 0.19 & 0.85 &1.57&2.86\\
-bert-base-hard & 0.35 & 0.42 & 0.77&-0.15&0.25\\
-bert-base-conceptor & 0.18 & 0.11 & 0.28 & 0.61&0.36\\
-bert-base-densray & 0.48 & 0.37 & 0.86&0.28&0.12\\
+bert-base & 0.66 & 0.19 & 0.85 &1.98&1.39\\
+bert-base-hard & 0.35 & 0.42 & 0.77&0.42&0.09\\
+bert-base-conceptor & 0.18 & 0.11 & 0.28 & 0.68&0.26\\
+bert-base-densray & 0.48 & 0.37 & 0.86&\textbf{0.36}&0.07\\
 \hline
-bert-large  & 0.63 & 0.19 & 0.82  &1.46&2.46\\
-bert-large-hard & 0.40 & 0.23 & 0.63&0.64&0.36\\
-bert-large-conceptor & 0.43 & 0.18 & 0.61 & 0.97&0.64\\
-bert-large-densray  & 0.47 & 0.31 & 0.77&0.48&0.15 \\
+bert-large  & 0.63 & 0.19 & 0.82  &1.82&1.30\\
+bert-large-hard & 0.40 & 0.23 & 0.63&0.69&0.30\\
+bert-large-conceptor & 0.43 & 0.18 & 0.61 & 1.03&0.53\\
+bert-large-densray  & 0.47 & 0.31 & 0.77&\textbf{0.49}&0.13 \\
 \hline
 \end{tabular}
 \caption{\tablabel{t:templates1} BERT debiasing results on
   OCCTMP. \textit{bert-base} and \textit{bert-large} are the
   original models without debiasing. \textit{prob(he)} is
   the average probability  predicted for \textit{he} as
-  the [MASK] in OCCTMP. \textit{var} is the variance of the
-  differences between the probabilities of  predicted
-  for \textit{he} and \textit{she}.}
+  the [MASK] in OCCTMP.}
 \end{table}
 
 \tabref{t:weat1} shows the results on association tests. The debiasing performance of the three methods are comparable.
@@ -125,19 +123,19 @@ In \tabref{t:templates2} we show two OCCTMP examples. In the first sentence, har
 \begin{table}[h]
 	\centering
 	\footnotesize
-	\begin{tabular}{llccc}
+	\begin{tabular}{llcccc}
 		\hline
-		sentence & model & prob(he) & prob(she) &diff\\
+		sentence & model & prob(he) & prob(she) &sum&diff\\
 		\hline
-		[MASK] is a & bert-base & 0.84 & 0.13&0.71\\
-		professor.& bert-base-hard& 0.37 & 0.55&-0.18\\
-		& bert-base-conceptor& 0.28 & 0.23&\textbf{0.05}\\
-		& bert-base-densray & 0.53 & 0.37&0.16\\
+		[MASK] is a & bert-base & 0.84 & 0.13&0.97&1.86\\
+		professor.& bert-base-hard& 0.37 & 0.55&0.92&0.40\\
+		& bert-base-conceptor& 0.28 & 0.23&0.51&{0.20}\\
+		& bert-base-densray & 0.53 & 0.37&0.90&0.36\\
 		\hline
-		[MASK] is a & bert-base & 0.22 & 0.72&-0.50\\
-		dancer.  & bert-base-hard& 0.27 & 0.64&-0.37\\
-		& bert-base-conceptor& 0.20 & 0.33&-0.13\\
-		& bert-base-densray& 0.42 & 0.52&\textbf{-0.10}\\
+		[MASK] is a & bert-base & 0.22 & 0.72&0.94&1.19\\
+		dancer.  & bert-base-hard& 0.27 & 0.64&0.91&0.86\\
+		& bert-base-conceptor& 0.20 & 0.33&0.53&0.50\\
+		& bert-base-densray& 0.42 & 0.52&0.92&0.21\\
 		\hline
 	\end{tabular}
 	\caption{\tablabel{t:templates2}
