@@ -9,7 +9,7 @@ where $\alpha$ is a parameter. $C$ has an analytical solution
 C=\frac{1}{d}EE^{T}(\frac{1}{d}EE^{T}+\alpha^{-2}I)^{-1}
 \end{eqnarray}
 Intuitively, C is a soft projection matrix on the linear subspace where embeddings have the maximum bias. 
-Once C is computed a debiased version of embeddings $X \in R^{t \times d}$  can be obtained by matrix multiplication $X(I-C)$.
+
 
 \subsection{Hard Debasing}
 We will also compare with the hard debiasing method proposed
@@ -49,13 +49,17 @@ where $d_{vw}:=e_v-e_w$. The objective can be simplified to
 \sum_{(v,w)\in L_{\neq}}\alpha_{\neq}||d_{vw}d_{vw}^\intercal ||^2_2-\sum_{(v,w)\in L_{=}}\alpha_{=}||d_{vw}d_{vw}^\intercal ||^2_2)q=:\max\limits_{q} q^\intercal Aq
 \eqlabel{eq:densray2}
 \end{eqnarray}
-We provide an alternative description on how to compute $A$ in order to easier see the difference to Conceptor or Hard-Debiasing.
+\eat{We provide an alternative description on how to compute $A$ in order to easier see the difference to Conceptor or Hard-Debiasing.
 Let $V_{+}:=\{v\in V|l(v)=1\}$ with corresponding embedding $E_{+} \in R^{n_+\times d}$ and define$V_{-}, E_{-}$ analogously. Also let the cross-covariance matrix $K_{+-}=Cov(E_{+}^\intercal,E_{-}^\intercal)$, if $n_{+}=n_{-}=n/2$, then matrix $A$ in \eqref{eq:densray2} can be computed by
+<<<<<<< HEAD
 %\begin{eqnarray}
 %A=\frac{n}{2}\{\alpha_{\neq}[(n-2)(K_{+-}+K_{+-}^\intercal)+(E_{+}-E_{-})(E_{+}-E_{-})^\interca%l]-\alpha_{=}(n-2)(K_{++}+K_{--})\}
 %\eqlabel{eq:densray3}
 %\end{eqnarray}
-
+\begin{eqnarray}
+A=\frac{n}{2}\{\alpha_{\neq}[(n-2)(K_{+-}+K_{+-}^\intercal)+(E_{+}-E_{-})(E_{+}-E_{-})^\intercal]-\alpha_{=}(n-2)(K_{++}+K_{--})\}
+\eqlabel{eq:densray3}
+\end{eqnarray}}
 As stated in \cite{dufter2019analytical} $q$ is simply the eigenvector of $A$ corresponding to the largest eigenvalue.
 $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hyperparameters to balance the different optimization terms. 
 
@@ -65,7 +69,7 @@ $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hyperparameters to balance the different
 \subsection{Removing Gender Information}
 
 Hard debiasing and DensRay yield a gender dimension $q \in R^d$. In a contextualized language model like BERT each layer yields a contextualized embedding matrix $X \in R^{t \times d}$ where $t$ is the length of the sentence. To debias representations we simply zero out the projected values on $q$ for each position, that is we set $x^{\text{debiased}}_i = x_i -  (x_i^\intercal q) q$ for each position $i$.
-
+To debias $X$ with conceptor one simply performs one matrix multiplication $X(I-C)$. 
 
 \subsection{Comparison of the Approaches}
 \seclabel{artexample}
@@ -73,12 +77,12 @@ Hard debiasing and DensRay yield a gender dimension $q \in R^d$. In a contextual
  the first principal component does not correlate with gender. DensRay is able to handle this as it explicitly uses the labels.
  
 As Conceptor debiasing does not compute a single direction of gender, but always needs to apply the full conceptor matrix, it is not possible to depict the direction in the figure. 
-We argue that DensRay is more interpretable than Conceptor. It allows for example to assign token level gender scores easily. In addition it affects language model performance less than Conceptor debiasing, as we show later.
+We argue that having a single gender direction as in DensRay is more interpretable and easier to use than the Conceptor, e.g., it allows  to assign token level gender scores easily as shown in \tabref{t:measure1}. In addition DensRay affects language model performance less than Conceptor debiasing, as we show in \tabref{t:glue1}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.4\linewidth]{examples.png}
 	\caption{Gender direction for a set of gendered
-          words computed for the three debiasing methods.}
+          words computed for hard debiasing and DensRay.}
 	\figlabel{fig:example}
 \end{figure}
 
