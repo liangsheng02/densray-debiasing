@@ -14,7 +14,7 @@ We applied DensRay to all BERT layers for debiasing. We
 compare with the hard debiasing method \cite{mu2018all} and
 the debiasing conceptor \cite{karve2019conceptor} to
 eliminate gender bias as adapted to contextualized
-embeddings by \cite{karve2019conceptor}. In the experiments, we found that hard debiasing applied to all BERT layers
+embeddings. In the experiments, we found that hard debiasing applied to all BERT layers
 yields better results than only applying it to the last layer. In contrast, when applying debiasing conceptor
 to all layers, language modeling performance (as measured by
 perplexity) is extremely poor.
@@ -40,7 +40,7 @@ We measure gender bias as the average difference between the log probability of 
 where $\mathcal T$ is the set of 320 templates.  We find
 that for most experiments and templates, the probability of
 ``he'' is higher than ``she'', which qualitatively indicates
-that gender bias can be identified using the OCCTMP templates. We also find that in most cases the sum of the two probability is higher than 0.7; thus, this evaluation task is a good fit for BERT because it has learned that a pronoun is likely to occur in the masked position. Our templates can be easily extended to other languages such as Chinese.
+that gender bias can be identified using the OCCTMP templates. We also find that in most cases the sum of the two probabilities is higher than 0.7; thus, this evaluation task is a good fit for BERT because it has learned that a pronoun is likely to occur in the masked position. Our templates can be easily extended to other languages such as Chinese.
 
 \subsubsection{Association Tests}\label{sec:weat}
 Association tests originated in sociological research. \newcite{greenwald1998measuring} proposed the Implicit Association Test (IAT) to quantify societal bias. In IAT, response times were recorded when subjects were asked to match two concepts. For example, subjects were asked to match black and white names with “pleasant” and “unpleasant” words. Subjects tended to have shorter response times for concepts they thought associated. 
