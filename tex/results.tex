@@ -8,10 +8,11 @@ diff: bias between predicting he/she drops by large margin
 that DensRay outperforms the other two methods on OCCTMP.
 Note that
 the prediction probabilities of debiasing conceptor are
-quite low for both ``he'' and ``she''. However,
+quite low for both ``he'' and ``she'' indicating that conceptor debiasing might affect language model performance. However,
 in relative terms, ``he'' is still strongly favored compared
 to ``she''.
-\tabref{t:weat1} shows the results on association tests. The debiasing performance of the three methods are comparable.
+\tabref{t:weat1} shows the results on association tests. We observe that association tests have a high variance depending on which category is used. 
+Overall the debiasing performance of the three methods are comparable with DensRay and Conceptor having the best performance three times and hard-debiasing having the best performance 5 times.
 
 \begin{table}[ht]
 \centering
@@ -32,7 +33,8 @@ bert-large-densray  & 0.47 & 0.31 & 0.77&\textbf{0.49}&0.13 \\
 \hline
 \end{tabular}
 \caption{\tablabel{t:templates1} BERT debiasing results on OCCTMP. \textit{bert-base} and \textit{bert-large} are the original models without debiasing. \textit{prob(he)} is
-	the average probability predicted for \textit{he} as the [MASK] in OCCTMP. We also show the average sum probability $sum=prob(he)+prob(she)$ and \textit{var}, the variance of \textit{ diff}, for reference.}
+	the average probability predicted for \textit{he} as the [MASK] in OCCTMP. We also show the average sum probability $sum=prob(he)+prob(she)$ which we take as an indication of 
+	language model performance and \textit{var}, the variance of \textit{ diff}, for reference.}
 \end{table}
 
 \begin{table}[h]
@@ -71,7 +73,7 @@ bert-large-densray  & 0.47 & 0.31 & 0.77&\textbf{0.49}&0.13 \\
 the original models on Wikitext-2 and GLUE tasks.
 In most tasks on bert-base and all tasks on bert-large, DensRay performs better than hard debiasing, so DensRay affects model performance less.
 Similarly, in most tasks on bert-base and all tasks but one
-on bert-large, DensRay performs better than debiasing conceptor, so DensRay affects model performance less.
+on bert-large, DensRay performs better than debiasing conceptor. Overall we find that DensRay affects model performance the least among the considered methods.
 \begin{table*}[h]
 \centering
 \footnotesize
@@ -130,12 +132,12 @@ a pronoun is  likely to occur in the masked position.
 \subsection{Analysis}
 
 \subsubsection*{Debiasing on Attention Heads and Layers}
-We now apply DensRay to the attention heads in BERT to debias on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [1.0,1.4]. Due to the lack of dimensions and the distribution of gender features in the attention heads, we chose to apply DensRay on layers as a debiasing method. We conclude that there is no single attention head that is responsible for processing gender information.
+We now apply DensRay to single attention heads in BERT and investigate the debiasing effect on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [1.0,1.4]. We conclude that there is no single attention head that is responsible for processing gender information.
 
 So far we have always applied DensRay to all BERT layers
 simultaneously. \figref{fig:layersbase}  illustrates the effect of
 debiasing a single  layer on our templates and the three
-WEAT categories. We see that the debiasing effect is
+WEAT categories.  In contrast to the attention heads we observe a different debiasing effect across different layers. We see that the debiasing effect is
 stronger in layers 7--10 than in the other layers in
 bert-base.
 \enote{hs}{
@@ -164,7 +166,7 @@ It is shown that gender information is extracted and processed on BERT layers, e
 \subsubsection*{Quantifying Gender Bias with DensRay}
 \seclabel{quantify}
 DensRay can be used to quantify gender bias for sentences
-and tokens. We use the distance to the origin of the gender
+and tokens. We use the distance to the origin in the gender
 subspace as the measurement. In BERT, we use the average
 bias score of tokens to quantify the whole
 sentence. \tabref{t:measure1} compares DensRay with the log
@@ -174,7 +176,10 @@ is a [ATTRIBUTE]''. We regard zero as a balance point
 without bias. Contrary to the log probability score, a
 positive DensRay score represents the level of female
 bias. These examples show that DensRay is more versatile, it
-can quantify  bias both on the token and on the sentence level.
+can quantify  bias both on the token and on the sentence level in contrast to the log-probability score.
+In the sentence ``The professor asked the nurse .'' one can immediately see that the model has a male bias on ``professor'' and a female bias on ``nurse'', although the sentence itsel
+is completely gender-neutral.
+
 \begin{table}[h]
 	\centering
 	\scriptsize
@@ -217,14 +222,16 @@ As a projection-based debiasing method, the premise of DensRay debiasing is that
 	\figlabel{curve}
 \end{figure}
 
-\subsubsection*{Balancing Gender Bias}
+
+\subsubsection*{Alternatives to Removing the Gender Dimension}
 In our experiments, we zero out the dimensions of the gender
 subspace to remove gender bias. 
 We also explored three alternatives to zeroing out. 1)
 Replace the first dimension of the gender subspace with the
 mean value of the first dimension of the training
 samples. 2) Standardize the first dimension. 3) Replace the
-first dimension with a small random variable sampled from a Gaussian distribution. All of them did not perform well. We further checked the mean and found that the mean of the different layers is not stable around zero, which is a problem worthy of further exploration. We also tried to delete more dimensions. However removing more dimensions does not improve the debiasing results significantly while harming the model performance.
+first dimension with a small random variable sampled from a Gaussian distribution. All of them did not perform well. We further checked the mean and found that the mean of the different layers is not stable around zero, which we plan to investigate in future work. Using higher dimensional gender subspaces (i.e., not only a single direction)
+did not improve the debiasing results while harming the model performance.
 
 
 \subsection{Multilingual Debiasing}
