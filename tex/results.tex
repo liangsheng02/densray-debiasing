@@ -91,7 +91,7 @@ bert-large-densray &\textbf{3.35}& 48.91&\textbf{94.02}&\textbf{88.84}&\textbf{8
 %\hline
 \end{tabular}
 \caption{\tablabel{t:glue1}
-Language modelling perplexity and GLUE tasks
+Language modeling perplexity and GLUE tasks
 performance. }
 \end{table*}
 
@@ -129,7 +129,7 @@ a pronoun is  likely to occur in the masked position.
 
 \subsection{Analysis}
 
-\subsubsection{Debiasing on Attention Heads and Layers}
+\subsubsection*{Debiasing on Attention Heads and Layers}
 We now apply DensRay to the attention heads in BERT to debias on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [1.0,1.4]. Due to the lack of dimensions and the distribution of gender features in the attention heads, we chose to apply DensRay on layers as a debiasing method. We conclude that there is no single attention head that is responsible for processing gender information.
 
 So far we have always applied DensRay to all BERT layers
@@ -161,7 +161,7 @@ It is shown that gender information is extracted and processed on BERT layers, e
 	\figlabel{fig:headsandlayers}
 \end{figure}
 
-\subsubsection{Quantifying Gender Bias with DensRay}
+\subsubsection*{Quantifying Gender Bias with DensRay}
 \seclabel{quantify}
 DensRay can be used to quantify gender bias for sentences
 and tokens. We use the distance to the origin of the gender
@@ -203,7 +203,7 @@ can quantify  bias both on the token and on the sentence level.
 
 
 
-\subsubsection{Number of Training Samples}
+\subsubsection*{Number of Training Samples}
 In the experiments, we collected training samples for DensRay by considering occurrences of the same word in the corpus across different sentences. This greatly enriches training samples. We also collected equally many masculine and feminine words for data balancing. Now we analyze the impact of these processes. DensRay is essentially a supervised learning method. It is difficult to extract useful features in the case of insufficient or unbalanced labels.  As shown in \figref{curve}, the debiasing results improve with an increased number of training samples.
 
 As a projection-based debiasing method, the premise of DensRay debiasing is that the gender direction should be correct. Unbalanced samples will lead to incorrect gender direction biased towards either the male or the female, resulting in reversing the gender bias during debiasing. For example, if there are more masculine samples, then the embeddings will be biased towards feminine after debiasing. The figure also shows that a balanced training set improves  debiasing performance.
@@ -215,7 +215,7 @@ As a projection-based debiasing method, the premise of DensRay debiasing is that
 	\figlabel{curve}
 \end{figure}
 
-\subsubsection{Balancing Gender Bias}
+\subsubsection*{Balancing Gender Bias}
 In our experiments, we zero out the dimensions of the gender
 subspace to remove gender bias. 
 We also explored three alternatives to zeroing out. 1)
