@@ -163,7 +163,18 @@ It is shown that gender information is extracted and processed on BERT layers, e
 
 \subsubsection{Quantifying Gender Bias with DensRay}
 \seclabel{quantify}
-DensRay can be used to quantify gender bias for sentences and tokens. We use the distance to the origin of the gender subspace as the measurement. In BERT, we use the average bias score of tokens to quantify the whole sentence. \tabref{t:measure1} compared DensRay with the log probability score \cite{kurita2019measuring}, which can quantify gender bias on specific templates '[TARGET] is a [ATTRIBUTE].' we regard zero as a balance point without bias. Contrary to the log probability score, a positive DensRay score represents the level of female bias. These examples show that DensRay is more versatile, it can quantify the bias both token and sentence level.
+DensRay can be used to quantify gender bias for sentences
+and tokens. We use the distance to the origin of the gender
+subspace as the measurement. In BERT, we use the average
+bias score of tokens to quantify the whole
+sentence. \tabref{t:measure1} compares DensRay with the log
+probability score \cite{kurita2019measuring}, which
+quantifies gender bias based on templates of form ``[TARGET]
+is a [ATTRIBUTE]''. We regard zero as a balance point
+without bias. Contrary to the log probability score, a
+positive DensRay score represents the level of female
+bias. These examples show that DensRay is more versatile, it
+can quantify  bias both on the token and on the sentence level.
 \begin{table}[h]
 	\centering
 	\scriptsize
@@ -185,7 +196,7 @@ DensRay can be used to quantify gender bias for sentences and tokens. We use the
 		\hline
 	\end{tabular}
 	\caption{\tablabel{t:measure1}
-		Examples for quantifying bias on bert-base model.}
+		Examples for quantifying bias (model: bert-base).}
 \end{table}
 
 
