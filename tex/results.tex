@@ -127,14 +127,19 @@ a pronoun is  likely to occur in the masked position.
 \end{table}
 
 
-\subsection{Analyses}
+\subsection{Analysis}
 
 \subsubsection{Debiasing on Attention Heads and Layers}
 We now apply DensRay to the attention heads in BERT to debias on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [1.0,1.4]. Due to the lack of dimensions and the distribution of gender features in the attention heads, we chose to apply DensRay on layers as a debiasing method. We conclude that there is no single attention head that is responsible for processing gender information.
 
-So far we have also applied DensRay to all BERT layers simultaneously.\figref{fig:layersbase}  illustrates the effect of
+So far we have always applied DensRay to all BERT layers
+simultaneously. \figref{fig:layersbase}  illustrates the effect of
 debiasing a single  layer on our templates and the three
-WEAT categories. We see that the debiasing effect is stronger in layers 7--10 than in the other layers in bert-base model. It is shown that gender information is extracted and processed on BERT layers, especially the upper layers. 
+WEAT categories. We see that the debiasing effect is
+stronger in layers 7--10 than in the other layers in
+bert-base.
+\enote{hs}{
+It is shown that gender information is extracted and processed on BERT layers, especially the upper layers. delete?}
 \begin{figure}[h]
 	\centering
 	\subfigure[attention heads]{
@@ -152,7 +157,7 @@ WEAT categories. We see that the debiasing effect is stronger in layers 7--10 th
 		\end{minipage}%
 	}%
 	\centering
-	\caption{(a): DensRay debiasing on each single attention head in bert-base, measured by \text{diff} on OCCTMP. (b): DensRay debiasing on each single layer, bias is measured by \text{diff} on  OCCTMP and $d$-value on WEAT.}
+	\caption{(a): DensRay debiasing on each single attention head in bert-base, measured by \text{diff} on OCCTMP. (b): DensRay debiasing on each single layer, measured by \text{diff} on  OCCTMP and $d$-value on WEAT.}
 	\figlabel{fig:headsandlayers}
 \end{figure}
 
