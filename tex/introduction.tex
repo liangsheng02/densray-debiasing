@@ -24,13 +24,14 @@ that DensRay only requires two or multiple groups of
 gendered words. In contrast to \cite{bolukbasi2016man}, it
 does not require explicit pairs. Compared
 to \cite{mu2018all}, it has explicit supervision with gender
-labels. We show in \secref{artexample} that this is leads to better gender directions identified by 
-DensRay.
+labels. We show in \secref{artexample} that this enables
+DensRay to identify better gender directions.
 
 In summary, our contributions are: 
-i) We adjust DensRay to be usable to debias contextualized embeddings
-By evaluating the approach on two tasks, a set of templates we constructed and previously used Association Tests, we show that DensRay performs comparable to prior approaches. 
-ii) We provide arguments why DensRay is more robust and find that applying DensRay affects language model performance on downstream tasks less.
-iii) We analyse how gender information is processed in BERT by applying DensRay to attention heads and layers: we conclude that there is no single attention head responsible for processing gender information. In addition we show in a qualitative analysis that token-level gender scores can be obtained. 
+i) We adjust DensRay to be usable to debias contextualized embeddings.
+We evaluate the approach on two tasks -- a set of templates
+we constructed and previously used Association Tests -- and show that DensRay performs comparable to prior approaches. 
+ii) We provide arguments why DensRay is more robust and find that applying DensRay preserves language model performance on downstream tasks better.
+iii) We analyze how gender information is processed in BERT by applying DensRay to attention heads and layers: we conclude that there is no single attention head responsible for processing gender information. In addition we show in a qualitative analysis that token-level gender scores can be obtained. 
 v) We apply our debiasing method to the multilingual-BERT (mBERT) model: we show that English training data can be used to effectively debias Chinese.
 
