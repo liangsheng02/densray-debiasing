@@ -30,7 +30,7 @@ OCCTMP is a new evaluation dataset based on occupation templates
 that we created specifically to evaluate contextualized language models.  It has the added advantage that results are easier to interpret than those for Association tests.
 
 To construct OCCTMP, we start with 320 occupation names\footnote{https://github.com/tolga-/debiaswe/blob/master/data/professions.json} provided by \newcite{bolukbasi2016man}. Each occupation name is converted into the fromat ``[MASK] is an \textit{occupation}.''
-We measure gender bias in the templates as the average difference between the probability of BERT predicting [MASK] as ``he'' vs.\ ``she''
+We measure gender bias as the average difference between the log probability of BERT predicting [MASK] as ``he'' vs.\ ``she''
 %\begin{eqnarray}
 \begin{gather*}
 \text{diff}=\frac{1}{|{\mathcal T}|} \sum_{T \in
