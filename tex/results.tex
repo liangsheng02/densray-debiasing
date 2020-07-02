@@ -2,8 +2,15 @@
 \subsection{Debiasing Results}
 \tabref{t:templates1} gives results on OCCTMP. Two OCCTMP
 examples are given in \tabref{t:templates2}. We see that
-DensRay can mitigate the gender bias in BERT: bias between predicting he/she drops to around two
-third (e.g., for bert-base from 1.98 to 0.36). The table indicates that DensRay outperforms the other two methods on OCCTMP. While the probabilities of debiasing conceptor predictions are significantly lower then the other two methods, which indicates that debiasing conceptor will affect the performance of the model. 
+DensRay can mitigate the gender bias in BERT as measured by
+diff: bias between predicting he/she drops by large margin
+(e.g., for bert-base from 1.98 to 0.36). The table indicates
+that DensRay outperforms the other two methods on OCCTMP.
+Note that
+the prediction probabilities of debiasing conceptor are
+quite low for both ``he'' and ``she''. However,
+in relative terms, ``he'' is still strongly favored compared
+to ``she''.
 \tabref{t:weat1} shows the results on association tests. The debiasing performance of the three methods are comparable.
 
 \begin{table}[ht]
