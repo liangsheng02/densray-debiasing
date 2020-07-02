@@ -1,10 +1,9 @@
 
 \subsection{Debiasing Results}
-\tabref{t:templates1} gives results for OCCTMP. Two OCCTMP
+\tabref{t:templates1} gives results on OCCTMP. Two OCCTMP
 examples are given in \tabref{t:templates2}. We see that
-DensRay can mitigate the gender bias in BERT: the average
-difference between predicting he/she drops to around two
-third (e.g., for bert-base from 0.47 to 0.11). The table indicates that the debiasing performance of the three methods is comparable. While the probabilities of debiasing conceptor predictions are significantly lower then the other two methods, which indicates that debiasing conceptor will affect the performance of the model. 
+DensRay can mitigate the gender bias in BERT: bias between predicting he/she drops to around two
+third (e.g., for bert-base from 1.98 to 0.36). The table indicates that DensRay outperforms the other two method on OCCTMP. While the probabilities of debiasing conceptor predictions are significantly lower then the other two methods, which indicates that debiasing conceptor will affect the performance of the model. 
 \tabref{t:weat1} shows the results on association tests. The debiasing performance of the three methods are comparable.
 
 \begin{table}[ht]
@@ -25,11 +24,8 @@ bert-large-conceptor & 0.43 & 0.18 & 0.61 & 1.03&0.53\\
 bert-large-densray  & 0.47 & 0.31 & 0.77&\textbf{0.49}&0.13 \\
 \hline
 \end{tabular}
-\caption{\tablabel{t:templates1} BERT debiasing results on
-  OCCTMP. \textit{bert-base} and \textit{bert-large} are the
-  original models without debiasing. \textit{prob(he)} is
-  the average probability  predicted for \textit{he} as
-  the [MASK] in OCCTMP.}
+\caption{\tablabel{t:templates1} BERT debiasing results on OCCTMP. \textit{bert-base} and \textit{bert-large} are the original models without debiasing. \textit{prob(he)} is
+	the average probability predicted for \textit{he} as the [MASK] in OCCTMP. We also show the average sum probability $sum=prob(he)+prob(she)$ and \textit{var}, the variance of \textit{ diff}, for reference.}
 \end{table}
 
 \begin{table}[h]
@@ -118,7 +114,7 @@ In \tabref{t:templates2} we show two OCCTMP examples. In the first sentence, har
 \subsection{Analyses}
 
 \subsubsection{Debiasing on Attention Heads and Layers}
-We now apply DensRay to the attention heads in BERT to debias on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [0.4,0.5]. Due to the lack of dimensions and the distribution of gender features in the attention heads, we chose to apply DensRay on layers as a debiasing method. We conclude that there is no single attention head that is responsible for processing gender information.
+We now apply DensRay to the attention heads in BERT to debias on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [1.0,1.4]. Due to the lack of dimensions and the distribution of gender features in the attention heads, we chose to apply DensRay on layers as a debiasing method. We conclude that there is no single attention head that is responsible for processing gender information.
 
 So far we have also applied DensRay to all BERT layers simultaneously.\figref{fig:layersbase}  illustrates the effect of
 debiasing a single  layer on our templates and the three
@@ -198,21 +194,22 @@ We use  bert-base-multilingual-uncased from \shortcite{wolf2019huggingfaces}. We
 Since Chinese is a language that does not mark gender, we can construct the OCCTMP templates by directly translating from the English templates. We use the following form:
 ``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupation name based on Tencent Translation\footnote{https://fanyi.qq.com/} and make some manual adjustments to the translation. After removing duplicates,  302 Chinese templates remain.
 
-\tabref{t:templates3} gives results for the Chinese templates. Two examples are given in \tabref{t:templates3}. We see that DensRay trained with English can mitigate gender bias in mBERT: the average difference drops from 0.17 to 0.08 on Chinese templates. 
+\tabref{t:templates3} gives results for the Chinese templates. Two examples are given in \tabref{t:templates3}. We see that DensRay trained with English can mitigate gender bias in mBERT: the diff score drops from 1.39 to 1.33 on Chinese templates. 
 \begin{table}[h]
 	\centering
 	\footnotesize
-	\begin{tabular}{lcccc}
+	\begin{tabular}{lccccc}
 		\hline
-		model & prob(he) & prob(she) & diff & var\\
+		model & prob(he) & prob(she) & sum &diff & var\\
 		\hline
 		 bert-multi-en 
-		& 0.51 & 0.14 & 0.36 & 0.06 \\ 
-		bert-multi-densray-en & 0.33 & 0.12 & 0.21 & 0.03 \\
+		& 0.51 & 0.14 & 0.65 & 1.66&0.81 \\ 
+		bert-multi-densray-en & 0.33 & 0.12 & 0.46 & 1.33&0.65 \\
+		\hline
 		 bert-multi-cn 
-		& 0.24 & 0.07 & 0.17 & 0.02 \\
+		& 0.24 & 0.07 & 0.31 & 1.39&0.60 \\
 		 bert-multi-densray-cn 
-		& 0.12 & 0.04 & 0.08 & 0.01\\
+		& 0.12 & 0.04 & 0.17 & 1.22&0.47\\
 		\hline
 	\end{tabular}
 	\caption{\tablabel{t:templates3}

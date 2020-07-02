@@ -8,8 +8,7 @@ where $\alpha$ is a parameter. $C$ has an analytical solution
 C=\frac{1}{d}EE^{T}(\frac{1}{d}EE^{T}+\alpha^{-2}I)^{-1}
 \end{eqnarray}
 Intuitively, C is a soft projection matrix on the linear subspace where embeddings have the maximum bias. 
-Once C is computed a debiased version of embeddings $X \in R^{t \times d}$  can be obtained by matrix multiplication $X^\intercal(I-C)$.
-\enote{pd}{is this correct?}
+Once C is computed a debiased version of embeddings $X \in R^{t \times d}$  can be obtained by matrix multiplication $X(I-C)$.
 
 \subsection{Hard Debasing}
 We will also compare with the hard debiasing method proposed
