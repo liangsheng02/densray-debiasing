@@ -2,8 +2,15 @@
 \subsection{Debiasing Results}
 \tabref{t:templates1} gives results on OCCTMP. Two OCCTMP
 examples are given in \tabref{t:templates2}. We see that
-DensRay can mitigate the gender bias in BERT: bias between predicting he/she drops to around two
-third (e.g., for bert-base from 1.98 to 0.36). The table indicates that DensRay outperforms the other two method on OCCTMP. While the probabilities of debiasing conceptor predictions are significantly lower then the other two methods, which indicates that debiasing conceptor will affect the performance of the model. 
+DensRay can mitigate the gender bias in BERT as measured by
+diff: bias between predicting he/she drops by large margin
+(e.g., for bert-base from 1.98 to 0.36). The table indicates
+that DensRay outperforms the other two methods on OCCTMP.
+Note that
+the prediction probabilities of debiasing conceptor are
+quite low for both ``he'' and ``she''. However,
+in relative terms, ``he'' is still strongly favored compared
+to ``she''.
 \tabref{t:weat1} shows the results on association tests. The debiasing performance of the three methods are comparable.
 
 \begin{table}[ht]
@@ -61,7 +68,10 @@ bert-large-densray  & 0.47 & 0.31 & 0.77&\textbf{0.49}&0.13 \\
 
 \subsection{Model Performance}
 \tabref{t:glue1} shows that DensRay debiasing gets comparable results with
-the original models on Wikitext-2 and GLUE tasks. In most tasks on bert-base and all tasks on bert-large, DensRay performs better than hard debiasing, so DensRay affects model performance less.
+the original models on Wikitext-2 and GLUE tasks.
+In most tasks on bert-base and all tasks on bert-large, DensRay performs better than hard debiasing, so DensRay affects model performance less.
+Similarly, in most tasks on bert-base and all tasks but one
+on bert-large, DensRay performs better than debiasing conceptor, so DensRay affects model performance less.
 \begin{table*}[h]
 \centering
 \footnotesize
@@ -87,7 +97,13 @@ performance. }
 
 
 \subsection{Examples}
-In \tabref{t:templates2} we show two OCCTMP examples. In the first sentence, hard debiasing reverses male bias and creates female bias. The sum probabilities of "he" and "she" on the debiasing conceptor are around 0.5, indicates that the pronoun is not likely to occur in the masked position.
+In \tabref{t:templates2} we show two OCCTMP examples.
+Again, densray works best as measures by diff.
+The sum probabilities of ``he'' and ``she''
+on the debiasing conceptor are around 0.5, indicating that
+the
+language model has lost part of its ability to predict that 
+a pronoun is  likely to occur in the masked position.
 \begin{table}[h]
 	\centering
 	\footnotesize
@@ -111,14 +127,19 @@ In \tabref{t:templates2} we show two OCCTMP examples. In the first sentence, har
 \end{table}
 
 
-\subsection{Analyses}
+\subsection{Analysis}
 
 \subsubsection{Debiasing on Attention Heads and Layers}
 We now apply DensRay to the attention heads in BERT to debias on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [1.0,1.4]. Due to the lack of dimensions and the distribution of gender features in the attention heads, we chose to apply DensRay on layers as a debiasing method. We conclude that there is no single attention head that is responsible for processing gender information.
 
-So far we have also applied DensRay to all BERT layers simultaneously.\figref{fig:layersbase}  illustrates the effect of
+So far we have always applied DensRay to all BERT layers
+simultaneously. \figref{fig:layersbase}  illustrates the effect of
 debiasing a single  layer on our templates and the three
-WEAT categories. We see that the debiasing effect is stronger in layers 7--10 than in the other layers in bert-base model. It is shown that gender information is extracted and processed on BERT layers, especially the upper layers. 
+WEAT categories. We see that the debiasing effect is
+stronger in layers 7--10 than in the other layers in
+bert-base.
+\enote{hs}{
+It is shown that gender information is extracted and processed on BERT layers, especially the upper layers. delete?}
 \begin{figure}[h]
 	\centering
 	\subfigure[attention heads]{
@@ -136,13 +157,24 @@ WEAT categories. We see that the debiasing effect is stronger in layers 7--10 th
 		\end{minipage}%
 	}%
 	\centering
-	\caption{(a): DensRay debiasing on each single attention head in bert-base, measured by \text{diff} on OCCTMP. (b): DensRay debiasing on each single layer, bias is measured by \text{diff} on  OCCTMP and $d$-value on WEAT.}
+	\caption{(a): DensRay debiasing on each single attention head in bert-base, measured by \text{diff} on OCCTMP. (b): DensRay debiasing on each single layer, measured by \text{diff} on  OCCTMP and $d$-value on WEAT.}
 	\figlabel{fig:headsandlayers}
 \end{figure}
 
 \subsubsection{Quantifying Gender Bias with DensRay}
 \seclabel{quantify}
-DensRay can be used to quantify gender bias for sentences and tokens. We use the distance to the origin of the gender subspace as the measurement. In BERT, we use the average bias score of tokens to quantify the whole sentence. \tabref{t:measure1} compared DensRay with the log probability score \cite{kurita2019measuring}, which can quantify gender bias on specific templates '[TARGET] is a [ATTRIBUTE].' we regard zero as a balance point without bias. Contrary to the log probability score, a positive DensRay score represents the level of female bias. These examples show that DensRay is more versatile, it can quantify the bias both token and sentence level.
+DensRay can be used to quantify gender bias for sentences
+and tokens. We use the distance to the origin of the gender
+subspace as the measurement. In BERT, we use the average
+bias score of tokens to quantify the whole
+sentence. \tabref{t:measure1} compares DensRay with the log
+probability score \cite{kurita2019measuring}, which
+quantifies gender bias based on templates of form ``[TARGET]
+is a [ATTRIBUTE]''. We regard zero as a balance point
+without bias. Contrary to the log probability score, a
+positive DensRay score represents the level of female
+bias. These examples show that DensRay is more versatile, it
+can quantify  bias both on the token and on the sentence level.
 \begin{table}[h]
 	\centering
 	\scriptsize
@@ -157,14 +189,16 @@ DensRay can be used to quantify gender bias for sentences and tokens. We use the
 		2.43  &1.34  &1.7   &1.93  &0.5&& 1.58 &-5.44\\
 		\hline
 		The &professor &asked &me& . &&&\\
-		-1.25 &-0.55 &-0.08  &0.59  &0.35 &&-0.19 &-\\
+		-1.25 &-0.55 &-0.08  &0.59  &0.35 &&-0.19 &
+                not applicable\\
 		\hline
 		The &professor &asked &the&nurse &.&&\\
-		-1.3&  -0.25  &0.24  &1.28  &2.19  &0.45&0.43&-\\
+		-1.3&  -0.25  &0.24  &1.28  &2.19
+                &0.45&0.43& not applicable\\
 		\hline
 	\end{tabular}
 	\caption{\tablabel{t:measure1}
-		Examples for quantifying bias on bert-base model.}
+		Examples for quantifying bias (model: bert-base).}
 \end{table}
 
 
@@ -172,7 +206,7 @@ DensRay can be used to quantify gender bias for sentences and tokens. We use the
 \subsubsection{Number of Training Samples}
 In the experiments, we collected training samples for DensRay by considering occurrences of the same word in the corpus across different sentences. This greatly enriches training samples. We also collected equally many masculine and feminine words for data balancing. Now we analyze the impact of these processes. DensRay is essentially a supervised learning method. It is difficult to extract useful features in the case of insufficient or unbalanced labels.  As shown in \figref{curve}, the debiasing results improve with an increased number of training samples.
 
-As a projection-based debiasing method, the premise of DensRay debiasing is that the gender direction should be correct. Unbalanced samples will lead to incorrect gender direction biased towards either the male or the female, resulting in reversing the gender bias during debiasing. For example, if there are more masculine samples, then the embeddings will be biased towards feminine after debiasing. The figure also shows that a balanced training sample improves the debiasing performance.
+As a projection-based debiasing method, the premise of DensRay debiasing is that the gender direction should be correct. Unbalanced samples will lead to incorrect gender direction biased towards either the male or the female, resulting in reversing the gender bias during debiasing. For example, if there are more masculine samples, then the embeddings will be biased towards feminine after debiasing. The figure also shows that a balanced training set improves  debiasing performance.
 \begin{figure}[h]
 	\centering
 	\footnotesize
@@ -182,19 +216,28 @@ As a projection-based debiasing method, the premise of DensRay debiasing is that
 \end{figure}
 
 \subsubsection{Balancing Gender Bias}
-In this experiment, we zero out the dimensions of gender subspace to remove gender bias. Here we explore some other ways.
-
-We explored three other ways to remove bias: 1) replace the first dimension of the gender subspace with the mean value of the first dimension of the training samples. 2) standardize the first dimension. 3) replace the first dimension with a small random variable sampled from Gaussian distribution. All of them did not perform well. We further checked the mean and found that the mean of the different layers is not stable around zero, which is a problem worthy of further exploration. We also tried to delete more dimensions. However removing more dimensions does not improve the debiasing results significantly while harming the model performance.
+In our experiments, we zero out the dimensions of the gender
+subspace to remove gender bias. 
+We also explored three alternatives to zeroing out. 1)
+Replace the first dimension of the gender subspace with the
+mean value of the first dimension of the training
+samples. 2) Standardize the first dimension. 3) Replace the
+first dimension with a small random variable sampled from a Gaussian distribution. All of them did not perform well. We further checked the mean and found that the mean of the different layers is not stable around zero, which is a problem worthy of further exploration. We also tried to delete more dimensions. However removing more dimensions does not improve the debiasing results significantly while harming the model performance.
 
 
 \subsection{Multilingual Debiasing}
 We now show that, in a multilingual contextualized language model like mBERT, we can use DensRay for zero-shot debiasing. Specifically, we train a DensRay model on English and use it to debias Chinese.
-We use  bert-base-multilingual-uncased from \shortcite{wolf2019huggingfaces}. We use the same setup as for bert-base-uncased in our previous experiments. As before, we compute the rotation matrices using the English gendered words from the ``family'' category of the Google analogy test set \shortcite{mikolov2013efficient}.
+We use  bert-base-multilingual-uncased from
+\cite{wolf2019huggingfaces}. We use the same setup as for
+bert-base-uncased in our previous experiments. As before, we
+compute the rotation matrices using the English gendered
+words from the ``family'' category of the Google analogy
+test set \cite{mikolov2013efficient}.
 
 Since Chinese is a language that does not mark gender, we can construct the OCCTMP templates by directly translating from the English templates. We use the following form:
-``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupation name based on Tencent Translation\footnote{https://fanyi.qq.com/} and make some manual adjustments to the translation. After removing duplicates,  302 Chinese templates remain.
+``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupation using Tencent Translation\footnote{https://fanyi.qq.com/} and make some manual adjustments to the translation. After removing duplicates,  302 Chinese templates remain.
 
-\tabref{t:templates3} gives results for the Chinese templates. Two examples are given in \tabref{t:templates3}. We see that DensRay trained with English can mitigate gender bias in mBERT: the diff score drops from 1.39 to 1.33 on Chinese templates. 
+\tabref{t:templates3} gives results for the Chinese templates. Two examples are given in \tabref{t:templates3}. We see that DensRay trained with English can mitigate gender bias in mBERT: the diff score drops from 1.39 to 1.22 on Chinese templates. 
 \begin{table}[h]
 	\centering
 	\footnotesize
@@ -235,5 +278,5 @@ Since Chinese is a language that does not mark gender, we can construct the OCCT
 		\hline
 	\end{tabular}
 	\caption{\label{t:templates3}
-		Sanity check on the Chinese templates, where \yin{\textit{他}} means \textit{he} and \yin{\textit{她}} means \textit{she}. Corresponding English translations are shown blow the Chinese.}
+		Sanity check on the Chinese templates, where \yin{\textit{他}} means \textit{he} and \yin{\textit{她}} means \textit{she}. Corresponding English translations are shown below the Chinese.}
 \end{table}

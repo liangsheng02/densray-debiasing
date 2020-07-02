@@ -1,7 +1,43 @@
 \subsection{Quantifying Gender Bias}
-A typical way to measure gender bias is the \textbf{association tests}. The origin WEAT is used on static embeddings. To extend WEAT to contextual embeddings, some template-based processes \cite{karve2019conceptor,kurita2019measuring,Tan2019AssessingSA} were constructed to obtain the word embeddings from the context. SEAT further improved the templates and computed the similarities between the sentences instead of words. \cite{guo2020detecting} proposed CEAT (Contextual Embedding Association Test), which samples the occurrences from the corpus to get the embeddings, and measure the bias by a random-effects model. However, we find that it is difficult to obtain a stable result on CEAT due to the vary contexts, so in this paper we still use WEAT and SEAT as experiments. Besides, \cite{kurita2019measuring} proposed a template-based log probability bias score to measure the association between targets and attributes in BERT. Since it can only be applied on specific templates, we compare this method with DensRay as a measurement of gender bias in \secref{quantify}.
+\textbf{Association tests} are commonly used to measure
+gender bias. The original WEAT is used on static
+embeddings. To extend WEAT to contextual embeddings, some
+template-based processes
+\cite{karve2019conceptor,kurita2019measuring,Tan2019AssessingSA}
+were constructed to obtain the word embeddings from the
+context. SEAT further improved the templates and computed
+the similarities between the sentences instead of
+words. \newcite{guo2020detecting} proposed CEAT (Contextual
+Embedding Association Test), which samples the occurrences
+from the corpus to get the embeddings, and measures the bias
+by a random-effects model. However, we find that it is
+difficult to obtain a stable result on CEAT due to the
+\enote{hs}{what does vary mean?} vary
+contexts, so in this paper we  use WEAT and SEAT for our
+experiments. \newcite{kurita2019measuring} proposed a
+template-based log probability bias score to measure the
+association between targets and attributes in BERT. Since it
+can only be applied on specific templates, we compare this
+method with DensRay as a measurement of gender bias in
+\secref{quantify}.
 
-An alternative way to measure gender bias is to evaluate on \textbf{downstream tasks}. For coreference resolution, \cite{zhao2018gender} designed Winobias and \cite{rudinger2018gender} designed Winogender schemas. \cite{webster2018mind} released GAP, a balanced corpus of Gendered Ambiguous Pronouns, which measures gender bias as the ratio of F1 score on masculine to F1 score on feminine. However the ratio is very close to 1 \cite{Chada_2019,Attree_2019} making it hard to compare debiasing systems. For sentiment analysis, Equity Evaluation Corpus (EEC) \cite{Kiritchenko_2018} was designed to measure gender bias by the difference in emotional intensity predictions between gender-swapped sentences. Since the measurements of gender bias in these data sets are not intuitive, we chose to experiment on association tests in this paper.
+An alternative way to measure gender bias is to evaluate on
+\textbf{downstream tasks}. For coreference resolution,
+\newcite{zhao2018gender} designed Winobias and
+\newcite{rudinger2018gender} designed Winogender
+schemas. \newcite{webster2018mind} released GAP, a balanced
+corpus of Gendered Ambiguous Pronouns, which measures gender
+bias as the ratio of F1 score on masculine to F1 score on
+feminine. However the ratio is very close to 1
+\cite{Chada_2019,Attree_2019} making it hard to compare
+debiasing systems. For sentiment analysis, Equity Evaluation
+Corpus (EEC) \cite{Kiritchenko_2018} was designed to measure
+gender bias by the difference in emotional intensity
+predictions between gender-swapped sentences. Since the
+measurements of gender bias in these data sets are not
+intuitive, we chose to use association tests in
+this paper.
+
 \subsection{Debiasing Methods}
 Many methods to remove gender bias have been proposed. The most common way is to define a gender direction (or, more generally, a subspace) by a set of gendered words and debias the word embeddings in a post-processing projection. \cite{bolukbasi2016man} propose (i) \emph{hard debiasing}: use the gendered words to compute the difference embedding vector as the gender direction; and (ii) \emph{soft debiasing}, a machine learning based method that combines the inner-products objective of word embedding and an objective to project the word embedding into an orthogonal gender subspace. It has been found to work better than soft debiasing.  \cite{dev2019attenuating} explored partial projection and some simple tricks to improve the hard debiasing method. \cite{zhao2019gender} applied the data augmentation and debiasing method of  \cite{bolukbasi2016man} to mitigate gender bias on ELMo  \cite{Peters:2018}. \cite{karve2019conceptor} proposed the debiasing conceptor, which shrinks each principal component of the covariance matrix of the embeddings to achieve a soft debiasing. They also introduced a simple and intuitive hard debiasing method proposed by \cite{mu2018all}, which identified the gender subspace by PCA and projected the first principal component off.  
 
