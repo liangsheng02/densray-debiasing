@@ -10,35 +10,38 @@ of the Google analogy test set \cite{mikolov2013efficient}. As the input corpus,
 occurrences of words in the gendered list for the BERT base
 (resp.\ large) model. We carefully balance the occurrences such that the number of male and female samples are equal. We set  $\alpha_{\neq}=\alpha_{=}=0.5$, as we have balanced the training samples from the corpus.
 
-We adapted DensRay to all BERT layers for debiasing. We
+We applied DensRay to all BERT layers for debiasing. We
 compare with the hard debiasing method \cite{mu2018all} and
 the debiasing conceptor \cite{karve2019conceptor} to
 eliminate gender bias as adapted to contextualized
-embeddings by \cite{karve2019conceptor}. In the experiments, we found that hard debiasing adapted to all BERT layers
-yields better results than only adapted to the contextual
-embeddings. In contrast, when applying debiasing conceptor
+embeddings by \cite{karve2019conceptor}. In the experiments, we found that hard debiasing applied to all BERT layers
+yields better results than only applying it to the contextual
+embeddings (i.e., the last layer). In contrast, when applying debiasing conceptor
 to all layers, language modeling performance (as measured by
 perplexity) is extremely poor.
 We therefore applied the
 debiasing conceptor only to the last BERT layer.
 
-\subsection{Evaluations}
+\subsection{Evaluation}
 \subsubsection{OCCTMP}
 We use two evaluation datasets to measure gender bias: Association tests (Section~\ref{sec:weat}) and OCCTMP.
 
 OCCTMP is a new evaluation dataset based on occupation templates
 that we created specifically to evaluate contextualized language models.  It has the added advantage that results are easier to interpret than those for Association tests.
 
-To construct OCCTMP, we start with 320 occupation names\footnote{https://github.com/tolga-/debiaswe/blob/master/data/professions.json} provided by \newcite{bolukbasi2016man}. Each occupation name is converted into the fromat ``[MASK] is an \textit{occupation}.''
+To construct OCCTMP, we start with 320 occupation names\footnote{https://github.com/tolga-/debiaswe/blob/master/data/professions.json} provided by \newcite{bolukbasi2016man}. Each occupation name is converted into the format ``[MASK] is an \textit{occupation}.''
 We measure gender bias as the average difference between the log probability of BERT predicting [MASK] as ``he'' vs.\ ``she''
 %\begin{eqnarray}
 \begin{gather*}
 \text{diff}=\frac{1}{|{\mathcal T}|} \sum_{T \in
-	{\mathcal T}}(log\ p_{max} - log\ p_{min}),\\
-\mbox{where }p_{max}=max\{p(\mbox{he}| T),p(\mbox{she}| T)\} \mbox{; }p_{min}=min\{p(\mbox{he}| T),p(\mbox{she}| T)\}
+	{\mathcal T}}(\log p_{max} - \log p_{min}),\\
+\mbox{where }p_{max}=\max\{p(\mbox{he}| T),p(\mbox{she}| T)\} \mbox{; }p_{min}=\min\{p(\mbox{he}| T),p(\mbox{she}| T)\}
 \end{gather*}
 %\end{eqnarray}
-where $\mathcal T$ is the set of 320 templates.  We find that for most experiments and templates, the probability of ``he'' is higher than ``she'', which qualitatively indicates that gender bias can be identified using these templates. We also find that in most cases the sum of the two probability is higher than 0.7; thus, this evaluation task is a good fit for BERT because it has learned that a pronoun is likely to occur in the masked position. Our templates can be easily extended to other languages as we later show for Chinese.
+where $\mathcal T$ is the set of 320 templates.  We find
+that for most experiments and templates, the probability of
+``he'' is higher than ``she'', which qualitatively indicates
+that gender bias can be identified using the OCCTMP templates. We also find that in most cases the sum of the two probability is higher than 0.7; thus, this evaluation task is a good fit for BERT because it has learned that a pronoun is likely to occur in the masked position. Our templates can be easily extended to other languages as we later show for Chinese.
 
 \subsubsection{Association Tests}\label{sec:weat}
 Association tests originated in sociological research. \newcite{greenwald1998measuring} proposed the Implicit Association Test (IAT) to quantify societal bias. In IAT, response times were recorded when subjects were asked to match two concepts. For example, subjects were asked to match black and white names with “pleasant” and “unpleasant” words. Subjects tended to have shorter response times for concepts they thought associated. 
@@ -69,7 +72,7 @@ d=\frac{s(X_1,X_2,A_1,A_2)}{\mbox{std}_{x\in X_1 \cup X_2}s(x,A_1,A_2)}.\nonumbe
 
 To extend WEAT to contextual embeddings,
 \newcite{karve2019conceptor} extracted contextual embeddings
-from the template '[MASK] is \textit{word}.'
+from the template ``[MASK] is \textit{word}''.
 \newcite{may2019measuring} proposed the Sentence Embedding
 Association Test (SEAT), for which they designed more complex templates to extract word embeddings. 
 
