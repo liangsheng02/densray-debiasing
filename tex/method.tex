@@ -52,11 +52,14 @@ where $d_{vw}:=e_v-e_w$. The objective can be simplified to
 We provide an alternative description on how to compute $A$ in order to easier see the difference to Conceptor or Hard-Debiasing.
 Let $V_{+}:=\{v\in V|l(v)=1\}$ with corresponding embedding $E_{+} \in R^{n_+\times d}$ and define$V_{-}, E_{-}$ analogously. Also let the cross-covariance matrix $K_{+-}=Cov(E_{+}^\intercal,E_{-}^\intercal)$, if $n_{+}=n_{-}=n/2$, then matrix $A$ in \eqref{eq:densray2} can be computed by
 \begin{eqnarray}
-A=\frac{n}{2}\{\alpha_{\neq}[(n-2)(K_{++}+K_{+-})+(E_{+}-E_{-})(E_{+}-E_{-})^\intercal]-\alpha_{=}(n-2)(K_{+-}+K_{+-}^\intercal)\}\nonumber
+A=\frac{n}{2}\{\alpha_{\neq}[(n-2)(K_{+-}+K_{+-}^\intercal)+(E_{+}-E_{-})(E_{+}-E_{-})^\intercal]-\alpha_{=}(n-2)(K_{++}+K_{--})\}
 \eqlabel{eq:densray3}
 \end{eqnarray}
+<<<<<<< HEAD
 As stated in \cite{dufter2019analytical} $q$ is simply the eigenvector of $A$ corresponding to the largest eigenvalue.
 $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hyperparameters to balance the different optimization terms. 
+
+\enote{sl}{from the first term we can see densray intend to maximize the correlation between different groups, and maximize the differences of embeddings from different groups; the second term, minimize the correlation in same the group.}
 
 
 \subsection{Removing Gender Information}
