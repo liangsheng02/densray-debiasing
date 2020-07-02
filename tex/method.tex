@@ -54,9 +54,10 @@ $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hyperparameters to balance the different
 
 Let $V_{+}:=\{v\in V|l(v)=1\}$ with corresponding embedding $E_{+} \in R^{n_+\times d}$ and define$V_{-}, E_{-}$ analogously. Also let the cross-covariance matrix $K_{+-}=Cov(E_{+}^\intercal,E_{-}^\intercal)$, if $n_{+}=n_{-}=n/2$, then matrix $A$ in \eqref{eq:densray2} can be reformulated into matrix form
 \begin{eqnarray}
-A=\frac{n}{2}\{\alpha_{\neq}[(n-2)(K_{++}+K_{+-})+(E_{+}-E_{-})(E_{+}-E_{-})^\intercal]-\alpha_{=}(n-2)(K_{+-}+K_{+-}^\intercal)\}\nonumber
+A=\frac{n}{2}\{\alpha_{\neq}[(n-2)(K_{+-}+K_{+-}^\intercal)+(E_{+}-E_{-})(E_{+}-E_{-})^\intercal]-\alpha_{=}(n-2)(K_{++}+K_{--})\}
 \eqlabel{eq:densray3}
 \end{eqnarray}
+\enote{sl}{from the first term we can see densray intend to maximize the correlation between different groups, and maximize the differences of embeddings from different groups; the second term, minimize the correlation in same the group.}
 \subsection{Removing Gender Information}
 
 Hard debiasing and DensRay yield a gender dimension $q \in R^d$. In a contextualized language model like BERT each layer yields a contextualized embedding matrix $X \in R^{t \times d}$ where $t$ is the length of the sentence. To debias representations we simply zero out the projected values on $q$ for each position, that is we set $X^{\text{debiased}}_i = X_i -  (X_i^\intercal q) q$ for each position $i$.
