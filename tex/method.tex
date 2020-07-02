@@ -52,7 +52,7 @@ where we define $d_{vw}:=e_v-e_w$. The objective can be simplified to
 As stated in \cite{dufter2019analytical} $q$ is simply the eigenvector of $A$ corresponding to the largest eigenvalue.
 $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hyperparameters to balance the different optimization terms. 
 
-Let $V_{+}:={v\in V|l(v)=1}$ with corresponding embedding $E_{+} \in R^{n_1\times d}$ and define$V_{-}, E_{-}$ analogously. Also let $K_{+-}=Cov(E_{+}^\intercal,E_{-}^\intercal)$, if $n_{+}=n_{-}=n/2$, then matrix $A$ in \eqref{eq:densray2} can be reformulated into matrix form
+Let $V_{+}:=\{v\in V|l(v)=1\}$ with corresponding embedding $E_{+} \in R^{n_+\times d}$ and define$V_{-}, E_{-}$ analogously. Also let the cross-covariance matrix $K_{+-}=Cov(E_{+}^\intercal,E_{-}^\intercal)$, if $n_{+}=n_{-}=n/2$, then matrix $A$ in \eqref{eq:densray2} can be reformulated into matrix form
 \begin{eqnarray}
 A=\frac{n}{2}\{\alpha_{\neq}[(n-2)(K_{++}+K_{+-})+(E_{+}-E_{-})(E_{+}-E_{-})^\intercal]-\alpha_{=}(n-2)(K_{+-}+K_{+-}^\intercal)\}\nonumber
 \eqlabel{eq:densray3}
@@ -69,10 +69,6 @@ Hard debiasing and DensRay yield a gender dimension $q \in R^d$. In a contextual
  
 As Conceptor debiasing does not compute a single direction of gender, but always needs to apply the full conceptor matrix, it is not possible to depict the direction in the figure. 
 We argue that DensRay is more interpretable than Conceptor. It allows for example to assign token level gender scores easily. In addition it affects language model performance less than Conceptor debiasing, as we show later.
-
-\enote { hs } { you say that conceptor does not compute a
-  direction , but the figure shows one }
-
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.4\linewidth]{examples.png}
