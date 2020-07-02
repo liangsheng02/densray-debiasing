@@ -216,9 +216,13 @@ As a projection-based debiasing method, the premise of DensRay debiasing is that
 \end{figure}
 
 \subsubsection{Balancing Gender Bias}
-In this experiment, we zero out the dimensions of gender subspace to remove gender bias. Here we explore some other ways.
-
-We explored three other ways to remove bias: 1) replace the first dimension of the gender subspace with the mean value of the first dimension of the training samples. 2) standardize the first dimension. 3) replace the first dimension with a small random variable sampled from Gaussian distribution. All of them did not perform well. We further checked the mean and found that the mean of the different layers is not stable around zero, which is a problem worthy of further exploration. We also tried to delete more dimensions. However removing more dimensions does not improve the debiasing results significantly while harming the model performance.
+In our experiments, we zero out the dimensions of the gender
+subspace to remove gender bias. 
+We also explored three alternatives to zeroing out. 1)
+Replace the first dimension of the gender subspace with the
+mean value of the first dimension of the training
+samples. 2) Standardize the first dimension. 3) Replace the
+first dimension with a small random variable sampled from a Gaussian distribution. All of them did not perform well. We further checked the mean and found that the mean of the different layers is not stable around zero, which is a problem worthy of further exploration. We also tried to delete more dimensions. However removing more dimensions does not improve the debiasing results significantly while harming the model performance.
 
 
 \subsection{Multilingual Debiasing}
