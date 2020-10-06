@@ -1,6 +1,9 @@
 We introduced DensRay debiasing on BERT. Our experiments
 showed that this method can effectively mitigate gender bias on OCCTMP and the Association Tests, while maintained the performance of BERT on language modeling and GLUE tasks. We applied DensRay to BERT attention heads, showed that gender information is processed in all attention heads, there is no single attention head responsible for processing gender information. We also used DensRay to obtain interpretable gender bias scores, to quantify bias on token and sentence level for all representations. Finally, we demonstrated that we can remove bias multilingually, we used only English training data to effectively debias Chinese. \eat{As to further research, we plan to investigate other linguistic features on multilingual spaces by DensRay.}
 
+\enote{hs}{add future work here to address one reviewer
+comment: of course the biases can culturally differ. we
+don't address this here. this is for futurew ork}
 
 \enote{hs}{three parts of the paper should be in sync:
 
