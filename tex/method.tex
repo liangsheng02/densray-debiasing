@@ -63,8 +63,6 @@ A=\frac{n}{2}\{\alpha_{\neq}[(n-2)(K_{+-}+K_{+-}^\intercal)+(E_{+}-E_{-})(E_{+}-
 As stated in \cite{dufter2019analytical} $q$ is simply the eigenvector of $A$ corresponding to the largest eigenvalue.
 $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hyperparameters to balance the different optimization terms. 
 
-\enote{sl}{from the first term we can see densray intend to maximize the correlation between different groups, and maximize the differences of embeddings from different groups; the second term, minimize the correlation in same the group.}
-
 
 \subsection{Removing Gender Information}
 
@@ -78,6 +76,7 @@ To debias $X$ with conceptor one simply performs one matrix multiplication $X(I-
  
 As Conceptor debiasing does not compute a single direction of gender, but always needs to apply the full conceptor matrix, it is not possible to depict the direction in the figure. 
 We argue that having a single gender direction as in DensRay is more interpretable and easier to use than the Conceptor, e.g., it allows  to assign token level gender scores easily as shown in \tabref{t:measure1}. In addition DensRay affects language model performance less than Conceptor debiasing, as we show in \tabref{t:glue1}.
+\enote{sl}{Add an "expected gender direction" to the figure, and declare "the direction found by DensRay is closer to the expected direction than Hard Debiasing."}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.4\linewidth]{examples.png}
@@ -93,7 +92,7 @@ $V$, we extract sentences containing a word in $V$ from a
 corpus. We run a contextualized language model
 with $M$ layers
 on a set of 
-sentences that each contains one of the gender words, i.e., 
+sentences that each contains at least one of the gender words, i.e., 
 $t_1,\ldots,t_j,\ldots,t_n$ (where $t_j \in V$). 
 For each $t_j $ in each sentence we  compute the contextualized representations $e_j^m, 1\leq m
 \leq M$, one for each layer. We then use the vectors $e_j^m$ in \eqref{eq:densray2}.
