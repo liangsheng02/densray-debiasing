@@ -134,7 +134,7 @@ a pronoun is  likely to occur in the masked position.
 
 \subsubsection*{Debiasing on Attention Heads and Layers}
 We now apply DensRay to single attention heads in BERT and investigate the debiasing effect on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [1.0,1.4]. We conclude that there is no single attention head that is responsible for processing gender information.
-\enote{sl}{This conclusion is similar to the experiment from Bau et al (2018), which showed modifying some neurons activations in NMT didn't help in controlling gender, and conjectured that gender property is very distributed on the neurons.}
+\enote{sl}{This conclusion is similar to the experiment from \newcite{bau2019identifying}, which showed modifying some neurons activations in NMT didn't help in controlling gender, and conjectured that gender property is very distributed on the neurons.}
 So far we have always applied DensRay to all BERT layers
 simultaneously. \figref{fig:layersbase}  illustrates the effect of
 debiasing a single  layer on our templates and the three
@@ -241,7 +241,22 @@ bert-base-uncased in our previous experiments. As before, we
 compute the rotation matrices using the English gendered
 words from the ``family'' category of the Google analogy
 test set \cite{mikolov2013efficient}.
-
+\enote{hs}{In our opinion, debiasing involves two distinct
+	problems. First, how can bias be removed from the underlying
+	model? Second, how does bias manifest in a particular
+	language? The removal of bias from the underlying model can
+	be argued to be largely independent of the language whereas
+	the way bias manifests is highly language-dependent. For
+	example, Chinese does not mark gender and most French nouns
+	describing people are gender-specific. So on the surface,
+	Chinese sentences are gender-neutral and French sentences
+	cannot be gender-neutral (at least if wordy phrases like ... and
+	newer constructions like ... are to be avoided). However,
+	these particularities of surface form of individual
+	languages do not change the underlying problem of biased
+	language models: Chinese and French language models are
+	still biased and should be debiased to avoid unfair and
+	biased impact caused by deployed NLP systems.}
 Since Chinese is a language that does not mark gender, we can construct the OCCTMP templates by directly translating from the English templates. We use the following form:
 ``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupation using Tencent Translation\footnote{https://fanyi.qq.com/} and make some manual adjustments to the translation. After removing duplicates,  302 Chinese templates remain.
 
@@ -257,14 +272,14 @@ Since Chinese is a language that does not mark gender, we can construct the OCCT
 		& 0.51 & 0.14 & 0.65 & 1.66&0.81 \\ 
 		bert-multi-densray-en & 0.33 & 0.12 & 0.46 & 1.33&0.65 \\
 		\hline
-		 bert-multi-cn 
+		 bert-multi-zh 
 		& 0.24 & 0.07 & 0.31 & 1.39&0.60 \\
-		 bert-multi-densray-cn 
+		 bert-multi-densray-zh 
 		& 0.12 & 0.04 & 0.17 & 1.22&0.47\\
 		\hline
 	\end{tabular}
 	\caption{\tablabel{t:templates3}
-		Results of OCCTMP on mBERT after applied DensRay. Models with \textit{-en} are tested on English templates, and those with \textit{-cn} are tested on Chinese templates.}
+		Results of OCCTMP on mBERT after applied DensRay. Models with \textit{-en} are tested on English templates, and those with \textit{-zh} are tested on Chinese templates.}
 \end{table}
 
 \begin{table}[h]
@@ -276,13 +291,13 @@ Since Chinese is a language that does not mark gender, we can construct the OCCT
 		\hline
 		\yin{\text{[MASK]}是一个客座教授。} & bert-multi-en & 0.68 & 0.16&0.84&1.45\\
 		\text{[MASK]} is an adjunct professor.& bert-multi-densray-en & 0.51 & 0.18&0.70&1.04\\
-		& bert-multi-cn & 0.52 & 0.11&0.63&1.55\\
-		& bert-multi-densray-cn & 0.30 & 0.08&0.38&1.31\\
+		& bert-multi-zh & 0.52 & 0.11&0.63&1.55\\
+		& bert-multi-densray-zh & 0.30 & 0.08&0.38&1.31\\
 		\hline
 		\yin{\text{[MASK]}是一个管理员。} & bert-multi-en & 0.53 & 0.17&0.70&1.14\\
 		\text{[MASK]}is an administrator.& bert-multi-densray-en & 0.35 & 0.13&0.48&0.99\\
-		& bert-multi-cn & 0.68 & 0.16&0.84&1.45\\
-		& bert-multi-densray-cn & 0.51 & 0.18&0.69&1.04\\
+		& bert-multi-zh & 0.68 & 0.16&0.84&1.45\\
+		& bert-multi-densray-zh & 0.51 & 0.18&0.69&1.04\\
 		\hline
 	\end{tabular}
 	\caption{\label{t:templates3}

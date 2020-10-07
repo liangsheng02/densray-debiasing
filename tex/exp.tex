@@ -8,8 +8,7 @@ the ``family''
 category,\footnote{http://download.tensorflow.org/data/questions-words.txt}
 of the Google analogy test set \cite{mikolov2013efficient}. As the input corpus, we collect text data from Wikipedia that contains 5,000 (resp.\ 10,000)
 occurrences of words in the gendered list for the BERT base
-(resp.\ large) model. We carefully balance the occurrences such that the number of male and female samples are equal. We set  $\alpha_{\neq}=\alpha_{=}=0.5$, as we have balanced the training samples from the corpus.
-
+(resp.\ large) model. We carefully balance the occurrences such that the number of male and female samples are equal. We set  $\alpha_{\neq}=\alpha_{=}=0.5$, as we have balanced the training samples from the corpus. 
 We applied DensRay to all BERT layers for debiasing. We
 compare with the hard debiasing method \cite{mu2018all} and
 the debiasing conceptor \cite{karve2019conceptor} to

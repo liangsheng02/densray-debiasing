@@ -67,7 +67,7 @@ $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hyperparameters to balance the different
 \subsection{Removing Gender Information}
 
 Hard debiasing and DensRay yield a gender dimension $q \in R^d$. In a contextualized language model like BERT each layer yields a contextualized embedding matrix $X \in R^{t \times d}$ where $t$ is the length of the sentence. To debias representations we simply zero out the projected values on $q$ for each position, that is we set $x^{\text{debiased}}_i = x_i -  (x_i^\intercal q) q$ for each position $i$.
-To debias $X$ with conceptor one simply performs one matrix multiplication $X(I-C)$. 
+To debias $X$ with conceptor one simply performs one matrix multiplication $X^{\text{debiased}}=X(I-C)$. \enote{sl}{Then we use $X^{\text{debiased}}$ as the input of the next layer.}
 
 \subsection{Comparison of the Approaches}
 \seclabel{artexample}
