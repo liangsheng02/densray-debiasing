@@ -67,16 +67,15 @@ $\alpha_{\neq},\alpha_{=}\in [0,1]$ are hyperparameters to balance the different
 \subsection{Removing Gender Information}
 
 Hard debiasing and DensRay yield a gender dimension $q \in R^d$. In a contextualized language model like BERT each layer yields a contextualized embedding matrix $X \in R^{t \times d}$ where $t$ is the length of the sentence. To debias representations we simply zero out the projected values on $q$ for each position, that is we set $x^{\text{debiased}}_i = x_i -  (x_i^\intercal q) q$ for each position $i$.
-To debias $X$ with conceptor one simply performs one matrix multiplication $X^{\text{debiased}}=X(I-C)$. \enote{sl}{Then we use $X^{\text{debiased}}$ as the input of the next layer.}
+To debias $X$ with conceptor one simply performs one matrix multiplication $X^{\text{debiased}}=X(I-C)$. Then we use $X^{\text{debiased}}$ as the input of the next layer.
 
 \subsection{Comparison of the Approaches}
 \seclabel{artexample}
  \figref{fig:example} shows artificially created two dimensional embeddings. The lines show the gender directions identified by hard debiasing and DensRay. In this example
- the first principal component does not correlate with gender. DensRay is able to handle this as it explicitly uses the labels.
+ the first principal component does not correlate with gender, while DensRay is able to handle this as it explicitly uses the labels.
  
 As Conceptor debiasing does not compute a single direction of gender, but always needs to apply the full conceptor matrix, it is not possible to depict the direction in the figure. 
 We argue that having a single gender direction as in DensRay is more interpretable and easier to use than the Conceptor, e.g., it allows  to assign token level gender scores easily as shown in \tabref{t:measure1}. In addition DensRay affects language model performance less than Conceptor debiasing, as we show in \tabref{t:glue1}.
-\enote{sl}{Add an "expected gender direction" to the figure, and declare "the direction found by DensRay is closer to the expected direction than Hard Debiasing."}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.4\linewidth]{examples.png}

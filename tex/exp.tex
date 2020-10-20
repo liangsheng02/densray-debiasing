@@ -21,9 +21,7 @@ We therefore applied the
 debiasing conceptor only to the last BERT layer.
 
 \subsection{Evaluation}
-We use two evaluation datasets to measure gender bias: Association tests (Section~\ref{sec:weat}) and OCCTMP. \enote{sl}{ and OCCTMP (occupation templates).}
-OCCTMP is a new evaluation dataset based on occupation templates
-that we created specifically to evaluate contextualized language models.  It has the added advantage that results are easier to interpret than those for Association tests.
+We use two evaluation datasets to measure gender bias: Association tests (Section~\ref{sec:weat}) and OCCTMP (occupation templates). OCCTMP is a method to use existing occupation datasets for evaluation, based on the templates that we created specifically to evaluate contextualized language models.  It has the added advantage that results are easier to interpret than those for Association tests.
 
 \subsubsection{OCCTMP}
 To construct OCCTMP, we start with 320 occupation names %\footnote{https://github.com/tolga-/debiaswe/blob/master/data/professions.json} 
@@ -88,7 +86,7 @@ one-sided $p$-value of the permutation test.  A $d$-value closer to zero indicat
 
 \subsubsection{Model Performance}
 It is crucial that debiasing methods do not harm the downstream
-performance of BERT models. Thus we test the perplexity of language modeling on Wikitext-2 \cite{merity2016pointer}, a subset of Wikipedia with 2 million words. We also test on GLUE  \cite{wang2018glue}, using the same setup as \cite{wolf2019huggingfaces}.%\footnote{https://huggingface.co/transformers/}
-\enote{sl}{Since the deviation already exists in the data of these tasks, 
-	the overall performance will decrease after debiasing. 
-	Our expectation here is to cause less damage to the model performance after debiasing.}
+performance of BERT models. Thus we test the perplexity of language modeling on Wikitext-2 \cite{merity2016pointer}, a subset of Wikipedia with 2 million words. We also test on GLUE  \cite{wang2018glue}, using the same setup as \cite{wolf2019huggingfaces}.\footnote{https://huggingface.co/transformers/}
+Since the deviation already exists in the data of these tasks, 
+the overall performance will decrease after debiasing. 
+Our expectation here is to cause less damage to the model performance after debiasing.

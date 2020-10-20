@@ -13,7 +13,7 @@ in relative terms, ``he'' is still strongly favored compared
 to ``she''.
 \tabref{t:weat1} shows the results on association tests. We observe that association tests have a high variance depending on which category is used. 
 Overall the debiasing performance of the three methods are comparable with DensRay and Conceptor having the best performance three times and hard-debiasing having the best performance 5 times.
-\enote{sl}{Overall the debiasing performance of the three methods are comparable, with DensRay and Conceptor both having the best performance three times and hard-debiasing having the best performance 5 times.}
+Overall the debiasing performance of the three methods are comparable, with DensRay and Conceptor both having the best performance three times and hard-debiasing having the best performance 5 times.
 
 \begin{table}[ht]
 \centering
@@ -134,7 +134,7 @@ a pronoun is  likely to occur in the masked position.
 
 \subsubsection*{Debiasing on Attention Heads and Layers}
 We now apply DensRay to single attention heads in BERT and investigate the debiasing effect on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [1.0,1.4]. We conclude that there is no single attention head that is responsible for processing gender information.
-\enote{sl}{This conclusion is similar to the experiment from \newcite{bau2019identifying}, which showed modifying some neurons activations in NMT didn't help in controlling gender, and conjectured that gender property is very distributed on the neurons.}
+This conclusion is similar to the experiment from \newcite{bau2019identifying}, which showed modifying some neurons activations in NMT didn't help in controlling gender, and conjectured that gender property is very distributed on the neurons.
 So far we have always applied DensRay to all BERT layers
 simultaneously. \figref{fig:layersbase}  illustrates the effect of
 debiasing a single  layer on our templates and the three
