@@ -42,6 +42,7 @@ Many methods to remove gender bias have been proposed. The most common way is to
 
 The debiasing conceptor and the \cite{mu2018all} hard debiasing produce gender direction by gendered word list mixed with male and female words. In contrast, the \cite{bolukbasi2016man} hard debiasing used two groups of gendered words for definition and another two groups for alignment, to identify the gender direction by male-female pairs. The method we use, DensRay, is similar to the \cite{bolukbasi2016man} hard debiasing in this aspect. However, DensRay uses only one male and one female word list, and it can be solved efficiently in a closed form. So it would be more stable to be applied to contextual models than the \cite{bolukbasi2016man} hard debiasing. 
  
+\cite{gonen-goldberg-2019-lipstick-pig} showed that except the gender direction, gender bias on static embeddings also come from the association to other implicitly gendered terms. While we assume that this phenomenon will be weakened in contextual embedding, so we only focus on the gender direction, this may be a limitation of our work. \cite{gonen-goldberg-2019-lipstick-pig} also proposed some experiments to evaluate the remaining bias after debiasing, in which the gender classifier experiment shared the same idea with OCCTMP.
 
 
 
