@@ -129,12 +129,12 @@ a pronoun is  likely to occur in the masked position.
 		OCCTMP examples with prediction probabilities.}
 \end{table}
 
-
 \subsection{Analysis}
 
 \subsubsection*{Debiasing on Attention Heads and Layers}
-We now apply DensRay to single attention heads in BERT and investigate the debiasing effect on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in [1.0,1.4]. We conclude that there is no single attention head that is responsible for processing gender information.
+We now apply DensRay to single attention heads in BERT and investigate the debiasing effect on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in (1.0,1.4). We conclude that there is no single attention head that is responsible for processing gender information.
 This conclusion is similar to the experiment from \newcite{bau2019identifying}, which showed modifying some neurons activations in NMT didn't help in controlling gender, and conjectured that gender property is very distributed on the neurons.
+
 So far we have always applied DensRay to all BERT layers
 simultaneously. \figref{fig:layersbase}  illustrates the effect of
 debiasing a single  layer on our templates and the three
@@ -207,21 +207,6 @@ is completely gender-neutral.
 
 
 
-\subsubsection*{Number of Training Samples}
-In the experiments, we collected training samples for DensRay by considering occurrences of the same word in the corpus across different sentences. This greatly enriches training samples. We also collected equally many masculine and feminine words for data balancing. Now we analyze the impact of these processes. DensRay is essentially a supervised learning method. It is difficult to extract useful features in the case of insufficient or unbalanced labels.  As shown in \figref{curve}, the debiasing results improve with an increased number of training samples.
-
-As a projection-based debiasing method, the premise of DensRay debiasing is that the gender direction should be correct. Unbalanced samples will lead to incorrect gender direction biased towards either the male or the female, resulting in reversing the gender bias during debiasing. For example, if there are more masculine samples, then the embeddings will be biased towards feminine after debiasing. 
-%Besides, \eqref{eq:densray3} shows that .
- The figure also shows that a balanced training set improves  debiasing performance.
-\begin{figure}[h]
-	\centering
-	\footnotesize
-	\includegraphics[width=0.4\linewidth]{samples}
-	\caption{DensRay debiasing results on OCCTMP with different number of samples and unbalanced/balanced data.}
-	\figlabel{curve}
-\end{figure}
-
-
 \subsubsection*{Alternatives to Removing the Gender Dimension}
 In our experiments, we zero out the dimensions of the gender
 subspace to remove gender bias. 
@@ -229,8 +214,7 @@ We also explored three alternatives to zeroing out. 1)
 Replace the first dimension of the gender subspace with the
 mean value of the first dimension of the training
 samples. 2) Standardize the first dimension. 3) Replace the
-first dimension with a small random variable sampled from a Gaussian distribution. All of them did not perform well. We further checked the mean and found that the mean of the different layers is not stable around zero, which we plan to investigate in future work. Using higher dimensional gender subspaces (i.e., not only a single direction)
-did not improve the debiasing results while harming the model performance.
+first dimension with a small random variable sampled from a Gaussian distribution. All of them did not perform well. Using higher dimensional gender subspaces also did not improve the debiasing results while harming the model performance.
 
 
 \subsection{Multilingual Debiasing}
@@ -244,8 +228,8 @@ In our opinion, multilingual debiasing involves two distinct
 	the way bias manifests is highly language-dependent. For
 	example, Chinese does not mark gender and most German nouns
 	describing people are gender-specific. So on the surface,
-	Chinese sentences are gender-neutral and German sentences
-	cannot be gender-neutral (at least if wordy phrases like \textit{Studentinnen} and \textit{Studenten} are to be avoided). However, these particularities of surface form of individual
+	Chinese are gender-neutral and German
+	cannot be gender-neutral (e.g. \textit{Studentinnen} and \textit{Studenten}). However, these particularities of surface form of individual
 	languages do not change the underlying problem of biased
 	language models: Chinese and German language models are
 	still biased and should be debiased to avoid unfair and

@@ -4,9 +4,9 @@ gender bias. The original WEAT is used on static
 embeddings. To extend WEAT to contextual embeddings, some
 template-based processes
 \cite{karve2019conceptor,kurita2019measuring,Tan2019AssessingSA}
-were constructed to obtain the word embeddings from the
+were constructed to obtain word embeddings from the
 context. SEAT further improved the templates and computed
-the similarities between the sentences instead of
+the similarities between sentences instead of
 words. \newcite{guo2020detecting} proposed CEAT (Contextual
 Embedding Association Test), which samples the occurrences
 from the corpus to get the embeddings, and measures the bias
@@ -26,23 +26,23 @@ An alternative way to measure gender bias is to evaluate on
 schemas. \newcite{webster2018mind} released GAP, a balanced
 corpus of Gendered Ambiguous Pronouns, which measures gender
 bias as the ratio of F1 score on masculine to F1 score on
-feminine. However the ratio is very close to 1
+feminine. However the ratio is very close to 1.0
 \cite{Chada_2019,Attree_2019} making it hard to compare
 debiasing systems. For sentiment analysis, Equity Evaluation
 Corpus (EEC) \cite{Kiritchenko_2018} was designed to measure
 gender bias by the difference in emotional intensity
 predictions between gender-swapped sentences. Since the
-measures of gender bias in these data sets are not
-intuitive, we chose to use association tests in
-this paper.
+measures of gender bias in these datasets are not
+intuitive, we use association tests in
+this work.
 
 \subsection{Debiasing Methods}
-Many methods to remove gender bias have been proposed. The most common way is to define a gender direction (or, more generally, a subspace) by a set of gendered words and debias the word embeddings in a post-processing projection. \cite{bolukbasi2016man} propose (i) \emph{hard debiasing}: use the gendered words to compute the difference embedding vector as the gender direction, and remove the gender subspace component of the neutral words while preserve it for the gendered words; and (ii) \emph{soft debiasing}, a machine learning based method that combines the inner-products objective of word embedding and an objective to project the word embedding into an orthogonal gender subspace. It has been found to work better than soft debiasing. \cite{prost-etal-2019-debiasing} proposed a variant of the hard debiasing algorithm by simply removing gender subspace component of all words in the vocabulary, we also applied this strategy in our approach. \cite{dev2019attenuating} explored partial projection and some simple tricks to improve the hard debiasing method.
-\cite{zhao2019gender} applied the data augmentation and debiasing method of  \cite{bolukbasi2016man} to mitigate gender bias on ELMo  \cite{Peters:2018}. \cite{karve2019conceptor} proposed the debiasing conceptor, which shrinks each principal component of the covariance matrix of the embeddings to achieve a soft debiasing. They also introduced a simple and intuitive hard debiasing method proposed by \cite{mu2018all}, which identified the gender subspace by PCA and projected the first principal component off.  
+Many methods to remove gender bias have been proposed. The most common way is to define a gender direction (or, more generally, a subspace) by a set of gendered words and debias the word embeddings in a post-processing projection. \newcite{bolukbasi2016man} propose (i) \emph{hard debiasing}: use the gendered words to compute the difference embedding vector as the gender direction, and remove the gender subspace component of the neutral words while preserve it for the gendered words; and (ii) \emph{soft debiasing}, a machine learning based method that combines the inner-products objective of word embedding and an objective to project the word embedding into an orthogonal gender subspace. It has been found to work better than soft debiasing. \newcite{prost-etal-2019-debiasing} proposed a variant of the hard debiasing algorithm by simply removing gender subspace component of all words in the vocabulary, we also applied this strategy in our approach. \newcite{dev2019attenuating} explored partial projection and some simple tricks to improve the hard debiasing method.
+\newcite{zhao2019gender} applied the data augmentation and debiasing method of \newcite{bolukbasi2016man} to mitigate gender bias on ELMo  \cite{Peters:2018}. \newcite{karve2019conceptor} proposed the debiasing conceptor, which shrinks each principal component of the covariance matrix of the embeddings to achieve a soft debiasing. They also introduced a simple and intuitive hard debiasing method proposed by \cite{mu2018all}, which identified the gender subspace by PCA and projected the first principal component off.  
 
-The debiasing conceptor and the \cite{mu2018all} hard debiasing produce gender direction by gendered word list mixed with male and female words. In contrast, the \cite{bolukbasi2016man} hard debiasing used two groups of gendered words for definition and another two groups for alignment, to identify the gender direction by male-female pairs. The method we use, DensRay, is similar to the \cite{bolukbasi2016man} hard debiasing in this aspect. However, DensRay uses only one male and one female word list, and it can be solved efficiently in a closed form. So it would be more stable to be applied to contextual models than the \cite{bolukbasi2016man} hard debiasing. 
+The debiasing conceptor and the \newcite{mu2018all} hard debiasing produce gender direction by gendered word list mixed with male and female words. In contrast, the \newcite{bolukbasi2016man} hard debiasing used two groups of gendered words for definition and another two groups for alignment, to identify the gender direction by male-female pairs. The method we use, DensRay, is similar to the \newcite{bolukbasi2016man} hard debiasing in this aspect. However, DensRay uses only one male and one female word list, and it can be solved efficiently in a closed form. So it would be more stable to be applied to contextual models than the \newcite{bolukbasi2016man} hard debiasing. 
  
-\cite{gonen-goldberg-2019-lipstick-pig} showed that except the gender direction, gender bias on static embeddings also come from the association to other implicitly gendered terms. While we assume that this phenomenon will be weakened in contextual embedding, so we only focus on the gender direction, this may be a limitation of our work. \cite{gonen-goldberg-2019-lipstick-pig} also proposed some experiments to evaluate the remaining bias after debiasing, in which the gender classifier experiment shared the same idea with OCCTMP.
+\newcite{gonen-goldberg-2019-lipstick-pig} showed that except the gender direction, biases on static embeddings also come from the association to other implicitly gendered terms. We assume that this phenomenon will be weakened in contextual embedding, so we only focus on the gender direction, this may be a limitation.They also proposed some experiments to evaluate the remaining bias after debiasing, in which the gender classifier shared the same idea with OCCTMP.
 
 
 

@@ -7,7 +7,7 @@ embedding models, such as BERT \cite{devlin2018bert}, have
 become increasingly common and achieved new state-of-the-art
 results in many NLP tasks. Researchers have also found
 gender bias in contextualized
-embeddings ~\cite{zhao2019gender,may2019measuring}.
+embeddings \cite{zhao2019gender,may2019measuring}. It had been also found that these biases have unignorable impacts on downstream tasks \cite{vanmassenhove-etal-2018-getting,moryossef-etal-2019-filling,rudinger2018gender,zhao2018gender}.
 
 A common approach for removing gender information in static
 embeddings is to identify a linear gender subspace (e.g., a
@@ -21,9 +21,9 @@ computing a PCA of a set of gender words hoping that the
 main variation occurs across gender. We propose to use
 DensRay \cite{dufter2019analytical}: the main advantage is
 that DensRay only requires two or multiple groups of
-gendered words. In contrast to \cite{bolukbasi2016man}, it
+gendered words. In contrast to \newcite{bolukbasi2016man}, it
 does not require explicit pairs. Compared
-to \cite{mu2018all}, it has explicit supervision with gender
+to \newcite{mu2018all}, it has explicit supervision with gender
 labels. We show in \secref{artexample} that this enables
 DensRay to identify better gender directions.
 

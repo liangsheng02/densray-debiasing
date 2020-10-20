@@ -103,8 +103,11 @@
 \newcommand{\pluseq}{\mathrel{+}=}
 
 
+\usepackage[colorlinks=true, citecolor=black, linkcolor=black, urlcolor=black]{hyperref}
+
+
 %\setlength\titlebox{5cm}
-%\colingfinalcopy % Uncomment this line for the final submission
+\colingfinalcopy % Uncomment this line for the final submission
 
 % You can expand the titlebox if you need extra space
 % to show all the authors. Please do not make the titlebox
@@ -114,16 +117,10 @@
 
 \title{Monolingual and Multilingual Reduction of Gender Bias in Contextualized Representations}
 
-\author{First Author \\
-  Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  Affiliation / Address line 3 \\
-  {\tt email@domain} \\\And
-  Second Author \\
-  Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  Affiliation / Address line 3 \\
-  {\tt email@domain} \\}
+\author{Sheng Liang, Philipp Dufter, Hinrich Schutze\\
+  Center for Information and Language Processing (CIS) \\
+  LMU Munich, Germany\\
+  {\tt \{shengliang, philipp\}@cis.lmu.de}}
 
 \date{}
 
@@ -225,5 +222,19 @@ from Chinese, using only English training data.
 %\newblock In \emph{Proceedings of the Australasian Language Technology Association %Workshop 2011}, pages 10--18, Canberra, Australia.
 
 %\end{thebibliography}
+{\bf Appendix A. Number of Training Samples}:
+
+DensRay is essentially a supervised learning method. It is difficult to extract useful features in the case of insufficient or unbalanced labels.  As shown in \figref{curve}, the debiasing results improve with an increased number of training samples.
+
+As a projection-based debiasing method, the premise of DensRay debiasing is that the gender direction should be correct. Unbalanced samples will lead to a biased gender direction. 
+%Besides, \eqref{eq:densray3} shows that .
+The figure also shows that a gender balanced training set improves debiasing performance.
+\begin{figure}[h]
+	\centering
+	\footnotesize
+	\includegraphics[width=0.4\linewidth]{samples}
+	\caption{DensRay debiasing results on OCCTMP with unbalanced/balanced data.}
+	\figlabel{curve}
+\end{figure}
 
 \end{document}
