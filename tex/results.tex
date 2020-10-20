@@ -235,29 +235,28 @@ did not improve the debiasing results while harming the model performance.
 
 \subsection{Multilingual Debiasing}
 We now show that, in a multilingual contextualized language model like mBERT, we can use DensRay for zero-shot debiasing. Specifically, we train a DensRay model on English and use it to debias Chinese.
-We use  bert-base-multilingual-uncased from
-\cite{wolf2019huggingfaces}. We use the same setup as for
-bert-base-uncased in our previous experiments. As before, we
-compute the rotation matrices using the English gendered
-words from the ``family'' category of the Google analogy
-test set \cite{mikolov2013efficient}.
-\enote{hs}{In our opinion, debiasing involves two distinct
+
+In our opinion, multilingual debiasing involves two distinct
 	problems. First, how can bias be removed from the underlying
 	model? Second, how does bias manifest in a particular
 	language? The removal of bias from the underlying model can
 	be argued to be largely independent of the language whereas
 	the way bias manifests is highly language-dependent. For
-	example, Chinese does not mark gender and most French nouns
+	example, Chinese does not mark gender and most German nouns
 	describing people are gender-specific. So on the surface,
-	Chinese sentences are gender-neutral and French sentences
-	cannot be gender-neutral (at least if wordy phrases like ... and
-	newer constructions like ... are to be avoided). However,
-	these particularities of surface form of individual
+	Chinese sentences are gender-neutral and German sentences
+	cannot be gender-neutral (at least if wordy phrases like \textit{Studentinnen} and \textit{Studenten} are to be avoided). However, these particularities of surface form of individual
 	languages do not change the underlying problem of biased
-	language models: Chinese and French language models are
+	language models: Chinese and German language models are
 	still biased and should be debiased to avoid unfair and
-	biased impact caused by deployed NLP systems.}
-Since Chinese is a language that does not mark gender, we can construct the OCCTMP templates by directly translating from the English templates. We use the following form:
+	biased impact caused by deployed NLP systems.
+	
+We use  bert-base-multilingual-uncased from
+\cite{wolf2019huggingfaces}. We use the same setup as for
+bert-base-uncased in our previous experiments. As before, we
+compute the rotation matrices using the English gendered
+words from the ``family'' category of the Google analogy
+test set \cite{mikolov2013efficient}. Since Chinese is a language that does not mark gender, we can construct the OCCTMP templates by directly translating from the English templates. We use the following form:
 ``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupation using Tencent Translation\footnote{https://fanyi.qq.com/} and make some manual adjustments to the translation. After removing duplicates,  302 Chinese templates remain.
 
 \tabref{t:templates3} gives results for the Chinese templates. Two examples are given in \tabref{t:templates3}. We see that DensRay trained with English can mitigate gender bias in mBERT: the diff score drops from 1.39 to 1.22 on Chinese templates. 
