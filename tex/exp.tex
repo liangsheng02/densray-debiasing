@@ -29,6 +29,7 @@ provided by \newcite{bolukbasi2016man}. Each occupation name is converted into t
 We measure gender bias as the average difference between the log probability of BERT predicting [MASK] as ``he'' vs.\ ``she''
 %\begin{eqnarray}
 \begin{gather*}
+\small
 \text{diff}=\frac{1}{|{\mathcal T}|} \sum_{T \in
 	{\mathcal T}}(\log p_{max} - \log p_{min}),\\
 \mbox{where }p_{max}=\max\{p(\mbox{he}| T),p(\mbox{she}| T)\} \mbox{; }p_{min}=\min\{p(\mbox{he}| T),p(\mbox{she}| T)\}
@@ -55,14 +56,17 @@ been argued that if the null hypothesis cannot be rejected,
 there is no significant gender bias.  The WEAT test
 statistic is defined as
 \begin{gather*}
+\small
 s(X_1,X_2,A_1,A_2)=\sum_{x\in X_1}s(x,A_1,A_2)-\sum_{x\in X_2}s(x,A_1,A_2),\\
 \mbox{where } s(x,A_1,A_2)=\mbox{mean}_{a\in A_1}cos(\vec{x},\vec{a})-\mbox{mean}_{a\in A_2}cos(\vec{x},\vec{a})
 \end{gather*}
 in which $cos(\vec{x},\vec{a})$ denotes the cosine similarity between embedding vector $\vec{x}$ and $\vec{a}$. Intuitively, $s(x,A_1,A_2)$ measures the association of a word with the attributes, so the test statistic measures the differential association of the two target sets with the attributes. 
 
-Let $\{({X_1}_i,{X_2}_i)\}_{i}$ denote all the partitions of $X_1\cup X_2$. The one-sided $p$-value of the permutation test is defined as $$p=Pr_i[s({X_1}_i,{X_2}_i,A_1,A_2)>s(X_1,X_2,A_1,A_2)]$$
+Let $\{({X_1}_i,{X_2}_i)\}_{i}$ denote all the partitions of $X_1\cup X_2$. The one-sided $p$-value of the permutation test is defined as $$\small
+p=Pr_i[s({X_1}_i,{X_2}_i,A_1,A_2)>s(X_1,X_2,A_1,A_2)]$$
 The effect size $d$-value is a normalized measure of how separated the two distributions of associations between the target and attribute are. It is defined as
 \begin{eqnarray}
+\small
 d=\frac{s(X_1,X_2,A_1,A_2)}{\mbox{std}_{x\in X_1 \cup X_2}s(x,A_1,A_2)}.\nonumber
 \end{eqnarray}
 

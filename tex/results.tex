@@ -18,6 +18,9 @@ Overall the debiasing performance of the three methods are comparable, with Dens
 \begin{table}[ht]
 \centering
 \footnotesize
+\vspace{0cm}  
+\setlength{\abovecaptionskip}{0.2cm}   
+\setlength{\belowcaptionskip}{0cm}
 \begin{tabular}{lccccc}
 \hline
 model & prob(he) & prob(she) & sum &diff & var\\
@@ -41,6 +44,9 @@ bert-large-densray  & 0.47 & 0.31 & 0.77&\textbf{0.49}&0.13 \\
 \begin{table}[h]
 	\centering
 	\footnotesize
+	\vspace{0cm}  
+	\setlength{\abovecaptionskip}{0.2cm}   
+	\setlength{\belowcaptionskip}{0cm}
 	\begin{tabular}{cl{|}cccc{|}cccc}
 		\hline
 		&&\multicolumn{4}{c|}{bert-base}&\multicolumn{4}{c}{bert-large}\\
@@ -78,6 +84,9 @@ on bert-large, DensRay performs better than debiasing conceptor. Overall we find
 \begin{table*}[h]
 \centering
 \footnotesize
+\vspace{0cm}  
+\setlength{\abovecaptionskip}{0.2cm}   
+\setlength{\belowcaptionskip}{0cm}
 \begin{tabular}{l||c|cccccccccc}
 %\hline
 model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI&GLUE avg\\
@@ -104,12 +113,14 @@ In \tabref{t:templates2} we show two OCCTMP examples.
 Again, densray works best as measures by diff.
 The sum probabilities of ``he'' and ``she''
 on the debiasing conceptor are around 0.5, indicating that
-the
-language model has lost part of its ability to predict that 
+the language model has lost part of its ability to predict that 
 a pronoun is  likely to occur in the masked position.
 \begin{table}[h]
 	\centering
 	\footnotesize
+		\vspace{0cm}  
+	\setlength{\abovecaptionskip}{0.2cm}   
+	\setlength{\belowcaptionskip}{0cm}  
 	\begin{tabular}{llcccc}
 		\hline
 		sentence & model & prob(he) & prob(she) &sum&diff\\
@@ -143,6 +154,7 @@ stronger in layers 7--10 than in the other layers in
 bert-base. It is shown that gender information is processed on BERT layers, especially the upper layers.
 \begin{figure}[h]
 	\centering
+	\footnotesize
 	\subfigure[attention heads]{
 		\begin{minipage}[l]{0.5\linewidth}
 			\centering
@@ -181,7 +193,10 @@ is completely gender-neutral.
 
 \begin{table}[h]
 	\centering
-	\scriptsize
+	\footnotesize
+	\vspace{0cm}  
+	\setlength{\abovecaptionskip}{0.2cm}   
+	\setlength{\belowcaptionskip}{0cm}
 	\begin{tabular}{cccccc|c||c}
 		\hline
 		\multicolumn{6}{c|}{DensRay}&Avg.&log probability score\\		
@@ -204,6 +219,7 @@ is completely gender-neutral.
 	\caption{\tablabel{t:measure1}
 		Examples for quantifying bias (model: bert-base).}
 \end{table}
+
 
 
 
@@ -247,6 +263,9 @@ test set \cite{mikolov2013efficient}. Since Chinese is a language that does not 
 \begin{table}[h]
 	\centering
 	\footnotesize
+	\vspace{0cm}  
+	\setlength{\abovecaptionskip}{0.2cm}   
+	\setlength{\belowcaptionskip}{0cm}
 	\begin{tabular}{lccccc}
 		\hline
 		model & prob(he) & prob(she) & sum &diff & var\\
@@ -268,6 +287,9 @@ test set \cite{mikolov2013efficient}. Since Chinese is a language that does not 
 \begin{table}[h]
 	\centering
 	\footnotesize
+	\vspace{0cm}  
+	\setlength{\abovecaptionskip}{0.2cm}   
+	\setlength{\belowcaptionskip}{0cm}
 	\begin{tabular}{llcccc}
 		\hline
 		sentence & model & \yin{prob(他)} & \yin{prob(她)}&sum&diff\\

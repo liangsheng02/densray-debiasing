@@ -224,16 +224,18 @@ from Chinese, using only English training data.
 %\end{thebibliography}
 {\bf Appendix A. Number of Training Samples}:
 
-DensRay is essentially a supervised learning method. It is difficult to extract useful features in the case of insufficient or unbalanced labels.  As shown in \figref{curve}, the debiasing results improve with an increased number of training samples.
+ DensRay is essentially a supervised learning method. It is difficult to extract useful features in the case of insufficient or unbalanced labels.  As shown in \figref{curve}, the debiasing results improve with an increased number of training samples.
 
-As a projection-based debiasing method, the premise of DensRay debiasing is that the gender direction should be correct. Unbalanced samples will lead to a biased gender direction. 
-%Besides, \eqref{eq:densray3} shows that .
-The figure also shows that a gender balanced training set improves debiasing performance.
+As a projection-based debiasing method, the premise of DensRay debiasing is that the gender direction should be correct. Unbalanced samples will lead to incorrect gender direction biased towards either male or female, resulting in reversing the gender bias during debiasing. The figure also shows that a balanced training set improves debiasing performance.
 \begin{figure}[h]
 	\centering
 	\footnotesize
+	\vspace{0cm}  
+	\setlength{\abovecaptionskip}{0.2cm}   
+	\setlength{\belowcaptionskip}{0cm}
 	\includegraphics[width=0.4\linewidth]{samples}
-	\caption{DensRay debiasing results on OCCTMP with unbalanced/balanced data.}
+	\caption{DensRay debiasing results on OCCTMP with different number of samples and unbalanced/balanced data.}
+ 
 	\figlabel{curve}
 \end{figure}
 
