@@ -8,35 +8,26 @@ the ``family''
 category,\footnote{http://download.tensorflow.org/data/questions-words.txt}
 of the Google analogy test set \cite{mikolov2013efficient}. As the input corpus, we collect text data from Wikipedia that contains 5,000 (resp.\ 10,000)
 occurrences of words in the gendered list for the BERT base
-(resp.\ large) model. We carefully balance the occurrences such that the number of male and female samples are equal. We set  $\alpha_{\neq}=\alpha_{=}=0.5$, as we have balanced the training samples from the corpus. 
-We applied DensRay to all BERT layers for debiasing. We
-compare with the hard debiasing method \cite{mu2018all} and
-the debiasing conceptor \cite{karve2019conceptor} to
-eliminate gender bias as adapted to contextualized
-embeddings. In the experiments, we found that hard debiasing applied to all BERT layers
-yields better results than only applying it to the last layer.\enote{pd}{I guess DensRay is also applied to all layers?} In contrast, when applying debiasing conceptor
-to all layers, language modeling performance (as measured by
-perplexity) is extremely poor.
-We therefore applied the
-debiasing conceptor only to the last BERT layer.
+(resp.\ large) model. We carefully balance the occurrences such that the number of male and female samples are equal, then we set  $\alpha_{\neq}=\alpha_{=}=0.5$. We compare with hard debiasing \cite{mu2018all} and debiasing conceptor \cite{karve2019conceptor} to eliminate gender bias as adapted to contextualized embeddings. In the experiments, we found that DensRay and hard debiasing applied to all BERT layers yield better results than only applying to the last layer. In contrast, when applying debiasing conceptor to all layers, language modeling performance (as measured by perplexity) is extremely poor.
+We therefore applied the DensRay and hard debiasing to all BERT layers while debiasing conceptor only to the last layer.
 
 \subsection{Evaluation}
 We use two evaluation datasets to measure gender bias: Association tests (Section~\ref{sec:weat}) and OCCTMP (occupation templates). OCCTMP is a method to use existing occupation datasets for evaluation, based on the templates that we created specifically to evaluate contextualized language models.  It has the added advantage that results are easier to interpret than those for Association tests.
 
 \subsubsection{OCCTMP}
+\label{sec:occtmp}
 To construct OCCTMP, we start with 320 occupation names %\footnote{https://github.com/tolga-/debiaswe/blob/master/data/professions.json} 
 provided by \newcite{bolukbasi2016man}. Each occupation name is converted into the format ``[MASK] is an \textit{occupation}.''
-We measure gender bias as the average difference between the log probability of BERT predicting [MASK] as ``he'' vs.\ ``she''
+We measure gender bias as the mean of the differences between the log probability of BERT predicting [MASK] as ``he'' vs.\ ``she''
 %\begin{eqnarray}
 \begin{gather*}
-\small
-\text{diff}=\frac{1}{|{\mathcal T}|} \sum_{T \in
+\textit{diff}=\frac{1}{|{\mathcal T}|} \sum_{T \in
 	{\mathcal T}}(\log p_{max} - \log p_{min}),\\
 \mbox{where }p_{max}=\max\{p(\mbox{he}| T),p(\mbox{she}| T)\} \mbox{; }p_{min}=\min\{p(\mbox{he}| T),p(\mbox{she}| T)\}
 \end{gather*}
 %\end{eqnarray}
-where $\mathcal T$ is the set of 320 templates.  We find
-that for most experiments and templates, the probability of
+where $\mathcal T$ is the set of 320 templates. 
+We will also report the standard deviation of the differences. We find that for most experiments and templates, the probability of
 ``he'' is higher than ``she'', which qualitatively indicates
 that gender bias can be identified using the OCCTMP templates. We also find that in most cases the sum of the two probabilities is higher than 0.7; thus, this evaluation task is a good fit for BERT because it has learned that a pronoun is likely to occur in the masked position. Our templates can be easily extended to other languages such as Chinese.
 
@@ -56,7 +47,6 @@ been argued that if the null hypothesis cannot be rejected,
 there is no significant gender bias.  The WEAT test
 statistic is defined as
 \begin{gather*}
-\small
 s(X_1,X_2,A_1,A_2)=\sum_{x\in X_1}s(x,A_1,A_2)-\sum_{x\in X_2}s(x,A_1,A_2),\\
 \mbox{where } s(x,A_1,A_2)=\mbox{mean}_{a\in A_1}cos(\vec{x},\vec{a})-\mbox{mean}_{a\in A_2}cos(\vec{x},\vec{a}),
 \end{gather*}

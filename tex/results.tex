@@ -21,24 +21,9 @@ Overall the debiasing performance of the three methods are comparable, with Dens
 \vspace{0cm}  
 \setlength{\abovecaptionskip}{0.2cm}   
 \setlength{\belowcaptionskip}{0cm}
-\begin{tabular}{lccccc}
-\hline
-model & prob(he) & prob(she) & sum &diff & var\\
-\hline
-bert-base & 0.66 & 0.19 & 0.85 &1.98&1.39\\
-bert-base-hard & 0.35 & 0.42 & 0.77&0.42&0.09\\
-bert-base-conceptor & 0.18 & 0.11 & 0.28 & 0.68&0.26\\
-bert-base-densray & 0.48 & 0.37 & 0.86&\textbf{0.36}&0.07\\
-\hline
-bert-large  & 0.63 & 0.19 & 0.82  &1.82&1.30\\
-bert-large-hard & 0.40 & 0.23 & 0.63&0.69&0.30\\
-bert-large-conceptor & 0.43 & 0.18 & 0.61 & 1.03&0.53\\
-bert-large-densray  & 0.47 & 0.31 & 0.77&\textbf{0.49}&0.13 \\
-\hline
-\end{tabular}
 \begin{tabular}{llccccc}
 	\hline
-	model & debiasing &$p(\text{he} | T)$ & $p(\text{she} | T)$& $p(\text{he} | T) +p(\text{she} | T)$ & mean(logdiff) & std(logdiff)\\
+	model & debiasing &$p(\text{he} | {\mathcal T})$ & $p(\text{she} | {\mathcal T})$& sum & diff & std\\
 	\hline
 	\multirow{4}{2cm}{bert-base} & - & 0.66 & 0.19 & 0.85 &1.98&1.39\\
 	&hard & 0.35 & 0.42 & 0.77&0.42&0.09\\
@@ -51,9 +36,7 @@ bert-large-densray  & 0.47 & 0.31 & 0.77&\textbf{0.49}&0.13 \\
 	&densray  & 0.47 & 0.31 & 0.77&\textbf{0.49}&0.13 \\
 	\hline
 \end{tabular}
-\caption{\tablabel{t:templates1} BERT debiasing results on OCCTMP. \textit{bert-base} and \textit{bert-large} are the original models without debiasing. \textit{prob(he)} is
-	the average probability predicted for \textit{he} as the [MASK] in OCCTMP. We also show the average sum probability $sum=prob(he)+prob(she)$ which we take as an indication of 
-	language model performance and \textit{var}, the variance of \textit{ diff}, for reference. \enote{pd}{how is var computed? is it the standard deviation as opposed for the mean which is "diff"? Maybe explain this in 3.2.1, e.g., by introducing diff(T) and then report mean and std of diff(T) across templates.} \enote{pd}{I added a suggestion for improving the table. If you like it I suggest to make other tables consistent. Also e.g., Table 2 uses different names for the debiasing methods (hard-debiasing vs. hard, etc.): I would make those names consistent.}}
+\caption{\tablabel{t:templates1} BERT debiasing results on OCCTMP, measure by diff and std described in \ref{sec:occtmp}. We also show the average sum probability $sum=prob(he|{\mathcal T})+prob(she|{\mathcal T})$ as an indication of language model performance.}
 \end{table}
 
 \begin{table}[h]
@@ -238,7 +221,7 @@ is completely gender-neutral.
 		\hline
 	\end{tabular}
 	\caption{\tablabel{t:measure1}
-		Examples for quantifying bias (model: bert-base), where red(blue) denotes female(male) bias. \enote{pd}{an example for a nice graphic that can be used as inspiration is https://arxiv.org/pdf/2010.00667.pdf Table 1}}
+		Examples for quantifying bias (model: bert-base), where red(blue) denotes female(male) bias.}
 \end{table}
 
 
@@ -273,14 +256,14 @@ In our opinion, multilingual debiasing involves two distinct
 	biased impact caused by deployed NLP systems.
 	
 We use  bert-base-multilingual-uncased from
-\cite{wolf2019huggingfaces}. We use the same setup as for
+\cite{wolf2019huggingfaces} with the same setup as for
 bert-base-uncased in our previous experiments. As before, we
 compute the rotation matrices using the English gendered
 words from the ``family'' category of the Google analogy
-test set \cite{mikolov2013efficient}. Since Chinese is a language that does not mark gender, we can construct the OCCTMP templates by directly translating from the English templates. We use the following form:
-``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupation using Tencent Translation\footnote{https://fanyi.qq.com/} and make some manual adjustments to the translation. After removing duplicates,  302 Chinese templates remain. \enote{pd}{why are there duplicates in Chinese and not in English? Because of actress/actor in English?}
+test set \cite{mikolov2013efficient}. Since Chinese is a language that does not mark gender, we construct OCCTMP by directly translating from the English templates. We use the following form:
+``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupations using Tencent Translation\footnote{https://fanyi.qq.com/} and make some manual adjustments to the translation. After removing duplicates (e.g. firefighter and fireman have the same translation is Chinese), 302 Chinese templates remain.
 
-\tabref{t:templates3} gives results for the Chinese templates. Two examples are given in \tabref{t:templates3}. We see that DensRay trained with English can mitigate gender bias in mBERT: the diff score drops from 1.39 to 1.22 on Chinese templates. 
+\tabref{t:templates3} gives results for the Chinese templates. Two examples are given in \tabref{t:templates5}. We see that DensRay trained with English can mitigate gender bias in mBERT: the diff score drops from 1.39 to 1.22 on Chinese templates. 
 \begin{table}[h]
 	\centering
 	\footnotesize
@@ -326,6 +309,6 @@ test set \cite{mikolov2013efficient}. Since Chinese is a language that does not 
 		& bert-multi-densray-zh & 0.51 & 0.18&0.69&1.04\\
 		\hline
 	\end{tabular}
-	\caption{\label{t:templates3}
+	\caption{\tablabel{t:templates5}
 		Sanity check on the Chinese templates, where \yin{\textit{他}} means \textit{he} and \yin{\textit{她}} means \textit{she}. Corresponding English translations are shown below the Chinese.}
 \end{table}
