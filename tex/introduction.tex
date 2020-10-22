@@ -7,18 +7,18 @@ embedding models, such as BERT \cite{devlin2018bert}, have
 become increasingly common and achieved new state-of-the-art
 results in many NLP tasks. Researchers have also found
 gender bias in contextualized
-embeddings \cite{zhao2019gender,may2019measuring}. It had been also found that these biases have unignorable impacts on downstream tasks \cite{vanmassenhove-etal-2018-getting,moryossef-etal-2019-filling,rudinger2018gender,zhao2018gender}.
+embeddings \cite{zhao2019gender,may2019measuring}. It has been found that these biases have a big impact on downstream tasks \cite{vanmassenhove-etal-2018-getting,moryossef-etal-2019-filling,rudinger2018gender,zhao2018gender}.
 
 A common approach for removing gender information in static
 embeddings is to identify a linear gender subspace (e.g., a
 gender direction) and subsequently setting all values on the
-gender direction to 0. Successful approaches rely on simple
+gender direction to zero. Successful approaches rely on simple
 principal component
 analysis \cite{bolukbasi2016man,mu2018all}. \newcite{bolukbasi2016man}
 require pairs of gendered words to compute a direction
 (e.g., ``man''-``woman'') and \newcite{mu2018all} rely on
 computing a PCA of a set of gender words hoping that the
-main variation occurs across gender. We propose to use
+main variation direction is the gender direction. We propose to use
 DensRay \cite{dufter2019analytical}: the main advantage is
 that DensRay only requires two or multiple groups of
 gendered words. In contrast to \newcite{bolukbasi2016man}, it
@@ -30,8 +30,8 @@ DensRay to identify better gender directions.
 In summary, our contributions are: 
 i) We adjust DensRay to be usable to debias contextualized embeddings.
 We evaluate the approach on two tasks -- a set of templates
-we constructed and previously used Association Tests -- and show that DensRay performs comparable to prior approaches. 
+we constructed and and association tests -- and show that DensRay performs comparable to prior approaches. 
 ii) We provide arguments why DensRay is more robust and find that applying DensRay preserves language model performance on downstream tasks better.
 iii) We analyze how gender information is processed in BERT by applying DensRay to attention heads and layers: we conclude that there is no single attention head responsible for processing gender information. In addition we show in a qualitative analysis that token-level gender scores can be obtained. 
 iv) We apply our debiasing method to the multilingual-BERT (mBERT) model: we show that English training data can be used to effectively debias Chinese.
-
+\enote{pd}{do we publish the code? If yes insert url.}

@@ -14,7 +14,7 @@ compare with the hard debiasing method \cite{mu2018all} and
 the debiasing conceptor \cite{karve2019conceptor} to
 eliminate gender bias as adapted to contextualized
 embeddings. In the experiments, we found that hard debiasing applied to all BERT layers
-yields better results than only applying it to the last layer. In contrast, when applying debiasing conceptor
+yields better results than only applying it to the last layer.\enote{pd}{I guess DensRay is also applied to all layers?} In contrast, when applying debiasing conceptor
 to all layers, language modeling performance (as measured by
 perplexity) is extremely poor.
 We therefore applied the
@@ -58,12 +58,12 @@ statistic is defined as
 \begin{gather*}
 \small
 s(X_1,X_2,A_1,A_2)=\sum_{x\in X_1}s(x,A_1,A_2)-\sum_{x\in X_2}s(x,A_1,A_2),\\
-\mbox{where } s(x,A_1,A_2)=\mbox{mean}_{a\in A_1}cos(\vec{x},\vec{a})-\mbox{mean}_{a\in A_2}cos(\vec{x},\vec{a})
+\mbox{where } s(x,A_1,A_2)=\mbox{mean}_{a\in A_1}cos(\vec{x},\vec{a})-\mbox{mean}_{a\in A_2}cos(\vec{x},\vec{a}),
 \end{gather*}
 in which $cos(\vec{x},\vec{a})$ denotes the cosine similarity between embedding vector $\vec{x}$ and $\vec{a}$. Intuitively, $s(x,A_1,A_2)$ measures the association of a word with the attributes, so the test statistic measures the differential association of the two target sets with the attributes. 
 
 Let $\{({X_1}_i,{X_2}_i)\}_{i}$ denote all the partitions of $X_1\cup X_2$. The one-sided $p$-value of the permutation test is defined as $$\small
-p=Pr_i[s({X_1}_i,{X_2}_i,A_1,A_2)>s(X_1,X_2,A_1,A_2)]$$
+p=Pr_i[s({X_1}_i,{X_2}_i,A_1,A_2)>s(X_1,X_2,A_1,A_2)].$$
 The effect size $d$-value is a normalized measure of how separated the two distributions of associations between the target and attribute are. It is defined as
 \begin{eqnarray}
 \small

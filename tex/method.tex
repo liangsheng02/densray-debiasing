@@ -1,14 +1,14 @@
 
 \subsection{Debiasing Conceptor}
-\newcite{karve2019conceptor} introduced conceptor debiasing. Given a set of gendered words $V:=\{v_1,v_2,\dots,v_n\}$ and their embeddings $E$, gender bias can be mitigated by multiplying the debiasing conceptor matrix$\neg C= I-C$, where $C$ is the conceptor matrix that minimizes the objective
+\newcite{karve2019conceptor} introduced conceptor debiasing. Given a set of gendered words $V:=\{v_1,v_2,\dots,v_n\}$ and their embeddings $E$, gender bias can be mitigated by multiplying the debiasing conceptor matrix $\neg C= I-C$, where $C$ is the conceptor matrix that minimizes the objective
 \begin{eqnarray}
-||E-CE||^2_F+\alpha^{-2}||E||^2_F
+||E-CE||^2_F+\alpha^{-2}||E||^2_F,
 \end{eqnarray}
-where $\alpha$ is a parameter. $C$ has an analytical solution
+where $\alpha$ is a parameter. $C$ has an analytical solution given by
 \begin{eqnarray}
-C=\frac{1}{d}EE^{T}(\frac{1}{d}EE^{T}+\alpha^{-2}I)^{-1}
+C=\frac{1}{d}EE^{T}(\frac{1}{d}EE^{T}+\alpha^{-2}I)^{-1}.
 \end{eqnarray}
-Intuitively, C is a soft projection matrix on the linear subspace where embeddings have the maximum bias. 
+Intuitively, C is a soft projection matrix on the linear subspace where embeddings have the maximum bias. \enote{pd}{doesn't this somewhat contradict section 2.5 where we say that conceptor does not have a single direction that one can depict?}
 
 
 \subsection{Hard Debasing}
@@ -18,7 +18,7 @@ technique for improving word
 representations. \newcite{karve2019conceptor} adopted it as a
 method for debiasing. Hard debiasing relies upon
 the assumption that the first principal component of the
-embedding vectors is a meaningful gender direction. The first principal component of $E$ is the gender direction $q$.
+embedding vectors \enote{pd}{"of the embedding vectors associated to gendered words" the current text suggest that PCA is computed on all embedding vectors} is a meaningful gender direction. The first principal component of $E$ is the gender direction $q$.
 
 \subsection{DensRay}
 DensRay \cite{dufter2019analytical} is an analytical method for identifying the
@@ -29,7 +29,7 @@ R^{n\times d}$. In contrast to the above approaches it uses a function $l$ for t
 $l:V\to \{-1,1\}$;
 e.g. $l(\mbox{father})=1$, $l(\mbox{sister})=-1$. The objective of DensRay
 is to find an orthogonal matrix $Q\in R^{d\times d}$ such
-that $EQ$ is  a gender subspace.
+that the rotated space $EQ$ the dimensions are ordered by there degree of correlation with gender, e.g., the first dimension can then be interpreted as a gender subspace.
 
 Let $L_{=}:=\{(v,w)\in V\times V|l(v)=l(w)\}$ and define
 $L_{\neq}$ analogously.  The DensRay objective
@@ -74,7 +74,7 @@ To debias $X$ with conceptor one simply performs one matrix multiplication $X^{\
  \figref{fig:example} shows artificially created two dimensional embeddings. The lines show the gender directions identified by hard debiasing and DensRay. In this example
  the first principal component does not correlate with gender, while DensRay is able to handle this as it explicitly uses the labels.
  
-As Conceptor debiasing does not compute a single direction of gender, but always needs to apply the full conceptor matrix, it is not possible to depict the direction in the figure. 
+As Conceptor debiasing does not compute a single direction of gender, but always needs to apply the full conceptor matrix, it is not obvious how to depict the direction in the figure. 
 We argue that having a single gender direction as in DensRay is more interpretable and easier to use than the Conceptor, e.g., it allows  to assign token level gender scores easily as shown in \tabref{t:measure1}. In addition DensRay affects language model performance less than Conceptor debiasing, as we show in \tabref{t:glue1}.
 \begin{figure}[h]
 	\centering
@@ -99,5 +99,5 @@ $t_1,\ldots,t_j,\ldots,t_n$ (where $t_j \in V$).
 For each $t_j $ in each sentence we  compute the contextualized representations $e_j^m, 1\leq m
 \leq M$, one for each layer. We then use the vectors $e_j^m$ in \eqref{eq:densray2}.
 to compute a gender direction
-$q_m$ for the $m$th BERT layer. 
-Notice that in our approach we focus on debiasing on the original representations, rather than the debiased representations.
+$q_m$ for the $m$-th BERT layer. 
+Notice that in our approach we focus on debiasing on the original representations, rather than the debiased representations. \enote{pd}{I do not understand the last sentence}
