@@ -205,34 +205,40 @@ bias. These examples show that DensRay is more versatile, it
 can quantify  bias both on the token and on the sentence level in contrast to the log-probability score.
 In the sentence ``The professor asked the nurse .'' one can immediately see that the model has a male bias on ``professor'' and a female bias on ``nurse'', although the sentence itself
 is completely gender-neutral.
-
 \begin{table}[h]
 	\centering
 	\footnotesize
 	\vspace{0cm}  
 	\setlength{\abovecaptionskip}{0.2cm}   
 	\setlength{\belowcaptionskip}{0cm}
-	\begin{tabular}{cccccc|c||c}
+	\begin{tabular}{ccccccc|c||c}
 		\hline
-		\multicolumn{6}{c|}{DensRay}&Avg.&log probability score\\		
+		\multicolumn{7}{c|}{DensRay}&Avg.&log probability score\\		
 		\hline\hline
-		[MASK] &is &a &professor& . &&&\\
-		-0.69 &-0.97 &-0.9  &-0.15  &0.45& &-0.45& 0.63\\
+		{\color{red} [MASK]} &{\color{red} cooked} &{\color{red} dinner} &{\color{blue}.}&&&&{\color{red} 0.14}& {\color{red} -1.04}\\
+		%0.09 &0.36 &0.17  &-0.05  &&& &{\color{red}0.14}& -1.04\\
 		\hline
-		[MASK] &is &a &nurse& . &&&\\
-		2.43  &1.34  &1.7   &1.93  &0.5&& 1.58 &-5.44\\
+		{\color{blue}[MASK]} &{\color{blue} is} &{\color{blue} a} &{\color{blue} professor}& {\color{red}.} &&&{\color{blue}-0.45}& {\color{blue}0.63}\\
+		%-0.69 &-0.97 &-0.9  &-0.15  &0.45& &&{\color{blue}-0.45}& 0.63\\
 		\hline
-		The &professor &asked &me& . &&&\\
-		-1.25 &-0.55 &-0.08  &0.59  &0.35 &&-0.19 &
-                not applicable\\
+		{\color{red}[MASK]} &{\color{red}is} &{\color{red}a} &{\color{red}nurse}& {\color{red}.} &&& {\color{red}1.58} &{\color{red}-5.44}\\
+		%2.43  &1.34  &1.7   &1.93  &0.5&&& {\color{red}1.58} &{\color{red}-5.44}\\
 		\hline
-		The &professor &asked &the&nurse &.&&\\
-		-1.3&  -0.25  &0.24  &1.28  &2.19
-                &0.45&0.43& not applicable\\
+		{\color{blue}The} &{\color{blue}professor} &{\color{blue}asked} &{\color{red}me}& {\color{red}.} &&&{\color{blue}-0.19} & not applicable\\
+		%-1.25 &-0.55 &-0.08  &0.59  &0.35 &&&{\color{blue}-0.19} & not applicable\\
+		\hline
+		{\color{blue}The} &{\color{blue}professor} &{\color{red}asked} &{\color{red}the}&{\color{red}nurse} &{\color{red}.}&&{\color{red}0.43}& not applicable\\
+		%-1.3&  -0.25  &0.24  &1.28  &2.19&0.45&&{\color{red}0.43&} not applicable\\
+		\hline
+		{\color{blue}The}&{\color{red}child} &{\color{blue}played} &{\color{red}with}&{\color{red}the}&{\color{red}car}&{\color{blue}.}&{\color{red}0.03}&not applicable\\
+		%-0.77&  0.18& -0.01&  0.14&  0.23&  0.56& -0.13&{\color{red}0.03}&not applicable\\
+		\hline
+		{\color{blue}The}&{\color{red}child} &{\color{red}played} &{\color{red}with}&{\color{red}the}&{\color{red}doll}&{\color{blue}.}&{\color{red}0.49}&not applicable\\
+		%-0.19&  0.65& 0.61&  0.57&  0.95&  1.06& -0.23&{\color{red}0.49}&not applicable\\
 		\hline
 	\end{tabular}
 	\caption{\tablabel{t:measure1}
-		Examples for quantifying bias (model: bert-base). \enote{pd}{an example for a nice graphic that can be used as inspiration is https://arxiv.org/pdf/2010.00667.pdf Table 1}}
+		Examples for quantifying bias (model: bert-base), where red(blue) denotes female(male) bias. \enote{pd}{an example for a nice graphic that can be used as inspiration is https://arxiv.org/pdf/2010.00667.pdf Table 1}}
 \end{table}
 
 
