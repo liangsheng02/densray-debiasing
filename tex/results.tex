@@ -194,31 +194,33 @@ is completely gender-neutral.
 	\vspace{0cm}  
 	\setlength{\abovecaptionskip}{0.2cm}   
 	\setlength{\belowcaptionskip}{0cm}
-	\begin{tabular}{ccccccc|c||c}
-		\hline
-		\multicolumn{7}{c|}{DensRay}&Avg.&log probability score\\		
-		\hline\hline
-		{\color{red} [MASK]} &{\color{red} cooked} &{\color{red} dinner} &{\color{blue}.}&&&&{\color{red} 0.14}& {\color{red} -1.04}\\
-		%0.09 &0.36 &0.17  &-0.05  &&& &{\color{red}0.14}& -1.04\\
-		\hline
-		{\color{blue}[MASK]} &{\color{blue} is} &{\color{blue} a} &{\color{blue} professor}& {\color{red}.} &&&{\color{blue}-0.45}& {\color{blue}0.63}\\
-		%-0.69 &-0.97 &-0.9  &-0.15  &0.45& &&{\color{blue}-0.45}& 0.63\\
-		\hline
-		{\color{red}[MASK]} &{\color{red}is} &{\color{red}a} &{\color{red}nurse}& {\color{red}.} &&& {\color{red}1.58} &{\color{red}-5.44}\\
-		%2.43  &1.34  &1.7   &1.93  &0.5&&& {\color{red}1.58} &{\color{red}-5.44}\\
-		\hline
-		{\color{blue}The} &{\color{blue}professor} &{\color{blue}asked} &{\color{red}me}& {\color{red}.} &&&{\color{blue}-0.19} & not applicable\\
-		%-1.25 &-0.55 &-0.08  &0.59  &0.35 &&&{\color{blue}-0.19} & not applicable\\
-		\hline
-		{\color{blue}The} &{\color{blue}professor} &{\color{red}asked} &{\color{red}the}&{\color{red}nurse} &{\color{red}.}&&{\color{red}0.43}& not applicable\\
-		%-1.3&  -0.25  &0.24  &1.28  &2.19&0.45&&{\color{red}0.43&} not applicable\\
-		\hline
-		{\color{blue}The}&{\color{red}child} &{\color{blue}played} &{\color{red}with}&{\color{red}the}&{\color{red}car}&{\color{blue}.}&{\color{red}0.03}&not applicable\\
-		%-0.77&  0.18& -0.01&  0.14&  0.23&  0.56& -0.13&{\color{red}0.03}&not applicable\\
-		\hline
-		{\color{blue}The}&{\color{red}child} &{\color{red}played} &{\color{red}with}&{\color{red}the}&{\color{red}doll}&{\color{blue}.}&{\color{red}0.49}&not applicable\\
-		%-0.19&  0.65& 0.61&  0.57&  0.95&  1.06& -0.23&{\color{red}0.49}&not applicable\\
-		\hline
+	\begin{tabular}{l|c||c}
+	\hline
+	\hspace{2.6cm}DensRay&Avg.&log probability score\\
+	\hline
+	%\hline
+	%\specialrule{.05em}{.1ex}{.65ex}
+	\hlc[pink!4]{[MASK]} \hlc[pink!18]{cooked} \hlc[pink!8]{dinner} \hlc[cyan!2]{.}
+	&\hlc[pink!7]{0.14}& -1.04\\[2pt]
+	%\hline
+	\hlc[cyan!34]{[MASK]} \hlc[cyan!48]{is} \hlc[cyan!45]{a} \hlc[cyan!7]{professor} \hlc[pink!22]{.}
+	&\hlc[cyan!34]{-0.45}& 0.63\\[2pt]
+	%\hline
+	\hlc[pink!100]{[MASK]} \hlc[pink!67]{is} \hlc[pink!85]{a} \hlc[pink!96]{nurse} \hlc[pink!25]{.}
+	&\hlc[pink!79]{1.58}& -5.44\\[2pt]
+	%\hline
+	\hlc[cyan!62]{The} \hlc[cyan!27]{professor} \hlc[cyan!4]{asked} \hlc[pink!29]{me} \hlc[pink!17]{.}
+	&\hlc[cyan!10]{-0.19} & not applicable\\[2pt]
+	%\hline
+	\hlc[cyan!65]{The} \hlc[cyan!12]{professor} \hlc[pink!12]{asked} \hlc[pink!64]{the} \hlc[pink!100]{nurse} \hlc[pink!22]{.}
+	&\hlc[pink!22]{0.43} &not applicable\\[2pt]
+	%\hline
+	\hlc[cyan!38]{The} \hlc[pink!9]{child} \hlc[cyan!0]{played} \hlc[pink!7]{with} \hlc[pink!11]{the} \hlc[pink!28]{car} \hlc[cyan!6]{.}
+	&\hlc[pink!2]{0.03} &not applicable\\[2pt]
+	%\hline
+	\hlc[cyan!9]{The} \hlc[pink!32]{child} \hlc[pink!30]{played} \hlc[pink!28]{with} \hlc[pink!47]{the} \hlc[pink!53]{doll} \hlc[cyan!11]{.}
+	&\hlc[pink!25]{0.49}&not applicable\\[2pt]
+	\hline
 	\end{tabular}
 	\caption{\tablabel{t:measure1}
 		Examples for quantifying bias (model: bert-base), where red(blue) denotes female(male) bias.}
