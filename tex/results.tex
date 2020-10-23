@@ -22,19 +22,19 @@ Overall the debiasing performance of the three methods are comparable, with Dens
 \setlength{\abovecaptionskip}{0.2cm}   
 \setlength{\belowcaptionskip}{0cm}
 \begin{tabular}{llccccc}
-	\hline
+	\toprule
 	model & debiasing &$p(\text{he} | {\mathcal T})$ & $p(\text{she} | {\mathcal T})$& sum & diff & std\\
-	\hline
+	\midrule
 	\multirow{4}{2cm}{bert-base} & - & 0.66 & 0.19 & 0.85 &1.98&1.39\\
 	&hard & 0.35 & 0.42 & 0.77&0.42&0.09\\
 	&conceptor & 0.18 & 0.11 & 0.28 & 0.68&0.26\\
 	&densray & 0.48 & 0.37 & 0.86&\textbf{0.36}&0.07\\
-	\hline
+	\midrule
 	\multirow{4}{2cm}{bert-large} & -  & 0.63 & 0.19 & 0.82  &1.82&1.30\\
 	&hard & 0.40 & 0.23 & 0.63&0.69&0.30\\
 	&conceptor & 0.43 & 0.18 & 0.61 & 1.03&0.53\\
 	&densray  & 0.47 & 0.31 & 0.77&\textbf{0.49}&0.13 \\
-	\hline
+	\bottomrule
 \end{tabular}
 \caption{\tablabel{t:templates1} BERT debiasing results on OCCTMP, measure by diff and std described in \ref{sec:occtmp}. We also show the average sum probability $sum=prob(he|{\mathcal T})+prob(she|{\mathcal T})$ as an indication of language model performance.}
 \end{table}
@@ -43,31 +43,31 @@ Overall the debiasing performance of the three methods are comparable, with Dens
 	\centering
 	\footnotesize
 	\vspace{0cm}  
-	\setlength{\abovecaptionskip}{0.2cm}   
+	\setlength{\abovecaptionskip}{0.0cm}   
 	\setlength{\belowcaptionskip}{0cm}
 	\begin{tabular}{cl{|}cccc{|}cccc}
-		\hline
+		\bottomrule
 		&&\multicolumn{4}{c|}{bert-base}&\multicolumn{4}{c}{bert-large}\\
 		%\hline
 		&&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c|}{SEAT}&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c}{SEAT}\\
 		\hline
-		category & model & d & p& d & p& d & p& d & p\\
+		category & debiasing & $d$ & $p$& $d$ & $p$& $d$ & $p$& $d$ & $p$\\
 		\hline
-		C6 & without debiasing & 0.66 & 0.08 &1.04&$<$10$^{-2*}$& 1.57 & $<$10$^{-2*}$ &0.50&$<$10$^{-2*}$\\
-		& hard debiasing& 0.15 & 0.38&\textbf{-0.08}&0.67& 0.80 & 0.06&0.07&0.35\\
-		& debiasing conceptor & \textbf{0.07} & 0.46&0.77&$<$10$^{-2*}$ & 1.33 & $<$10$^{-2*}$&\textbf{0.06}&0.37\\
+		\multirow{4}{*}{C6} & - & 0.66 & 0.08 &1.04&$<$10$^{-2*}$& 1.57 & $<$10$^{-2*}$ &0.50&$<$10$^{-2*}$\\
+		& hard& 0.15 & 0.38&\textbf{-0.08}&0.67& 0.80 & 0.06&0.07&0.35\\
+		& conceptor & \textbf{0.07} & 0.46&0.77&$<$10$^{-2*}$ & 1.33 & $<$10$^{-2*}$&\textbf{0.06}&0.37\\
 		&densray & 0.62 & 0.12&0.36&0.02$^{*}$ & \textbf{0.76} & 0.07&0.13&0.22\\
 		\hline
-		C7 & without debiasing & 0.60 & 0.11 &0.17&0.15 & -0.40 & 0.75 &0.38&0.01$^{*}$\\
-		& hard debiasing & \textbf{-0.07} & 0.56&\textbf{-0.06}&0.64 & -0.51 & 0.83&0.38&0.01$^{*}$\\
-		& debiasing conceptor & 0.54 & 0.14&-0.25&0.93 & -0.32 & 0.73&\textbf{-0.60}&0.99\\
+		\multirow{4}{*}{C7} &- & 0.60 & 0.11 &0.17&0.15 & -0.40 & 0.75 &0.38&0.01$^{*}$\\
+		& hard& \textbf{-0.07} & 0.56&\textbf{-0.06}&0.64 & -0.51 & 0.83&0.38&0.01$^{*}$\\
+		& conceptor & 0.54 & 0.14&-0.25&0.93 & -0.32 & 0.73&\textbf{-0.60}&0.99\\
 		& densray & 0.09 & 0.45&-0.47&0.99 & \textbf{0.06} & 0.05&-0.73&0.99\\
 		\hline
-		C8& without debiasing & 0.78 & 0.08 &0.81&$<$10$^{-2*}$ & -0.60 & 0.87 &-0.30&0.95\\
-		& hard debiasing & -0.29 & 0.68&\textbf{-0.10}&0.71 & 0.78 & 0.06&\textbf{-0.03}&0.56\\
-		& debiasing conceptor & 0.62 & 0.14&0.50&$<$10$^{-2*}$& \textbf{0.12} & 0.39&0.30&0.94\\
+		\multirow{4}{*}{C8}& - & 0.78 & 0.08 &0.81&$<$10$^{-2*}$ & -0.60 & 0.87 &-0.30&0.95\\
+		& hard & -0.29 & 0.68&\textbf{-0.10}&0.71 & 0.78 & 0.06&\textbf{-0.03}&0.56\\
+		& conceptor & 0.62 & 0.14&0.50&$<$10$^{-2*}$& \textbf{0.12} & 0.39&0.30&0.94\\
 		& densray & \textbf{0.03} & 0.47&0.41&0.01$^{*}$ & 0.20 & 0.33&-0.66&0.99\\
-		\hline
+		\toprule
 	\end{tabular}
 	\caption{\tablabel{t:weat1}
 		BERT debiasing results on association tests. * shows significant gender bias. Only models without significant gender bias ($p>0.05$) can be accepted.}
@@ -83,21 +83,22 @@ on bert-large, DensRay performs better than debiasing conceptor. Overall we find
 \centering
 \footnotesize
 \vspace{0cm}  
-\setlength{\abovecaptionskip}{0.2cm}   
+\setlength{\abovecaptionskip}{0.1cm}   
 \setlength{\belowcaptionskip}{0cm}
-\begin{tabular}{l||c|cccccc|c}
+\begin{tabular}{c|l||c|cccccc|c}
 %\hline
-model & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI&GLUE avg\\
+model&debiasing & Wikitext-2&CoLA &SST-2&MRPC&STS-B&RTE&WNLI&GLUE avg\\
 \hline\hline
-		bert-base &3.77&49.15&92.09&85.86&82.66&62.82&52.11&70.78\\
-bert-base-hard &3.95&45.53&\textbf{91.74}&82.48&\textbf{82.60}&63.54&\textbf{56.34}&70.37\\
-bert-base-conceptor &4.46&\textbf{48.31}&91.43&84.08&81.37&59.57&\textbf{56.34}&70.18\\
-bert-base-densray &\textbf{3.81}&48.04&\textbf{91.74}&\textbf{84.89}&82.43&\textbf{63.90}&53.52&\textbf{70.75}\\
+\multirow{4}{*}{bert-base}&- &3.77&49.15&92.09&85.86&82.66&62.82&52.11&70.78\\
+&hard &3.95&45.53&\textbf{91.74}&82.48&\textbf{82.60}&63.54&\textbf{56.34}&70.37\\
+&conceptor &4.46&\textbf{48.31}&91.43&84.08&81.37&59.57&\textbf{56.34}&70.18\\
+&densray &\textbf{3.81}&48.04&\textbf{91.74}&\textbf{84.89}&82.43&\textbf{63.90}&53.52&\textbf{70.75}\\
 \hline
-bert-large &3.29& 47.93&94.90&89.30&87.60&70.10&65.10&75.82\\
-bert-large-hard &3.85& 47.45&93.95&85.01&82.33&67.12&63.02&73.15\\
-bert-large-conceptor &4.13&\textbf{49.44}&93.87&87.67&83.44&62.45&56.34&72.20\\
-bert-large-densray &\textbf{3.35}& 48.91&\textbf{94.02}&\textbf{88.84}&\textbf{85.63}&\textbf{67.78}&\textbf{64.48}&\textbf{74.94}\\
+\multirow{4}{*}{bert-large}&- 
+&3.29& 47.93&94.90&89.30&87.60&70.10&65.10&75.82\\
+&hard &3.85& 47.45&93.95&85.01&82.33&67.12&63.02&73.15\\
+&conceptor &4.13&\textbf{49.44}&93.87&87.67&83.44&62.45&56.34&72.20\\
+&densray &\textbf{3.35}& 48.91&\textbf{94.02}&\textbf{88.84}&\textbf{85.63}&\textbf{67.78}&\textbf{64.48}&\textbf{74.94}\\
 %\hline
 \end{tabular}
 \caption{\tablabel{t:glue1}
@@ -117,22 +118,22 @@ a pronoun is  likely to occur in the masked position.
 	\centering
 	\footnotesize
 		\vspace{0cm}  
-	\setlength{\abovecaptionskip}{0.2cm}   
+	\setlength{\abovecaptionskip}{0.1cm}   
 	\setlength{\belowcaptionskip}{0cm}  
 	\begin{tabular}{llcccc}
-		\hline
-		sentence & model & prob(he) & prob(she) &sum&diff\\
-		\hline
-		[MASK] is a & bert-base & 0.84 & 0.13&0.97&1.86\\
-		professor.& bert-base-hard& 0.37 & 0.55&0.92&0.40\\
-		& bert-base-conceptor& 0.28 & 0.23&0.51&{0.20}\\
-		& bert-base-densray & 0.53 & 0.37&0.90&0.36\\
-		\hline
-		[MASK] is a & bert-base & 0.22 & 0.72&0.94&1.19\\
-		dancer.  & bert-base-hard& 0.27 & 0.64&0.91&0.86\\
-		& bert-base-conceptor& 0.20 & 0.33&0.53&0.50\\
-		& bert-base-densray& 0.42 & 0.52&0.94&0.21\\
-		\hline
+		\toprule
+		sentence & debiasing & prob(he) & prob(she) &sum&diff\\
+		\midrule
+		 & - & 0.84 & 0.13&0.97&1.86\\
+		\text{[MASK]} is a& hard& 0.37 & 0.55&0.92&0.40\\
+	    professor.	& conceptor& 0.28 & 0.23&0.51&{0.20}\\
+		& densray & 0.53 & 0.37&0.90&0.36\\
+		\midrule
+		 & - & 0.22 & 0.72&0.94&1.19\\
+		\text{[MASK]} is a& hard& 0.27 & 0.64&0.91&0.86\\
+		dancer.  & conceptor& 0.20 & 0.33&0.53&0.50\\
+		& densray& 0.42 & 0.52&0.94&0.21\\
+		\bottomrule
 	\end{tabular}
 	\caption{\tablabel{t:templates2}
 		OCCTMP examples with prediction probabilities.}
@@ -153,6 +154,9 @@ bert-base. This indicates that gender information is processed on BERT layers, e
 \begin{figure}[h]
 	\centering
 	\footnotesize
+	\vspace{0cm}  
+	\setlength{\abovecaptionskip}{0.1cm}   
+	\setlength{\belowcaptionskip}{0cm}
 	\subfigure[attention heads]{
 		\begin{minipage}[l]{0.5\linewidth}
 			\centering
@@ -192,7 +196,7 @@ is completely gender-neutral.
 	\centering
 	\footnotesize
 	\vspace{0cm}  
-	\setlength{\abovecaptionskip}{0.2cm}   
+	\setlength{\abovecaptionskip}{0.0cm}   
 	\setlength{\belowcaptionskip}{0cm}
 	\begin{tabular}{l|c||c}
 	\bottomrule
@@ -270,46 +274,45 @@ test set \cite{mikolov2013efficient}. Since Chinese is a language that does not 
 	\centering
 	\footnotesize
 	\vspace{0cm}  
-	\setlength{\abovecaptionskip}{0.2cm}   
+	\setlength{\abovecaptionskip}{0.1cm}   
 	\setlength{\belowcaptionskip}{0cm}
 	\begin{tabular}{lccccc}
-		\hline
+		\toprule
 		model & prob(he) & prob(she) & sum &diff & var\\
-		\hline
+		\midrule
 		 bert-multi-en 
 		& 0.51 & 0.14 & 0.65 & 1.66&0.81 \\ 
 		bert-multi-densray-en & 0.33 & 0.12 & 0.46 & 1.33&0.65 \\
-		\hline
+		\midrule
 		 bert-multi-zh 
 		& 0.24 & 0.07 & 0.31 & 1.39&0.60 \\
 		 bert-multi-densray-zh 
 		& 0.12 & 0.04 & 0.17 & 1.22&0.47\\
-		\hline
+		\bottomrule
 	\end{tabular}
 	\caption{\tablabel{t:templates3}
 		Results of OCCTMP on mBERT after applied DensRay. Models with \textit{-en} are tested on English templates, and those with \textit{-zh} are tested on Chinese templates.}
 \end{table}
-
 \begin{table}[h]
 	\centering
 	\footnotesize
 	\vspace{0cm}  
-	\setlength{\abovecaptionskip}{0.2cm}   
+	\setlength{\abovecaptionskip}{0.1cm}   
 	\setlength{\belowcaptionskip}{0cm}
 	\begin{tabular}{llcccc}
-		\hline
-		sentence & model & \yin{prob(他)} & \yin{prob(她)}&sum&diff\\
-		\hline
-		\yin{\text{[MASK]}是一个客座教授。} & bert-multi-en & 0.68 & 0.16&0.84&1.45\\
-		\text{[MASK]} is an adjunct professor.& bert-multi-densray-en & 0.51 & 0.18&0.70&1.04\\
-		& bert-multi-zh & 0.52 & 0.11&0.63&1.55\\
+		\toprule
+		sentence & debiasing & \yin{prob(他)} & \yin{prob(她)}&sum&diff\\
+		\midrule
+		& bert-multi-en & 0.68 & 0.16&0.84&1.45\\
+		\yin{\text{[MASK]}是一个客座教授。}& bert-multi-densray-en & 0.51 & 0.18&0.70&1.04\\
+		\text{[MASK]} is an adjunct professor.& bert-multi-zh & 0.52 & 0.11&0.63&1.55\\
 		& bert-multi-densray-zh & 0.30 & 0.08&0.38&1.31\\
-		\hline
-		\yin{\text{[MASK]}是一个管理员。} & bert-multi-en & 0.53 & 0.17&0.70&1.14\\
-		\text{[MASK]}is an administrator.& bert-multi-densray-en & 0.35 & 0.13&0.48&0.99\\
-		& bert-multi-zh & 0.68 & 0.16&0.84&1.45\\
+		\midrule
+		& bert-multi-en & 0.53 & 0.17&0.70&1.14\\
+		\yin{\text{[MASK]}是一个管理员。} & bert-multi-densray-en & 0.35 & 0.13&0.48&0.99\\
+		\text{[MASK]}is an administrator.& bert-multi-zh & 0.68 & 0.16&0.84&1.45\\
 		& bert-multi-densray-zh & 0.51 & 0.18&0.69&1.04\\
-		\hline
+		\bottomrule
 	\end{tabular}
 	\caption{\tablabel{t:templates5}
 		Sanity check on the Chinese templates, where \yin{\textit{他}} means \textit{he} and \yin{\textit{她}} means \textit{she}. Corresponding English translations are shown below the Chinese.}
