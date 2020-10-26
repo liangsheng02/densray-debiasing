@@ -111,8 +111,8 @@
 		\colorlet{foo}{#1}%
 		\sethlcolor{foo}\hl{#2}}%
 }
-%\usepackage{color}
-%\usepackage[colorlinks=true, citecolor=black, linkcolor=black, urlcolor=black]{hyperref}
+\usepackage{color}
+\usepackage[colorlinks=true, citecolor=black, linkcolor=black, urlcolor=black]{hyperref}
 
 
 %\setlength\titlebox{5cm}
@@ -231,23 +231,23 @@ from Chinese, using only English training data.
 %\newblock In \emph{Proceedings of the Australasian Language Technology Association %Workshop 2011}, pages 10--18, Canberra, Australia.
 
 %\end{thebibliography}
-{\bf Appendix A. Number of Training Samples}:
-
-\enote{pd}{not sure whether we need this appendix?}
-
- DensRay is essentially a supervised learning method. It is difficult to extract useful features in the case of insufficient or unbalanced labels.  As shown in \figref{curve}, the debiasing results improve with an increased number of training samples.
-
-As a projection-based debiasing method, the premise of DensRay debiasing is that the gender direction should be correct. Unbalanced samples will lead to incorrect gender direction biased towards either male or female, resulting in reversing the gender bias during debiasing. The figure also shows that a balanced training set improves debiasing performance.
-\begin{figure}[h]
-	\centering
-	\footnotesize
-	\vspace{0cm}  
-	\setlength{\abovecaptionskip}{0.2cm}   
-	\setlength{\belowcaptionskip}{0cm}
-	\includegraphics[width=0.4\linewidth]{samples}
-	\caption{DensRay debiasing results on OCCTMP with different number of samples and unbalanced/balanced data.}
- 
-	\figlabel{curve}
-\end{figure}
+%{\bf Appendix A. Number of Training Samples}:
+%
+%\enote{pd}{not sure whether we need this appendix?}
+%
+% DensRay is essentially a supervised learning method. It is difficult to extract useful features in the case of insufficient or unbalanced labels.  As shown in \figref{curve}, the debiasing results improve with an increased number of training samples.
+%
+%As a projection-based debiasing method, the premise of DensRay debiasing is that the gender direction should be correct. Unbalanced samples will lead to incorrect gender direction biased towards either male or female, resulting in reversing the gender bias during debiasing. The figure also shows that a balanced training set improves debiasing performance.
+%\begin{figure}[h]
+%	\centering
+%	\footnotesize
+%	\vspace{0cm}  
+%	\setlength{\abovecaptionskip}{0.2cm}   
+%	\setlength{\belowcaptionskip}{0cm}
+%	\includegraphics[width=0.4\linewidth]{samples}
+%	\caption{DensRay debiasing results on OCCTMP with different number of samples and unbalanced/balanced data.}
+% 
+%	\figlabel{curve}
+%\end{figure}
 
 \end{document}

@@ -16,9 +16,9 @@ Overall the debiasing performance of the three methods are comparable with DensR
 Overall the debiasing performance of the three methods are comparable, with DensRay and Conceptor both having the best performance three times and hard-debiasing having the best performance five times.
 
 \begin{table}[ht]
+\vspace{-5pt}
 \centering
 \footnotesize
-\vspace{0cm}  
 \setlength{\abovecaptionskip}{0.2cm}   
 \setlength{\belowcaptionskip}{0cm}
 \begin{tabular}{llccccc}
@@ -86,8 +86,8 @@ on bert-large, DensRay performs better than debiasing conceptor. Overall we find
 \begin{table*}[h]
 \centering
 \footnotesize
-\vspace{0cm}  
-\setlength{\abovecaptionskip}{0.1cm}   
+\vspace{-5pt}  
+\setlength{\abovecaptionskip}{0.2cm}   
 \setlength{\belowcaptionskip}{0cm}
 \begin{tabular}{c|l||c|cccccc|c}
 %\hline
@@ -113,7 +113,6 @@ performance. }
 
 \subsection{Examples}
 In \tabref{t:templates2} we show two OCCTMP examples.
-Again, DensRay works best as measures by diff.
 The sum probabilities of ``he'' and ``she''
 on the debiasing conceptor are around 0.5, indicating that
 the language model has lost part of its ability to predict that 
@@ -121,8 +120,8 @@ a pronoun is  likely to occur in the masked position.
 \begin{table}[h]
 	\centering
 	\footnotesize
-		\vspace{0cm}  
-	\setlength{\abovecaptionskip}{0.1cm}   
+	\vspace{-5pt}  
+	\setlength{\abovecaptionskip}{0.2cm}   
 	\setlength{\belowcaptionskip}{0cm}  
 	\begin{tabular}{llcccc}
 		\toprule
@@ -140,7 +139,7 @@ a pronoun is  likely to occur in the masked position.
 		\bottomrule
 	\end{tabular}
 	\caption{\tablabel{t:templates2}
-		OCCTMP examples with prediction probabilities.}
+		OCCTMP examples with prediction probabilities (model:bert-base).}
 \end{table}
 
 \subsection{Analysis}
@@ -158,7 +157,7 @@ bert-base. This indicates that gender information is processed on BERT layers, e
 \begin{figure}[h]
 	\centering
 	\footnotesize
-	\vspace{0cm}  
+	\vspace{-5pt}  
 	\setlength{\abovecaptionskip}{0.1cm}   
 	\setlength{\belowcaptionskip}{0cm}
 	\subfigure[attention heads]{
@@ -199,8 +198,8 @@ is completely gender-neutral.
 \begin{table}[h]
 	\centering
 	\footnotesize
-	\vspace{0cm}  
-	\setlength{\abovecaptionskip}{0.0cm}   
+	\vspace{-5pt}  
+	\setlength{\abovecaptionskip}{0.1cm}   
 	\setlength{\belowcaptionskip}{0cm}
 	\begin{tabular}{l|c||c}
 	\bottomrule
@@ -237,7 +236,7 @@ is completely gender-neutral.
 
 
 
-\subsubsection*{Alternatives to Removing the Gender Dimension}
+\subsubsection*{Alternatives to Removing Gender Bias}
 In our experiments, we zero out the dimensions of the gender
 subspace to remove gender bias. 
 We also explored three alternatives to zeroing out. 1)
@@ -245,6 +244,8 @@ Replace the first dimension of the gender subspace with the
 mean value of the first dimension of the training
 samples. 2) Standardize the first dimension. 3) Replace the
 first dimension with a small random variable sampled from a Gaussian distribution. All of them did not perform well. Using higher dimensional gender subspaces also did not improve the debiasing results while harming the model performance.
+
+When debiasing is applied to all layers in our experiments, we computed all the rotation matrices from the original model in advanced, and then successively applied them to the corresponding layer in the forward pass. However the gender direction on layer $l_{i+1}$ will be changed after debiased on $l_i$. Our approach is a compromise for faster training, by only focus on the original gender direction. A better alternative may be to computed a new rotation matrix for $l_{i+1}$ after debiased on $l_i$.
 
 
 \subsection{Multilingual Debiasing}
@@ -277,7 +278,7 @@ test set \cite{mikolov2013efficient}. Since Chinese is a language that does not 
 \begin{table}[h]
 	\centering
 	\footnotesize
-	\vspace{0cm}  
+	\vspace{-6pt}  
 	\setlength{\abovecaptionskip}{0.1cm}   
 	\setlength{\belowcaptionskip}{0cm}
 	\begin{tabular}{lccccc}
@@ -295,7 +296,7 @@ test set \cite{mikolov2013efficient}. Since Chinese is a language that does not 
 		\bottomrule
 	\end{tabular}
 	\caption{\tablabel{t:templates3}
-		Results of OCCTMP on mBERT after applied DensRay. Models with \textit{-en} are tested on English templates, and those with \textit{-zh} are tested on Chinese templates.}
+		Results of OCCTMP on mBERT after applied DensRay. \textit{-en} denotes we test on English templates, and textit{-zh} on Chinese templates.}
 	
 \vspace{0.4cm}
 
