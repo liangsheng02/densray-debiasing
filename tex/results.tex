@@ -146,13 +146,13 @@ a pronoun is  likely to occur in the masked position.
 \subsection{Analysis}
 
 \subsubsection*{Debiasing on Attention Heads and Layers}
-We now apply DensRay to single attention heads in BERT and investigate the debiasing effect on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in (1.0,1.4). We conclude that there is no single attention head that is responsible for processing gender information.
-This conclusion is similar to the experiment from \newcite{bau2019identifying}, which showed modifying some neurons activations in NMT did not help in controlling gender, and conjectured that gender property is very distributed on the neurons.
+We now apply DensRay to single attention heads in BERT and investigate the debiasing effect on OCCTMP. The heatmap \figref{fig:heads} shows that the debiasing effect of one single attention head is not apparent, with diff scores all in (1.0,1.4). We conjecture that there is no single attention head that is responsible for processing gender information.
+This conjecture is similar to the experiment from \newcite{bau2019identifying}, which showed modifying some neurons activations in NMT did not help in controlling gender, and speculated that gender property is very distributed on neurons.
 
 So far we have always applied DensRay to all BERT layers
 simultaneously. \figref{fig:layersbase}  illustrates the effect of
-debiasing a single  layer on our templates and the three
-WEAT categories.  In contrast to the attention heads we observe a different debiasing effect across different layers. We see that the debiasing effect is
+debiasing a single  layer on OCCTMP and the three
+WEAT categories. In contrast to the attention heads we observe a different debiasing effect across different layers. We see that the debiasing effect is
 stronger in layers 7--10 than in the other layers in
 bert-base. This indicates that gender information is processed on BERT layers, especially the upper layers.
 \begin{figure}[h]
@@ -183,7 +183,7 @@ bert-base. This indicates that gender information is processed on BERT layers, e
 \subsubsection*{Quantifying Gender Bias with DensRay}
 \seclabel{quantify}
 DensRay can be used to quantify gender bias for sentences
-and tokens. We use the distance to the origin in the gender
+and tokens. We use the distance to the origin in gender
 subspace as the measure. In BERT, we use the average
 bias score of tokens to quantify the whole
 sentence. \tabref{t:measure1} compares DensRay with the log
@@ -271,7 +271,7 @@ bert-base-uncased in our previous experiments. As before, we
 compute the rotation matrices using the English gendered
 words from the ``family'' category of the Google analogy
 test set \cite{mikolov2013efficient}. Since Chinese is a language that does not mark gender, we construct OCCTMP by directly translating from the English templates. We use the following form:
-``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupations using Tencent Translation\footnote{fanyi.qq.com/} and make some manual adjustments to the translation. After removing duplicates (e.g. firefighter and fireman have the same translation is Chinese), 302 Chinese templates remain.
+``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupations using Tencent Translation\footnote{\url{fanyi.qq.com/}} and make some manual adjustments to the translation. After removing duplicates (e.g. firefighter and fireman have the same translation is Chinese), 302 Chinese templates remain.
 
 \tabref{t:templates3} gives results for the Chinese templates. Two examples are given in \tabref{t:templates5}. We see that DensRay trained with English can mitigate gender bias in mBERT: the diff score drops from 1.39 to 1.22 on Chinese templates. 
 \begin{table}[h]

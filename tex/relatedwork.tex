@@ -9,9 +9,9 @@ context. SEAT further improved the templates and computed
 the similarities between sentences instead of
 words. \newcite{guo2020detecting} proposed CEAT (Contextual
 Embedding Association Test), which samples the occurrences
-from the corpus to get the embeddings, and measures the bias
+from corpus to get the embeddings, and measures bias
 by a random-effects model. However, we find that it is
-difficult to obtain a stable result on CEAT, since there are too many hyper-parameters need to be controlled, thus in this paper we  use WEAT and SEAT for our
+difficult to obtain a stable result on CEAT, since there are too many hyper-parameters to be controlled, thus in this paper we use WEAT and SEAT for our
 experiments. \newcite{kurita2019measuring} proposed a
 template-based log probability bias score to measure the
 association between targets and attributes in BERT. Since it
@@ -26,9 +26,7 @@ An alternative way to measure gender bias is to evaluate on
 schemas. \newcite{webster2018mind} released GAP, a balanced
 corpus of Gendered Ambiguous Pronouns, which measures gender
 bias as the ratio of F1 score on masculine to F1 score on
-feminine. However the ratio is very close to 1.0
-\cite{Chada_2019,Attree_2019} making it hard to compare
-debiasing systems. For sentiment analysis, Equity Evaluation
+feminine. However the ratio close to 1.0 \cite{Chada_2019,Attree_2019} making it hard to compare debiasing systems. For sentiment analysis, Equity Evaluation
 Corpus (EEC) \cite{Kiritchenko_2018} was designed to measure
 gender bias by the difference in emotional intensity
 predictions between gender-swapped sentences. Since the
@@ -42,7 +40,7 @@ Many methods to remove gender bias have been proposed. The most common way is to
 
 The debiasing conceptor and the \newcite{mu2018all} hard debiasing produce gender direction by gendered word list mixed with male and female words. In contrast, the \newcite{bolukbasi2016man} hard debiasing used two groups of gendered words for definition and another two groups for alignment, to identify the gender direction by male-female pairs. The method we use, DensRay, is similar to the \newcite{bolukbasi2016man} hard debiasing in this aspect. However, DensRay uses only one male and one female word list, and it can be solved efficiently in a closed form. So it would be more stable to be applied to contextual models than the \newcite{bolukbasi2016man} hard debiasing. 
  
-\newcite{gonen-goldberg-2019-lipstick-pig} showed that except the gender direction, biases on static embeddings also come from the association to other implicitly gendered terms. We assume that this phenomenon will be weakened in contextual embedding, so we only focus on the gender direction, this may be a limitation.They also proposed some experiments to evaluate the remaining bias after debiasing, in which the gender classifier shared the same idea with OCCTMP.
+\newcite{gonen-goldberg-2019-lipstick-pig} showed that except the gender direction, biases on static embeddings also come from the association to other implicitly gendered terms. We assume that this phenomenon will be weakened in contextual embedding, so we only focus on the gender direction, this may be a limitation.They also proposed some experiments to evaluate the remaining bias after debiasing, among which the gender classifier shared the same idea with OCCTMP.
 
 
 
