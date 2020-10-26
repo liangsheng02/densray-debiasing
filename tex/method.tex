@@ -89,14 +89,12 @@ We argue that having a single gender direction as in DensRay is more interpretab
 \subsection{Adapting DensRay to Contextualized Language Models}
 We now describe how we adapt DensRay to contextualized
 language models. Given a set of gendered words
-$V$, we extract sentences containing a word in $V$ from a
-corpus. We run a contextualized language model
+$V$, we run a contextualized language model
 with $M$ layers
 on a set of 
 sentences that each contains at least one of the gender words, i.e., 
-$t_1,\ldots,t_j,\ldots,t_n$ (where $t_j \in V$). 
-For each $t_j $ in each sentence we  compute the contextualized representations $e_j^m, 1\leq m
+$t_1,\ldots,t_j,\ldots,t_n$ (where $t_j \in V$) to get their embeddings. 
+For each $t_j $ in each sentence we compute the contextualized representations $e_j^m, 1\leq m
 \leq M$, one for each layer. We then use the vectors $e_j^m$ in \eqref{eq:densray2}.
 to compute a gender direction
 $q_m$ for the $m$-th BERT layer. 
-Notice that in our approach we focus on debiasing on the original representations, rather than the debiased representations. \enote{pd}{I do not understand the last sentence}

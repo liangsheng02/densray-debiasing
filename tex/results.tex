@@ -36,7 +36,36 @@ Overall the debiasing performance of the three methods are comparable, with Dens
 	&densray  & 0.47 & 0.31 & 0.77&\textbf{0.49}&0.13 \\
 	\bottomrule
 \end{tabular}
-\caption{\tablabel{t:templates1} BERT debiasing results on OCCTMP, measure by diff and std described in \ref{sec:occtmp}. We also show the average sum probability $sum=prob(he|{\mathcal T})+prob(she|{\mathcal T})$ as an indication of language model performance.}
+\caption{\tablabel{t:templates1} BERT debiasing results on OCCTMP, measure by \textit{diff}, \textit{std}, and \textit{sum} described in \ref{sec:occtmp}}
+
+\vspace{0.4cm}
+
+	\begin{tabular}{cl{|}cccc{|}cccc}
+	\bottomrule
+	&&\multicolumn{4}{c|}{bert-base}&\multicolumn{4}{c}{bert-large}\\
+	%\hline
+	&&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c|}{SEAT}&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c}{SEAT}\\
+	\hline
+	category & debiasing & $d$ & $p$& $d$ & $p$& $d$ & $p$& $d$ & $p$\\
+	\hline
+	\multirow{4}{*}{C6} & - & 0.66 & 0.08 &1.04&$<$10$^{-2*}$& 1.57 & $<$10$^{-2*}$ &0.50&$<$10$^{-2*}$\\
+	& hard& 0.15 & 0.38&\textbf{-0.08}&0.67& 0.80 & 0.06&0.07&0.35\\
+	& conceptor & \textbf{0.07} & 0.46&0.77&$<$10$^{-2*}$ & 1.33 & $<$10$^{-2*}$&\textbf{0.06}&0.37\\
+	&densray & 0.62 & 0.12&0.36&0.02$^{*}$ & \textbf{0.76} & 0.07&0.13&0.22\\
+	\hline
+	\multirow{4}{*}{C7} &- & 0.60 & 0.11 &0.17&0.15 & -0.40 & 0.75 &0.38&0.01$^{*}$\\
+	& hard& \textbf{-0.07} & 0.56&\textbf{-0.06}&0.64 & -0.51 & 0.83&0.38&0.01$^{*}$\\
+	& conceptor & 0.54 & 0.14&-0.25&0.93 & -0.32 & 0.73&\textbf{-0.60}&0.99\\
+	& densray & 0.09 & 0.45&-0.47&0.99 & \textbf{0.06} & 0.05&-0.73&0.99\\
+	\hline
+	\multirow{4}{*}{C8}& - & 0.78 & 0.08 &0.81&$<$10$^{-2*}$ & -0.60 & 0.87 &-0.30&0.95\\
+	& hard & -0.29 & 0.68&\textbf{-0.10}&0.71 & 0.78 & 0.06&\textbf{-0.03}&0.56\\
+	& conceptor & 0.62 & 0.14&0.50&$<$10$^{-2*}$& \textbf{0.12} & 0.39&0.30&0.94\\
+	& densray & \textbf{0.03} & 0.47&0.41&0.01$^{*}$ & 0.20 & 0.33&-0.66&0.99\\
+	\toprule
+\end{tabular}
+\caption{\tablabel{t:weat1}
+	BERT debiasing results on association tests. * shows significant gender bias. Only models without significant gender bias ($p>0.05$) can be accepted.}
 \end{table}
 
 \begin{table}[h]
@@ -45,32 +74,7 @@ Overall the debiasing performance of the three methods are comparable, with Dens
 	\vspace{0cm}  
 	\setlength{\abovecaptionskip}{0.0cm}   
 	\setlength{\belowcaptionskip}{0cm}
-	\begin{tabular}{cl{|}cccc{|}cccc}
-		\bottomrule
-		&&\multicolumn{4}{c|}{bert-base}&\multicolumn{4}{c}{bert-large}\\
-		%\hline
-		&&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c|}{SEAT}&\multicolumn{2}{c}{WEAT}&\multicolumn{2}{c}{SEAT}\\
-		\hline
-		category & debiasing & $d$ & $p$& $d$ & $p$& $d$ & $p$& $d$ & $p$\\
-		\hline
-		\multirow{4}{*}{C6} & - & 0.66 & 0.08 &1.04&$<$10$^{-2*}$& 1.57 & $<$10$^{-2*}$ &0.50&$<$10$^{-2*}$\\
-		& hard& 0.15 & 0.38&\textbf{-0.08}&0.67& 0.80 & 0.06&0.07&0.35\\
-		& conceptor & \textbf{0.07} & 0.46&0.77&$<$10$^{-2*}$ & 1.33 & $<$10$^{-2*}$&\textbf{0.06}&0.37\\
-		&densray & 0.62 & 0.12&0.36&0.02$^{*}$ & \textbf{0.76} & 0.07&0.13&0.22\\
-		\hline
-		\multirow{4}{*}{C7} &- & 0.60 & 0.11 &0.17&0.15 & -0.40 & 0.75 &0.38&0.01$^{*}$\\
-		& hard& \textbf{-0.07} & 0.56&\textbf{-0.06}&0.64 & -0.51 & 0.83&0.38&0.01$^{*}$\\
-		& conceptor & 0.54 & 0.14&-0.25&0.93 & -0.32 & 0.73&\textbf{-0.60}&0.99\\
-		& densray & 0.09 & 0.45&-0.47&0.99 & \textbf{0.06} & 0.05&-0.73&0.99\\
-		\hline
-		\multirow{4}{*}{C8}& - & 0.78 & 0.08 &0.81&$<$10$^{-2*}$ & -0.60 & 0.87 &-0.30&0.95\\
-		& hard & -0.29 & 0.68&\textbf{-0.10}&0.71 & 0.78 & 0.06&\textbf{-0.03}&0.56\\
-		& conceptor & 0.62 & 0.14&0.50&$<$10$^{-2*}$& \textbf{0.12} & 0.39&0.30&0.94\\
-		& densray & \textbf{0.03} & 0.47&0.41&0.01$^{*}$ & 0.20 & 0.33&-0.66&0.99\\
-		\toprule
-	\end{tabular}
-	\caption{\tablabel{t:weat1}
-		BERT debiasing results on association tests. * shows significant gender bias. Only models without significant gender bias ($p>0.05$) can be accepted.}
+
 \end{table}
 
 \subsection{Model Performance}
@@ -122,7 +126,7 @@ a pronoun is  likely to occur in the masked position.
 	\setlength{\belowcaptionskip}{0cm}  
 	\begin{tabular}{llcccc}
 		\toprule
-		sentence & debiasing & prob(he) & prob(she) &sum&diff\\
+		template $T$ & debiasing & $p(he|T)$ & $p(she|T)$ &sum&diff\\
 		\midrule
 		 & - & 0.84 & 0.13&0.97&1.86\\
 		\text{[MASK]} is a& hard& 0.37 & 0.55&0.92&0.40\\
@@ -278,42 +282,43 @@ test set \cite{mikolov2013efficient}. Since Chinese is a language that does not 
 	\setlength{\belowcaptionskip}{0cm}
 	\begin{tabular}{lccccc}
 		\toprule
-		model & prob(he) & prob(she) & sum &diff & var\\
+		debiasing & $p(he|\mathcal{T}$) & $p(she|\mathcal{T}$) & sum &diff & std\\
 		\midrule
-		 bert-multi-en 
-		& 0.51 & 0.14 & 0.65 & 1.66&0.81 \\ 
-		bert-multi-densray-en & 0.33 & 0.12 & 0.46 & 1.33&0.65 \\
+		 -en 
+		& 0.51 & 0.14 & 0.65 & 1.66&0.90 \\ 
+		densray-en & 0.33 & 0.12 & 0.46 & 1.33&0.81 \\
 		\midrule
-		 bert-multi-zh 
-		& 0.24 & 0.07 & 0.31 & 1.39&0.60 \\
-		 bert-multi-densray-zh 
-		& 0.12 & 0.04 & 0.17 & 1.22&0.47\\
+		 -zh 
+		& 0.24 & 0.07 & 0.31 & 1.39&0.77 \\
+		 densray-zh 
+		& 0.12 & 0.04 & 0.17 & 1.22&0.69\\
 		\bottomrule
 	\end{tabular}
 	\caption{\tablabel{t:templates3}
 		Results of OCCTMP on mBERT after applied DensRay. Models with \textit{-en} are tested on English templates, and those with \textit{-zh} are tested on Chinese templates.}
-\end{table}
-\begin{table}[h]
-	\centering
-	\footnotesize
-	\vspace{0cm}  
-	\setlength{\abovecaptionskip}{0.1cm}   
-	\setlength{\belowcaptionskip}{0cm}
+	
+\vspace{0.4cm}
+
 	\begin{tabular}{llcccc}
-		\toprule
-		sentence & debiasing & \yin{prob(他)} & \yin{prob(她)}&sum&diff\\
-		\midrule
-		& bert-multi-en & 0.68 & 0.16&0.84&1.45\\
-		\yin{\text{[MASK]}是一个客座教授。}& bert-multi-densray-en & 0.51 & 0.18&0.70&1.04\\
-		\text{[MASK]} is an adjunct professor.& bert-multi-zh & 0.52 & 0.11&0.63&1.55\\
-		& bert-multi-densray-zh & 0.30 & 0.08&0.38&1.31\\
-		\midrule
-		& bert-multi-en & 0.53 & 0.17&0.70&1.14\\
-		\yin{\text{[MASK]}是一个管理员。} & bert-multi-densray-en & 0.35 & 0.13&0.48&0.99\\
-		\text{[MASK]}is an administrator.& bert-multi-zh & 0.68 & 0.16&0.84&1.45\\
-		& bert-multi-densray-zh & 0.51 & 0.18&0.69&1.04\\
-		\bottomrule
-	\end{tabular}
-	\caption{\tablabel{t:templates5}
-		Sanity check on the Chinese templates, where \yin{\textit{他}} means \textit{he} and \yin{\textit{她}} means \textit{she}. Corresponding English translations are shown below the Chinese.}
+	\toprule
+	template $T$ & debiasing & \yin{$p$(他$|T)$} & \yin{$p$(她$|T)$}&sum&diff\\
+	\midrule
+	& -en & 0.68 & 0.16&0.84&1.45\\
+	\yin{\text{[MASK]}是一个客座教授。}
+	&densray-en & 0.51 & 0.18&0.70&1.04\\
+	\text{[MASK]} is an adjunct professor.
+	& -zh & 0.52 & 0.11&0.63&1.55\\
+	& densray-zh & 0.30 & 0.08&0.38&1.31\\
+	\midrule
+	& -en & 0.53 & 0.17&0.70&1.14\\
+	\yin{\text{[MASK]}是一个管理员。}  
+	&densray-en & 0.35 & 0.13&0.48&0.99\\
+	\text{[MASK]}is an administrator. 
+	& -zh & 0.68 & 0.16&0.84&1.45\\
+	& densray-zh & 0.51 & 0.18&0.69&1.04\\
+	\bottomrule
+\end{tabular}
+\caption{\tablabel{t:templates5}
+	Sanity check on the Chinese templates, where \yin{\textit{他}} means \textit{he} and \yin{\textit{她}} means \textit{she}. Corresponding English translations are shown below the Chinese.}
 \end{table}
+
