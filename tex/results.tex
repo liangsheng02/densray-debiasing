@@ -1,9 +1,8 @@
 
 \subsection{Debiasing Results}
-\tabref{t:templates1} gives results on OCCTMP. Two OCCTMP
-examples are given in \tabref{t:templates2}. We see that
-DensRay can mitigate the gender bias in BERT as measured by
-diff: bias between predicting he/she drops by large margin
+\tabref{t:templates1} gives results on OCCTMP. We show that
+DensRay can mitigate gender bias in BERT as measured by
+\textit{diff}: bias between predicting he/she drops by large margin
 (e.g., for bert-base from 1.98 to 0.36). The table indicates
 that DensRay outperforms the other two methods on OCCTMP.
 Note that
@@ -67,16 +66,6 @@ Overall the debiasing performance of the three methods are comparable, with Dens
 \caption{\tablabel{t:weat1}
 	BERT debiasing results on association tests. * shows significant gender bias. Only models without significant gender bias ($p>0.05$) can be accepted.}
 \end{table}
-
-\begin{table}[h]
-	\centering
-	\footnotesize
-	\vspace{0cm}  
-	\setlength{\abovecaptionskip}{0.0cm}   
-	\setlength{\belowcaptionskip}{0cm}
-
-\end{table}
-
 \subsection{Model Performance}
 \tabref{t:glue1} shows that DensRay debiasing gets comparable results with
 the original models on Wikitext-2 and GLUE tasks.
@@ -272,7 +261,7 @@ bert-base-uncased in our previous experiments. As before, we
 compute the rotation matrices using the English gendered
 words from the ``family'' category of the Google analogy
 test set \cite{mikolov2013efficient}. Since Chinese is a language that does not mark gender, we construct OCCTMP by directly translating from the English templates. We use the following form:
-``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupations using Tencent Translation\footnote{\url{fanyi.qq.com/}} and make some manual adjustments to the translation. After removing duplicates (e.g. firefighter and fireman have the same translation is Chinese), 302 Chinese templates remain.
+``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupations using Tencent Translation\footnote{\url{https://fanyi.qq.com/}} and make some manual adjustments to the translation. After removing duplicates (e.g. firefighter and fireman have the same translation is Chinese), 302 Chinese templates remain.
 
 \tabref{t:templates3} gives results for the Chinese templates. Two examples are given in \tabref{t:templates5}. We see that DensRay trained with English can mitigate gender bias in mBERT: the diff score drops from 1.39 to 1.22 on Chinese templates. 
 \begin{table}[h]
