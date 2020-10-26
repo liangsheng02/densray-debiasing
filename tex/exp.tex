@@ -5,7 +5,7 @@ To compute the rotation matrices by DensRay, we need the
 labels of a gendered word list and a corpus. For the word
 list, we get 23 masculine words and 23 feminine words from
 the ``family''
-category,\footnote{http://download.tensorflow.org/data/questions-words.txt}
+category,\footnote{download.tensorflow.org/data/questions-words.txt}
 of the Google analogy test set \cite{mikolov2013efficient}. As the input corpus, we collect text data from Wikipedia that contains 5,000 (resp.\ 10,000)
 occurrences of words in the gendered list for the BERT base
 (resp.\ large) model. We carefully balance the occurrences such that the number of male and female samples are equal, then we set  $\alpha_{\neq}=\alpha_{=}=0.5$. We compare with hard debiasing \cite{mu2018all} and debiasing conceptor \cite{karve2019conceptor} to eliminate gender bias as adapted to contextualized embeddings. In the experiments, we found that DensRay and hard debiasing applied to all BERT layers yield better results than only applying to the last layer. In contrast, when applying debiasing conceptor to all layers, language modeling performance (as measured by perplexity) is extremely poor.

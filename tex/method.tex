@@ -8,7 +8,7 @@ where $\alpha$ is a parameter. $C$ has an analytical solution given by
 \begin{eqnarray}
 C=\frac{1}{d}EE^{T}(\frac{1}{d}EE^{T}+\alpha^{-2}I)^{-1}.
 \end{eqnarray}
-Intuitively, C is a soft projection matrix on the linear subspace where embeddings have the maximum bias. \enote{pd}{doesn't this somewhat contradict section 2.5 where we say that conceptor does not have a single direction that one can depict?}
+Intuitively, C is a soft projection matrix on the linear subspace where embeddings have the maximum bias.
 
 
 \subsection{Hard Debasing}
@@ -73,8 +73,8 @@ To debias $X$ with conceptor one simply performs one matrix multiplication $X^{\
  \figref{fig:example} shows artificially created two dimensional embeddings. The lines show the gender directions identified by hard debiasing and DensRay. In this example
  the first principal component does not correlate with gender, while DensRay is able to handle this as it explicitly uses the labels.
  
-As Conceptor debiasing does not compute a single direction of gender, but always needs to apply the full conceptor matrix, it is not obvious how to depict the direction in the figure. 
-We argue that having a single gender direction as in DensRay is more interpretable and easier to use than the Conceptor, e.g., it allows  to assign token level gender scores easily as shown in \tabref{t:measure1}. In addition DensRay affects language model performance less than Conceptor debiasing, as we show in \tabref{t:glue1}.
+As a soft projection, Conceptor debiasing does not compute a single gender direction, but always debias on a linear combination of all directions, it is not obvious how to depict the direction in the figure. 
+We argue that having a single gender direction as in DensRay is more interpretable and easier to use than the Conceptor, e.g., it allows to assign token level gender scores easily as shown in \tabref{t:measure1}. In addition DensRay affects language model performance less than Conceptor, as we show in \tabref{t:glue1}.
 \begin{figure}[h]
 	\centering
 	\vspace{0cm}  

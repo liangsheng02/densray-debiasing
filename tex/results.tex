@@ -267,7 +267,7 @@ bert-base-uncased in our previous experiments. As before, we
 compute the rotation matrices using the English gendered
 words from the ``family'' category of the Google analogy
 test set \cite{mikolov2013efficient}. Since Chinese is a language that does not mark gender, we construct OCCTMP by directly translating from the English templates. We use the following form:
-``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupations using Tencent Translation\footnote{https://fanyi.qq.com/} and make some manual adjustments to the translation. After removing duplicates (e.g. firefighter and fireman have the same translation is Chinese), 302 Chinese templates remain.
+``\text{[MASK]}\yin{是一个}\textit{occupation}\yin{。}'' We translate the occupations using Tencent Translation\footnote{fanyi.qq.com/} and make some manual adjustments to the translation. After removing duplicates (e.g. firefighter and fireman have the same translation is Chinese), 302 Chinese templates remain.
 
 \tabref{t:templates3} gives results for the Chinese templates. Two examples are given in \tabref{t:templates5}. We see that DensRay trained with English can mitigate gender bias in mBERT: the diff score drops from 1.39 to 1.22 on Chinese templates. 
 \begin{table}[h]
